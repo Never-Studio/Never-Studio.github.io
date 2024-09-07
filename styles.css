@@ -7,6 +7,7 @@
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
+    font-size:20px;
     color: #333;
 }
 
@@ -128,6 +129,56 @@ h2 + div {
 .full-height-section > *:not(#scroll-down-arrow) {
     opacity: 0;
 }
+a {
+	text-decoration: underline
+}
+ /* unvisited link */
+.white-section  a:link {
+  color: black;
+}
+
+/* visited link */
+.white-section a:visited {
+	color: black;
+	font-weight: bold;
+	text-decoration:none;
+}
+
+/* mouse over link */
+.white-section a:hover {
+  color:black;
+  text-decoration: underline;
+}
+
+/* selected link */
+.white-section a:active {
+  color: black;
+  text-decoration: underline;
+} 
+
+.black-section a:link {
+  color: white;
+  text-decoration:none;
+}
+
+/* visited link */
+.black-section a:visited {
+	color: white;
+	font-weight: bold;
+	text-decoration:none;
+}
+
+/* mouse over link */
+.black-section a:hover {
+  color:white;
+  text-decoration: underline;
+}
+
+/* selected link */
+.black-section a:active {
+  color: white;
+  text-decoration: underline;
+} 
 
 @keyframes fadeInText {
     from {
