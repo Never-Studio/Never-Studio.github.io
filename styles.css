@@ -7,9 +7,10 @@
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
-    font-size:20px;
+    font-size:30px;
     color: #333;
 }
+
 
 .full-height-section {
     height: 100vh;
@@ -19,6 +20,25 @@ body {
     align-items: center;
     text-align: center;
     position: relative;
+    /*overflow: hidden;*/
+}
+
+.button {
+	display: block;
+	padding: 20px;
+	border: none;
+	border-radius: 30px;
+	font-size: 30px;
+	margin:20px;
+}
+
+.button: focus{
+	display: block;
+	padding: 20px;
+	border: none;
+    outline: none;
+	border-radius: 30px;
+	margin:20px;
 }
 
 .black-section {
@@ -32,7 +52,7 @@ body {
 }
 
 .logo {
-    font-size: 48px;
+    font-size: 100px;
     margin-bottom: 20px;
 }
 
@@ -59,34 +79,43 @@ body {
 }
 
 .notification-container {
-    width: 80%;
-    height: 200px;
-    overflow-y: hidden;
     position: relative;
+    
 }
 
 .notification-item {
     padding: 10px;
-    border-bottom: 1px solid #ccc;
-    animation: scroll 15s linear infinite;
+   /* animation: scroll 10s linear infinite;*/
 }
-
+/*
 @keyframes scroll {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-500%); }
+    0% { transform: translateY(0px); }
+    100% { transform: translateY(-300px); }
 }
+*/
+
 
 .work-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(1, auto);
     gap: 20px;
 }
 
+.work-item br{
+	clear: right;
+	
+}
+
+.work-item > *:not(img) {
+	float: left;
+}
+
 .work-item img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 5px;
+	width: 150px;
+	height: 150px;
+    margin:20px;
+    float: right;
+    display:block;
 }
 
 .contact-section h2 {
