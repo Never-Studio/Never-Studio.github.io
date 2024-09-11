@@ -29,6 +29,7 @@ var projects = [["A new project!","this is a cool project!","bild-icon.png"],
 				["A new project2","this is a cool project2","bild-icon.png"]
 			]
 var notifications = fetch('notifications.json').then().then().catch();
+console.log(notifications)
 
 function breaks(text){
 	if(text.match(/<br>/g) != null){
