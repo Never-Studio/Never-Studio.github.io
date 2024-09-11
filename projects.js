@@ -24,22 +24,9 @@ const observer = new IntersectionObserver((entries) => {
 
 sections.forEach(section => observer.observe(section));
 
-var projects = [["A new project!","this is a cool project!","bild-icon.png"],
-				["A new project1","this is a cool project1","bild-icon.png"],
-				["A new project2","this is a cool project2","bild-icon.png"],
-				["A new project!","this is a cool project!","bild-icon.png"],
-				["A new project1","this is a cool project1","bild-icon.png"],
-				["A new project2","this is a cool project2","bild-icon.png"],
-				["A new project!","this is a cool project!","bild-icon.png"],
-				["A new project1","this is a cool project1","bild-icon.png"],
-				["A new project2","this is a cool project2","bild-icon.png"],
-				["A new project!","this is a cool project!","bild-icon.png"],
-				["A new project1","this is a cool project1","bild-icon.png"],
-				["A new project2","this is a cool project2","bild-icon.png"],
-				["A new project!","this is a cool project!","bild-icon.png"],
-				["A new project1","this is a cool project1","bild-icon.png"],
-				["A new project2","this is a cool project2","bild-icon.png"]
-			]
+var projects = [["Never Isometric Engine","It is currently under development...","bild-icon.png"],
+		["Never RPG 1","Also currently under development ...","bild-icon.png"]
+		]
 
 
 // Adjust viewport height for mobile devices
