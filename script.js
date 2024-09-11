@@ -23,7 +23,7 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.5 }); // Changed from 0.1 to 0.5
 
 sections.forEach(section => observer.observe(section));
-
+console.log("hello")
 var projects = [["A new project!","this is a cool project!","bild-icon.png"],
 				["A new project1","this is a cool project1","bild-icon.png"],
 				["A new project2","this is a cool project2","bild-icon.png"]
