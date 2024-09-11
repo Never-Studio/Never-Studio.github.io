@@ -23,15 +23,13 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.5 }); // Changed from 0.1 to 0.5
 
 sections.forEach(section => observer.observe(section));
-var projects = [["A new project!","this is a cool project!","bild-icon.png"],
-				["A new project1","this is a cool project1","bild-icon.png"],
-				["A new project2","this is a cool project2","bild-icon.png"]
+var projects = [["Never Isometric Engine","It is currently under development...","bild-icon.png"],
+		["Never RPG 1","Also currently under development ...","bild-icon.png"]
 			]
-var notifications = [["New project launched!","We launched a new project! <br> How cool!"],
-					["New project launched!","We launched a new project!"],
-					["New project launched!","We launched a new project!"],
-					["New project launched!","We launched a new project!"]
-					]
+var notifications = [["Planned: Never World","An infinite ai generated world."],
+		     ["Working on: Never RPG","A pixel rpg with currently limited access."],
+		     ["Working on: Never Isometric Engine","The engine behind Never RPG. <br> It will be public and free to use. <br> Coming soon!"]
+		   ]
 					
 
 function breaks(text){
