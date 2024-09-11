@@ -59,7 +59,7 @@ function adjustViewportHeight() {
     
     var projDiv = document.getElementById("work-grid")
     projDiv.innerHTML = ""
-	for(let i=0; i< Math.min((window.innerHeight-350)/210,projects.length); i++){
+	for(let i=0; i< Math.min((window.innerHeight-400)/210,projects.length); i++){
 		projDiv.innerHTML += `<div class="work-item"><div><h3> ${projects[i][0]} </h3> ${projects[i][1]} </div><img src="${projects[i][2]}" alt="Project 1"></div>`;
 	}
 	
