@@ -49,7 +49,7 @@ function adjustViewportHeight() {
 	while(window.innerHeight-350>cost){
 		if(i<notifications.length){
 			notContainer.innerHTML += `<div class="notification-item"><h3>${notifications[i][0]}</h3>  ${notifications[i][1]} </div>`
-			cost += 70*(breaks(notifications[i][0])+2+breaks(notifications[i][1]))
+			cost += 90*(breaks(notifications[i][0])+2+breaks(notifications[i][1]))
 		}else{break;}
 		i++;
 	}
