@@ -45,7 +45,8 @@ body {
 	border: none;
 	border-radius: 30px;
 	font-size: 30px;
-	margin:20px;
+	margin-right:auto;
+	margin-left: auto;
 }
 
 .button: focus{
