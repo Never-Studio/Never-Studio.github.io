@@ -53,7 +53,7 @@ function adjustContainers(){
 		notContainer.innerHTML = ""		
 		let cost = 0;
 		let i = 0;
-		while(window.innerHeight-350>cost){
+		while(window.innerHeight-450>cost){
 			if(i<notifications.length){
 				notContainer.innerHTML += `<div class="notification-item"><h3>${notifications[i][0]}</h3>  ${notifications[i][1]} </div>`
 				cost += 270*(breaks(notifications[i][0])+2+breaks(notifications[i][1]))
@@ -63,7 +63,7 @@ function adjustContainers(){
 		
 		var projDiv = document.getElementById("work-grid")
 		projDiv.innerHTML = ""
-		for(let i=0; i< Math.min((window.innerHeight-400)/500,projects.length); i++){
+		for(let i=0; i< Math.min((window.innerHeight-500)/500,projects.length); i++){
 			projDiv.innerHTML += `<div class="work-item"><div><h3> ${projects[i][0]} </h3> ${projects[i][1]} </div><img src="${projects[i][2]}" alt="Project 1"></div>`;
 		}
 		
