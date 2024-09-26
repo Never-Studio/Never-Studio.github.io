@@ -26,7 +26,7 @@ body {
     /*overflow: hidden;*/
 }
 
-.button {
+.sticky {
 	position: fixed;
 	display: block;
 	padding: 20px;
