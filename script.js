@@ -53,10 +53,10 @@ function adjustContainers(){
 		notContainer.innerHTML = ""		
 		let cost = 0;
 		let i = 0;
-		while(window.innerHeight-450>cost){
+		while(window.innerHeight-500>cost){
 			if(i<notifications.length){
 				notContainer.innerHTML += `<div class="notification-item"><h3>${notifications[i][0]}</h3>  ${notifications[i][1]} </div>`
-				cost += 270*(breaks(notifications[i][0])+2+breaks(notifications[i][1]))
+				cost += 300*(breaks(notifications[i][0])+2+breaks(notifications[i][1]))
 			}else{break;}
 			i++;
 		}
