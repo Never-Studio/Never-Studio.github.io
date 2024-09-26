@@ -115,7 +115,7 @@ body {
 
 
 .work-grid {
-    
+    flex-direction: grid;
 }
 
 .work-item br{
