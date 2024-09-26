@@ -22,7 +22,7 @@ body {
     align-items: center;
     text-align: center;
     position: relative;
-    padding: 20px;
+    padding: auto;
     /*overflow: hidden;*/
 }
 
@@ -35,7 +35,6 @@ body {
 	border: none;
 	border-radius: 0px;
 	font-size: 30px;
-	margin: 0px;
 	color: black;
 	background-color: white;
 }
