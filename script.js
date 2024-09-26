@@ -40,29 +40,60 @@ function breaks(text){
 	}
 	
 }
+
+function adjustContainers(){
+	if (navigator.userAgent.match(/Android/i)
+         || navigator.userAgent.match(/webOS/i)
+         || navigator.userAgent.match(/iPhone/i)
+         || navigator.userAgent.match(/iPad/i)
+         || navigator.userAgent.match(/iPod/i)
+         || navigator.userAgent.match(/BlackBerry/i)
+         || navigator.userAgent.match(/Windows Phone/i)){
+		var notContainer =	document.getElementById("notification-container")	
+		notContainer.innerHTML = ""		
+		let cost = 0;
+		let i = 0;
+		while(window.innerHeight-350>cost){
+			if(i<notifications.length){
+				notContainer.innerHTML += `<div class="notification-item"><h3>${notifications[i][0]}</h3>  ${notifications[i][1]} </div>`
+				cost += 270*(breaks(notifications[i][0])+2+breaks(notifications[i][1]))
+			}else{break;}
+			i++;
+		}
+		
+		var projDiv = document.getElementById("work-grid")
+		projDiv.innerHTML = ""
+		for(let i=0; i< Math.min((window.innerHeight-400)/450,projects.length); i++){
+			projDiv.innerHTML += `<div class="work-item"><div><h3> ${projects[i][0]} </h3> ${projects[i][1]} </div><img src="${projects[i][2]}" alt="Project 1"></div>`;
+		}
+		
+	}else{
+		var notContainer =	document.getElementById("notification-container")	
+		notContainer.innerHTML = ""		
+		let cost = 0;
+		let i = 0;
+		while(window.innerHeight-350>cost){
+			if(i<notifications.length){
+				notContainer.innerHTML += `<div class="notification-item"><h3>${notifications[i][0]}</h3>  ${notifications[i][1]} </div>`
+				cost += 100*(breaks(notifications[i][0])+2+breaks(notifications[i][1]))
+			}else{break;}
+			i++;
+		}
+		
+		var projDiv = document.getElementById("work-grid")
+		projDiv.innerHTML = ""
+		for(let i=0; i< Math.min((window.innerHeight-400)/210,projects.length); i++){
+			projDiv.innerHTML += `<div class="work-item"><div><h3> ${projects[i][0]} </h3> ${projects[i][1]} </div><img src="${projects[i][2]}" alt="Project 1"></div>`;
+		}
+	}
+}
+
+
 // Adjust viewport height for mobile devices
 function adjustViewportHeight() {
-    var notContainer =	document.getElementById("notification-container")	
-	notContainer.innerHTML = ""		
-	let cost = 0;
-	let i = 0;
-	while(window.innerHeight-390>cost){
-		if(i<notifications.length){
-			notContainer.innerHTML += `<div class="notification-item"><h3>${notifications[i][0]}</h3>  ${notifications[i][1]} </div>`
-			cost += 100*(breaks(notifications[i][0])+2+breaks(notifications[i][1]))
-		}else{break;}
-		i++;
-	}
-    
-    var projDiv = document.getElementById("work-grid")
-    projDiv.innerHTML = ""
-	for(let i=0; i< Math.min((window.innerHeight-400)/210,projects.length); i++){
-		projDiv.innerHTML += `<div class="work-item"><div><h3> ${projects[i][0]} </h3> ${projects[i][1]} </div><img src="${projects[i][2]}" alt="Project 1"></div>`;
-	}
-	
-	
+	adjustContainers()
 	const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
+	document.documentElement.style.setProperty('--vh', `${vh}px`);
 }
 
 window.addEventListener('resize', adjustViewportHeight);
