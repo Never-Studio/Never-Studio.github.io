@@ -27,6 +27,7 @@ body {
 }
 
 .sticky {
+	z-index: 100;
 	position: fixed;
 	display: block;
 	padding: 20px;
