@@ -16,7 +16,7 @@ body {
 
 .full-height-section {
      flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-around;
      height: 100vh;
     display: flex-container;
     align-items: center;
