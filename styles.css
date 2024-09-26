@@ -27,6 +27,16 @@ body {
 }
 
 .button {
+	position: fixed;
+	display: block;
+	padding: 20px;
+	border: none;
+	border-radius: 30px;
+	font-size: 30px;
+	margin: 0px;
+}
+
+.button {
 	display: block;
 	padding: 20px;
 	border: none;
