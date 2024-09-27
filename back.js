@@ -1,4 +1,4 @@
-var back = document.getElementById("mainmenu")
+/*var back = document.getElementById("mainmenu")
 window.onscroll = function(e) {
 	// print "false" if direction is down and "true" if up
 	if(this.oldScroll < this.scrollY && this.scrollY > 30){
@@ -8,3 +8,4 @@ window.onscroll = function(e) {
 	}
 	this.oldScroll = this.scrollY;
 }
+*/
