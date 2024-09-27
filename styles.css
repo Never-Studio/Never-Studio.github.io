@@ -45,19 +45,11 @@ body {
 	display: block;
 	padding: 10px;
 	border: none;
-	border-radius: 50px;
+	border-radius: 0px;
 	font-size: 30px;
 	margin-right:auto;
 	margin-left: auto;
-}
-
-.button: focus{
-	display: block;
-	padding: 20px;
-	border: none;
-    outline: none;
-	border-radius: 50px;
-	margin:20px;
+	width: 100%;
 }
 
 .black-section {
