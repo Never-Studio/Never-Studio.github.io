@@ -4,11 +4,14 @@
     box-sizing: border-box;
     text-align: center;
     font-family: "Menlo", sans-serif;
-    
+    font-weight: bold;
+    font-size: 15pt;
 }
 
 body {
     font-family: "Menlo", sans-serif;
+    font-weight: bold;
+    font-size: 15pt;
     line-height: 1.6;
     font-size:30px;
     color: #333;
