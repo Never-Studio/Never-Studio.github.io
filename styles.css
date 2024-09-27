@@ -5,7 +5,7 @@
     text-align: center;
     font-family: "Menlo", sans-serif;
     font-weight: bold;
-    font-size: 15pt;
+    font-size: 20pt;
 }
 
 body {
@@ -13,7 +13,7 @@ body {
     font-weight: bold;
     font-size: 15pt;
     line-height: 1.6;
-    font-size:30px;
+    font-size:20px;
     color: #333;
     font-optical-sizing: auto;
 }
@@ -161,7 +161,7 @@ h2 + div {
 /* Responsive design */
 @media screen and (max-width: 768px) {
     .logo {
-        font-size: 36px;
+        font-size: 50px;
     }
     
     .notification-container {
