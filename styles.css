@@ -117,7 +117,14 @@ body {
 
 
 .work-grid {
-    flex-direction: grid;
+	display: flex;
+    flex-direction: column;
+}
+
+.work-item {
+	display: flex;
+	flex-direction: row;
+	margin: 10px;
 }
 
 .work-item br{
