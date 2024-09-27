@@ -29,12 +29,23 @@ var notifications = [["Planned: Never World","An infinite ai generated world."],
 		     ["Working on: Never Isometric Engine","The engine behind Never RPG. <br> It will be public and free to use. <br> Coming soon!"]
 		   ]
 
+function buttonizer(dict){
+	let buttons = ""
+	if(dict != undefined){
+		buttons += '<br><p style= "white-space: nowrap;">'
+		for(i of Object.keys(dict)){
+		buttons += ' <a href="'+dict[i]+'"><button class = "black-button" style="display: inline !important;">'+i+'</button></a>'
+		}
+		buttons += "</p>"
+	}
+	return buttons
+}
 // Adjust viewport height for mobile devices
 function adjustViewportHeight() {
 	var notContainer =	document.getElementById("notification-container")	
 	notContainer.innerHTML = ""
 	for(let i= 0; i< notifications.length; i++){
-		notContainer.innerHTML += `<div class="notification-item"><h3>${notifications[i][0]}</h3>  ${notifications[i][1]} </div>`
+		notContainer.innerHTML += `<div class="notification-item"><h3>${notifications[i][0]}</h3>  ${notifications[i][1]}${buttonizer(notifications[i][2])} </div>`
 	}
 	const vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
