@@ -3,11 +3,12 @@
     padding: 0;
     box-sizing: border-box;
     text-align: center;
-    font-family: "Calibri", sans-serif;
+    font-family: "Menlo", sans-serif;
+    
 }
 
 body {
-    font-family: "Calibri", sans-serif;
+    font-family: "Menlo", sans-serif;
     line-height: 1.6;
     font-size:30px;
     color: #333;
