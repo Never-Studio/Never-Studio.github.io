@@ -43,9 +43,9 @@ body {
 
 .button {
 	display: block;
-	padding: 20px;
+	padding: 10px;
 	border: none;
-	border-radius: 30px;
+	border-radius: 50px;
 	font-size: 30px;
 	margin-right:auto;
 	margin-left: auto;
