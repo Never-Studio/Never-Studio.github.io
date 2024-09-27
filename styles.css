@@ -13,10 +13,12 @@ body {
     line-height: 1.6;
     color: #333;
     font-optical-sizing: auto;
-    font-siye: 20pt;
+    font-size: 20pt;
 }
 
-
+#our-work-section {
+	font-size: 15pt;
+}
 .full-height-section {
      flex-direction: column;
     justify-content: space-around;
