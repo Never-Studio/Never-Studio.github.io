@@ -27,7 +27,7 @@ body {
 }
 
 .sticky {
-	top: 0px;
+	bottom: 0px;
 	left: 0px;
 	right: 0px;
 	width: 100%;
@@ -42,7 +42,6 @@ body {
 	color: black;
 	background-color: white;
 }
-
 .white-button {
 	display: block;
 	padding: 13px;
