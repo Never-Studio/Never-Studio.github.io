@@ -43,21 +43,22 @@ body {
 
 .white-button {
 	display: block;
-	padding: 10px;
+	padding: 13px;
 	border: none;
 	font-size: 30px;
+	border-radius: 15px;
 	color: white;
 	background-color: black;
 	text-decoration: none;
 }
 .black-button {
 	display: block;
-	padding: 10px;
-	border: 2px solid white;
-	border-radius: 5px;
+	padding: 13px;
+	border: none;
 	font-size: 30px;
-	color: white;
-	background-color: black;
+	border-radius: 15px;
+	color: black;
+	background-color: white;
 	text-decoration: none;
 }
 
