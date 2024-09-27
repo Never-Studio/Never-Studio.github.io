@@ -109,7 +109,7 @@ body {
 
 .notification-item {
     padding: 25px;
-    font-size: 12px;
+    font-size: 12px !important;
    /* animation: scroll 10s linear infinite;*/
 }
 /*
@@ -129,7 +129,7 @@ body {
 	display: flex;
 	flex-direction: row;
 	margin: 10px;
-	font-size: 12px;
+	font-size: 12px !important;
 }
 
 .work-item br{
