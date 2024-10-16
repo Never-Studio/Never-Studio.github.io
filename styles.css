@@ -5,6 +5,7 @@
 	text-align: center;
 	font-family: Arial, sans-serif;
 	font-size: 20pt;
+	font-weight: bold;
 }
 
 h1 {
@@ -198,55 +199,25 @@ body {
     opacity: 0;
 }
 a {
-	text-decoration: underline
+	text-decoration: none;
+}
+
+.white-section  p {
+  color: black;
 }
  /* unvisited link */
-.white-section  a:link {
+.white-section  a {
   color: black;
-}
-
-/* visited link */
-.white-section a:visited {
-	color: black;
-	font-weight: bold;
-	text-decoration:none;
-}
-
-/* mouse over link */
-.white-section a:hover {
-  color:black;
+  cursor: pointer;
   text-decoration: underline;
 }
 
-/* selected link */
-.white-section a:active {
-  color: black;
-  text-decoration: underline;
-} 
-
-.black-section a:link {
-  color: white;
-  text-decoration:none;
-}
-
-/* visited link */
-.black-section a:visited {
-	color: white;
-	font-weight: bold;
-	text-decoration:none;
-}
-
-/* mouse over link */
-.black-section a:hover {
-  color:white;
-  text-decoration: underline;
-}
-
-/* selected link */
-.black-section a:active {
+.black-section a {
   color: white;
   text-decoration: underline;
-} 
+  cursor: pointer;
+}
+
 
 @keyframes fadeInText {
     from {
