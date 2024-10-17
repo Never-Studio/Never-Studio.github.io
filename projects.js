@@ -24,16 +24,14 @@ const observer = new IntersectionObserver((entries) => {
 
 sections.forEach(section => observer.observe(section));
 
-var projects = [["Never Isometric Engine","It is currently under development...","bild-icon.png"],
-		["Never RPG 1","Also currently under development ...","bild-icon.png"]
-		]
+
 
 function buttonizer(dict){
 	let buttons = ""
 	if(dict != undefined){
 		buttons += '<br><p style= "white-space: nowrap;">'
 		for(i of Object.keys(dict)){
-		buttons += ' <a href="'+dict[i]+'"><button class = "white-button" style="display: inline !important;">'+i+'</button></a>'
+		buttons += ' <a href="'+dict[i]+'"><button class = "white-button" style="display: inline !important; margin: 15px;">'+i+'</button></a>'
 		}
 		buttons += "</p>"
 	}

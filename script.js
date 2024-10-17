@@ -23,14 +23,17 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.5 }); // Changed from 0.1 to 0.5
 
 sections.forEach(section => observer.observe(section));
-var projects = [["Never Isometric Engine","It is currently under development...","bild-icon.png"],
-		["Never RPG 1","Also currently under development ...","bild-icon.png"]
-			]
-var notifications = [["Planned: Never World","An infinite ai generated world."],
-		     ["Working on: Never RPG","A pixel rpg with currently limited access."],
-		     ["Working on: Never Isometric Engine","The engine behind Never RPG. <br> It will be public and free to use. <br> Coming soon!"]
-		   ]
-					
+function buttonizer(dict,color="white"){
+	let buttons = ""
+	if(dict != undefined){
+		buttons += '<br><p style= "white-space: nowrap;">'
+		for(i of Object.keys(dict)){
+		buttons += ' <a href="'+dict[i]+'"><button class = "'+color+'-button" style="display: inline !important; margin: 15px;">'+i+'</button></a>'
+		}
+		buttons += "</p>"
+	}
+	return buttons
+}			
 
 function breaks(text){
 	if(text.match(/<br>/g) != null){
@@ -55,7 +58,7 @@ function adjustContainers(){
 		let i = 0;
 		while(window.innerHeight-500>cost){
 			if(i<notifications.length){
-				notContainer.innerHTML += `<div class="notification-item"><h3>${notifications[i][0]}</h3>  ${notifications[i][1]} </div>`
+				notContainer.innerHTML += `<div class="notification-item"><h3>${notifications[i][0]}</h3>  ${notifications[i][1]}${buttonizer(notifications[i][2],"black")} </div>`
 				cost += 300*(breaks(notifications[i][0])+2+breaks(notifications[i][1]))
 			}else{break;}
 			i++;
@@ -64,7 +67,7 @@ function adjustContainers(){
 		var projDiv = document.getElementById("work-grid")
 		projDiv.innerHTML = ""
 		for(let i=0; i< Math.min((window.innerHeight-500)/500,projects.length); i++){
-			projDiv.innerHTML += `<div class="work-item"><div><h3> ${projects[i][0]} </h3> ${projects[i][1]} </div><img src="${projects[i][2]}" alt="Project 1"></div>`;
+			projDiv.innerHTML += `<div class="work-item"><div><h3> ${projects[i][0]} </h3> ${projects[i][1]}${buttonizer(projects[i][3])} </div><img src="${projects[i][2]}" alt="Project 1"></div>`;;
 		}
 		
 	}else{
@@ -74,7 +77,7 @@ function adjustContainers(){
 		let i = 0;
 		while(window.innerHeight-350>cost){
 			if(i<notifications.length){
-				notContainer.innerHTML += `<div class="notification-item"><h3>${notifications[i][0]}</h3>  ${notifications[i][1]} </div>`
+				notContainer.innerHTML += `<div class="notification-item"><h3>${notifications[i][0]}</h3>  ${notifications[i][1]}${buttonizer(notifications[i][2],"black")} </div>`
 				cost += 100*(breaks(notifications[i][0])+2+breaks(notifications[i][1]))
 			}else{break;}
 			i++;
@@ -83,7 +86,7 @@ function adjustContainers(){
 		var projDiv = document.getElementById("work-grid")
 		projDiv.innerHTML = ""
 		for(let i=0; i< Math.min((window.innerHeight-400)/210,projects.length); i++){
-			projDiv.innerHTML += `<div class="work-item"><div><h3> ${projects[i][0]} </h3> ${projects[i][1]} </div><img src="${projects[i][2]}" alt="Project 1"></div>`;
+			projDiv.innerHTML += `<div class="work-item"><div><h3> ${projects[i][0]} </h3> ${projects[i][1]}${buttonizer(projects[i][3])} </div><img src="${projects[i][2]}" alt="Project 1"></div>`;;
 		}
 	}
 }

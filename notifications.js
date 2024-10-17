@@ -24,17 +24,12 @@ const observer = new IntersectionObserver((entries) => {
 
 sections.forEach(section => observer.observe(section));
 
-var notifications = [["Planned: Never World","An infinite ai generated world."],
-		     ["Working on: Never RPG","A pixel rpg with currently limited access."],
-		     ["Working on: Never Isometric Engine","The engine behind Never RPG. <br> It will be public and free to use. <br> Coming soon!"]
-		   ]
-
 function buttonizer(dict){
 	let buttons = ""
 	if(dict != undefined){
 		buttons += '<br><p style= "white-space: nowrap;">'
 		for(i of Object.keys(dict)){
-		buttons += ' <a href="'+dict[i]+'"><button class = "black-button" style="display: inline !important;">'+i+'</button></a>'
+		buttons += ' <a href="'+dict[i]+'"><button class = "black-button" style="display: inline !important; margin: 15px;">'+i+'</button></a>'
 		}
 		buttons += "</p>"
 	}
