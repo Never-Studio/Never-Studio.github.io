@@ -268,11 +268,11 @@ a {
 	background-color: white;
 	color:black;
 	overflow: hidden;
-	align-items: start !important;
 }
 .panel > p{
 	background-color: #000 !important;
 	color:#fff !important;
 	text-align: left !important;
+	align-items: start !important;
 }
 
