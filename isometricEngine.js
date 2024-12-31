@@ -10,12 +10,12 @@ var normHeight = undefined;
 window.addEventListener("resize",resizeCanvas);
 
 function resizeCanvas(){
-	if(normWidth){
+	if(normWidth!= undefined&&normHeight!=undefined){
+		console.error("Set either nWidth or nHeight in setCanvas. Not both.\nHere are the specific docs: http://www.neverstudio.de/neverisometric.html#:~:text=There%20are%20nWidth")
+	}else if(normWidth){
 		canvas.height = normWidth * canvas.clientHeight/canvas.clientWidth
 		canvas.width = normWidth;
-	}
-	
-	if(normHeight){
+	}else if(normHeight){
 		canvas.width = normHeight * canvas.clientWidth/canvas.clientHeight;
 		canvas.height = normHeight;
 	}
@@ -278,14 +278,12 @@ It can be used to visualize different ratio values.*/
 	
 	moveForward(amount,draw=true){
 		let radAngles = toRad([this.aTurn,this.bTurn])
-		console.log(radAngles)
 		let newCoor = []
 		newCoor[0] = amount*Math.sin(radAngles[1])
 		newCoor[1] = amount*Math.cos(radAngles[1])
 		newCoor = toIso(newCoor[0],newCoor[1])
 		newCoor[0] -= toIso(0,0)[0]
 		newCoor[1] -= toIso(0,0)[1]
-		console.log(newCoor)
 		this.x += newCoor[0]
 		this.y += newCoor[1]
 		this.update()
@@ -317,9 +315,7 @@ It can be used to visualize different ratio values.*/
 		for(let i of Object.keys(this_)){
 			if(this_.protectedProps.includes(i)){
 				if(step.hasOwnProperty(i)){
-					console.log('Accesing "'+i+'" in an animation is not recommended:')
-					console.log('- Use "move":[xChange,yChange,zChange] if you want to move the object with collision.')
-					console.log('- Remove it from the IsoObjects protectedProps list to use it')
+					console.warn('Accesing "'+i+'" in an animation is not recommended: \n - Remove it from the IsoObjects protectedProps list to use it \n - Use "move":[xChange,yChange,zChange] if you want to move the object with collision. ')
 				}
 			}else{
 				if(step.hasOwnProperty("add_"+String(i))){
@@ -529,7 +525,7 @@ It can be used to visualize different ratio values.*/
 			}
 			return collided
 		}else{
-			console.log("World is undefined! This does not have to be a problem but it might be.")
+			console.warn("World is undefined! This does not have to be a problem but it might be.")
 			return undefined
 		}
 	}
@@ -575,8 +571,6 @@ class World{
 		for(let i of object.img){
 			this.images[i] = new Image();
 			this.images[i].src = i
-			this.images[i].obj = object
-			
 			this.images[i].addEventListener("load",
 				function() {
 					func(this.src)
@@ -585,6 +579,16 @@ class World{
 			);
 		}
 		
+	}
+	
+	loadImage(img,func = (obj)=>{console.log(obj,"loaded");}){
+			this.images[img] = new Image();
+			this.images[img].src = img
+			this.images[img].addEventListener("load",
+				function() {
+					func(this.src)
+				}
+			);
 	}
 	
 	remove(delObjekt){
