@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>NeverStudio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+	
+	<style>
+	* {
+		opacity: 1 !important;
+	}
+	#documentation {
+		display: block !important;
+		opacity: 1 !important;
+		font-size: 16px;
+		text-align: left !important;
+		line-height: 1.6;
+	}
+	#documentation h4 {
+		opacity: 1 !important;
+		font-size: 18px;
+		text-align: left !important;
+		font-weight: light !important;
+		
+	}
+	#documentation h3 {
+		opacity: 1 !important;
+		text-align: left !important;
+		font-size: 20px;
+		font-weight: light !important;
+	}
+	#documentation code {
+		background: lightgrey;
+		border-radius: 5px;
+		opacity: 1 !important;
+		text-align: left !important;
+		font-size: 16px;
+		font-weight: normal;
+		font-family: monospace !important;
+	}
+	#documentation a {
+		opacity: 1 !important;
+		text-align: left !important;
+		font-size: 16px;
+	}
+	a {
+		opacity: 1 !important;
+		display: inline-block !important;
+	}
+	</style>
+	
+</head>
+<body>
+    <section id="description-section" class="full-height-section white-section">
+        <p>
+			This is the Never Isometric Engine.<br>
+			It is an engine for isometric games.<br>
+			Feel free to visit the <a href="https://github.com/Never-Studio">GitHub Page</a> and to try out <a href="isometricdemo.html">the project demo</a>.<br>
+			You can also jump directly to <a href="#documentation">the documentation</a>.
+        </p>
+    </section>
+    
+	<a top= "20px" href="https://www.neverstudio.de" id="mainmenu" ><button class = "sticky" >Back to the main page &rarr; </button></a>
+	<script src="back.js"></script>
+	
+	
+	
+    <section id="documentation" class="full-height-section white-section" style="height: fit-content; min-height: 100vh; padding: 20px; color: black; align-items: start !important; text-align: left;">
+		<p>
+		<h3>Import</h3><br>
+		To import the engine simply use the cdn link below:
+		<pre><code>&lt;script src= "https://www.neverstudio.de/isometricEngine.js"&gt;&lt;/script&gt;</code></pre>
+		
+		<br>If you intend to use the drawing functions pass your canvas Id first:
+		<br><code>setCanvas("YourCanvasId")</code>
+		<br>
+		
+		<br><h3>Basic Scenes</h3>
+		The NeverIsometricEngine mainly consists of two classes and a collection of functions:<br>
+		&#x2022; The <code>World</code> object contains all physical objects.<br>
+		It also manages the global physics and that everything is displayed.<br>
+		<br>
+		&#x2022; The <code>IsoObject</code> class can be used for creating physical objects.<br>
+		It also defines the individuals objects physical behaviour, e.g. bounding boxes and the corresponding image.
+		<br>
+		<br>
+		
+		<br><h3>The aspect ratio and the drawing functions</h3>
+		Before reading the list notice that there are two types of coordinates the NeverIsometricEngine works with:
+	<br>&#x2022; isometric coordinates: coordinates on the underlying isometric grid
+	<br>&#x2022; canvas coordinates: normal coordinates on the canvas
+		<br>
+		<br>
+		&#x2022;<code>setCanvas(id,pixelized=false,full=false)</code>
+		<br>Sets the default canvas.
+		<br>Set <code>pixelized=true</code> to enable position rounding in the draw function and a pixelated canvas.
+		<br>Set <code>full=true</code> to make the canvas fullscreen.
+		The standard drawing functions provided by the NeverIsometricEngine:<br><br>
+		&#x2022; <code>setRatio(newRatio)</code> <br> This function sets the aspect ratio of the underlying isometric grid. 
+		<br>The <code>newRatio</code> parameter is expected to be of type float.<br>
+		<br>
+		&#x2022; <code>toScreen(isoX,isoY,isoZ=0)</code><br>
+		A function that converts isometric coordinates to canvas coordinates.<br>
+		Note that this might not align with the positions of the IsoObjects if the World object is centered on a specific object using <code>World.center</code><br>
+		<br>
+		&#x2022; <code>toIso(isoX,isoY,isoZ=0)</code> <br>
+		A function that converts canvas coordinates to coordinates on isometric coordinates.<br>
+		Note that this might not align with the  positions of the IsoObjects if the World object is centered on a specific object using <code>World.center</code>.<br>
+		<br>
+		&#x2022; <code>grid(minimum = -1000,maximum = 1000, steps=10)</code> <br>
+		A function that displays the underlying isometric grid. <br>
+		The <code>minimum</code> and the <code>maximum</code> parameters correspond to the minimum and maximum x and y values used in the grid. <br>
+		The <code>steps</code> parameter changes the size of each square in the grid.<br>
+		<br>
+		&#x2022; <code>isoLine(x1,y1,x2,y2,z1=0,z2=0,color="black",width = 5)</code> <br>
+		This function draws an isometric line on the canvas. <br>
+		The <code>x1,y1,z1</code> and the <code>x2,y2,z2</code> parameters correspond to the positions of the start and end point. <br>
+		The y values are the heights. If no value value is given it is assumed that they are of the value 0.
+		The <code>color</code> parameter changes the color of the line.<br>
+		The <code>width</code> parameter changes the linewidth.<br>
+		The coordinates are expected to be isometric.<br>
+		<br>
+		&#x2022; <code>drawImage(image,width,height,x,y,z=0)</code> <br>
+		Draws an image at the given coordinates on a screen.<br>
+		The <code>image</code> parameter is expected to be a javascript image element.<br>
+		The coordinates are expected to be isometric.<br>
+		Please note that the coordinates are rounded before drawing if <code>pixelized=true</code> was passed to <code>setCanvas</code>.<br>
+		
+		
+		<br><br><h4>The World Object</h4>
+		The world object is the central object of the NeverIsometricEngine, because it manages all other elements.<br>
+		<br>
+		Properties passed during construction:<br>
+		&#x2022; <code>canvas</code>: Id of the Canvas Object all IsoObjects in the World Object are drawn on.<br>
+		&#x2022; <code>keyObject</code>: You can pass an Object here to make it possible to move it using the Arrow-Keys or WASD.<br>
+		<br>
+		Displaying properties:<br>
+		&#x2022; <code>displayBox</code>: Whether the boundinhg boxes of the IsoObjects are displayed by default.<br>
+		&#x2022; <code>displayShadow</code>: Whether the shadow bounding boxes of the IsoObjects are displayed by default.<br>
+		&#x2022; <code>displayImage</code>: Whether the image of the IsoObjects are displayed by default.<br>
+		These properties are added to the IsoObjects when they are added with the <code>World.add()</code> method.<br>
+		<br>
+		Other properties:<br>
+		&#x2022; <code>images</code>: A JSON containing all images of the IsoObjects as image objects with the image paths as keys.<br>
+		&#x2022; <code>mousePos</code>: The position of the mouse as an isometric coordinate.<br>
+		<br>
+		<br>Methods of the World object: <br>
+		&#x2022; <code>add(object,func= yourFunction)</code><br>
+		This method can be used to add IsoObjects to the World object.<br>
+		The first argument is the object you want to add.<br>
+		The second optional parameter is a function that will be executed for each successfully loaded image Object associated with the added IsoObject.<br>
+		It will log "loaded" together with the image path by default.<br>
+		<br>
+		&#x2022; <code>remove(object)</code>
+		<br>This method removes objects already added to World.<br><br>
+		&#x2022; <code>setKeyObject(object)</code><br>
+		This method can be used to move an IsoObject already added to World with the Arrow keys or with WASD.<br>
+		The only argument is the object you want to add.<br>
+		There is a special mode for this function that can be enabled by setting <code>World.smartMovement</code> to true.<br>
+		In this mode the moved object doesn't stop moving when colliding with a barrier but instead moves along the side of it.<br>
+		<br>
+		&#x2022; <code>move(object,xchange,ychange,zchange=0)</code><br>
+		This method can be used to move an IsoObject already added to World.<br>
+		The first argument is the object you want to move.<br>
+		The other arguments are the desired x,y and z changes.<br>
+		Note that this function cuts each steps into smaller steps and checks whether the object collides for each smaller step.<br>
+		The number of smaller steps can be manipulated by changing <code>World.detail</code>.<br>
+		For example 0.1 corresponds to 10 smaller steps.<br>
+		<br>
+		&#x2022; <code>center(object)</code><br>
+		This method centers the canvas on a specific object.<br>
+		<br>
+		&#x2022; <code>draw(clear=true)</code><br>
+		Draws all IsoObjects that have been added onto the canvas.<br>
+		If <code>clear</code> is set to false the canvas is not cleared before drawing.<br>
+		WARNING: Everything that was drawn and that is not an IsoObject is deleted, if <code>clear</code> is set to true.<br>
+		<br>
+		
+		
+		<br><br><h3>Iso Objects</h3><br>
+		Every Object that is supposed to be displayed by the world class has to be an IsoObject.
+		<br>
+		<code>constructor(x,y,z,bounding,images,width=undefined,height=undefined,collision=undefined,screen=false)</code>
+		<br>Properties passed upon construction:
+		<br>&#x2022; <code>x,y and z</code>: These properties are isometric coordinates and they determine the position of the object.
+		<br><br>&#x2022; <code>bounding</code>: This property is an Array that sets the IsoObjects' collsion box. The Array has the following format: <code>[[minimum_x,minimum_y,minimum_z],[maximum_x,maximum_y,maximum_z]]</code>
+		<br><br>&#x2022; <code>img</code>: A list containing the paths to all images the IsoObject is supposed to use for drawing.
+		<br>
+		<br>Optional:
+		<br>&#x2022; <code>width</code>: Width of the IsoObject (for drawing the image).
+		<br><br>&#x2022; <code>height</code>: Height of the IsoObject (for drawing the image).
+		<br><br>&#x2022; <code>collision</code>: A function that is executed when the IsoObject collides with another IsoObject.
+		<br><br>&#x2022; <code>screen</code>: You can also pass the x and y position as canvas coordinates. Then you have to set <code>screen</code> to true.
+		<br>
+		<br>Other properties:
+		<br>&#x2022; <code>aTurn and bTurn</code>: <code>0</code> by default. They represent how the IsObject is turned.
+		<br><br>&#x2022; <code>turnMap</code>: A JSON that maps image paths to specific ways the IsoObject is turned.
+		<br> Example: 
+		<br></btr><code>{
+		<br>&emsp;"front":{
+		<br>&emsp;&emsp;"angle":[0,0], // [aTurn,bTurn]
+		<br>&emsp;&emsp;"imgs":["img1.png","img2.png",...]
+		<br>&emsp;},
+		<br>&emsp;"behind":{
+		<br>&emsp;&emsp;"angle":[0,180], // [aTurn,bTurn]
+		<br>&emsp;&emsp;"imgs":["img5.png","img6.png",...]
+		<br>&emsp;}
+		<br>}</code>
+		<br><br>&#x2022; <code>displayBox, displayShadow, displayImage</code>: Same like with world. Changes the standard setting.
+		<br> Warning: If you want to modify these values do it after you added the IsoObject to world, because the <code>World.add()</code> method resets them to the World Objects defaults.
+		<br><br>&#x2022; <code>activeImage</code>: The url from the <code>img</code> list that is used for drawing.
+		<br><br>&#x2022; <code>animationIndex</code>: The index of the image that should be drawn in the "img" list of the current direction in turnMap.
+		<br> E.g. with the above example <code>turnMap</code>, <code>aTurn</code>=0 and <code>bTurn</code>=0: <code>animationIndex = 0</code> corresponds to "img1.png" as  activeImage
+		<br><br>&#x2022; <code>imgChange</code> (in canvas coordinates): <code>[0,0]</code> by default. Changes the image position relative to the coordinate.
+		<br> Since <code>imgChange</code> is overwritten by <code>offsetMap</code> in the <code>update()</code> method you should set the default value of <code>offsetMap</code> instead.
+		<br><br>&#x2022; <code>offsetMap</code> (in canvas coordinates): <code>{"default":[0,0]}</code> by default. JSON that maps image paths to corresponding offsets during drawing (like <code>imgChange</code>).
+		<br> Example: 
+		<br></btr><code>{
+		<br>&emsp;"default":[0,0],// value that is used if the path of activeImage isn't a key of offsetMap
+		<br>&emsp;"img1.png":[1,5],// offset that is used when drawing img1.png
+		<br>&emsp;"img2.png":[1,5]// offset that is used when drawing img2.png
+		<br>}</code>
+		
+		<br><br>&#x2022; <code>hasCollision</code>: Whether the IsoObject collides with other IsoObjects.
+		
+		<br>
+		<br>Methods:
+		<br>&#x2022; <code>update()</code>: This function updates some internal values for collision and drawing.
+		<br>It also updates the <code>activeImage</code> depending on how the IsoObject is turned.
+		<br><br>&#x2022; <code>move(xchange,ychange,zchange=0,draw=true)</code>: Moves the object. Collision is included. The canvas is only updated if draw is true.
+		<br>The function returns true if the object didn't collide and false otherwise.
+		<br><br>&#x2022; <code>moveForward(amount,draw=true)</code>: Moves the IsoObject forward based on how it is turned (currently only along the vertical plane). The canvas is only updated if draw is true.
+		<br>The function returns true if the object didn't collide and false otherwise.
+		<br><br>&#x2022; <code>moveTo(newx,newy,newz=0,draw=true)</code>: Moves the IsoObject to a specific position. The canvas is only updated if draw is true.
+		<br>The function returns true if the object didn't collide and false otherwise.
+		<br><br>&#x2022; <code>turn(aTurn,bTurn,draw=true)</code>: Turns the object by the given angles. The canvas is only updated if draw is true. Collision is included.
+		<br><br>&#x2022; <code>turnTo(aTurn,bTurn,draw=true)</code>: Turns the object to the given angles. The canvas is only updated if draw is true.
+		<br><br>&#x2022; <code>draw(image,offset=[0,0,0])</code>: Used by the World Object to draw the IsoObject.
+		<br><br>&#x2022; <code>animate(animation,min,max,steps=500)</code>: This method animates an object based on a JSON.
+		<br><code>min</code> and <code>max</code> are the start and end times of the animation in milliseconds. <code>steps</code> is the size of individual timesteps (only necessary if "all" is set in <code>animation</code>).
+		<br><code>animation</code> is a json that determines how the animation works. Here is an example:
+		<br></btr><code>{
+		<br>&emsp;"all":{ // if the key is all the animation will be executed every steps milliseconds from min to max
+		<br>&emsp;&emsp;"move":[10,10,0], //move can be used for moving the object with collision. This example moves the object by 10 in x- and y-direction and 0 in z-direction. 
+		<br>&emsp;&emsp;"displayBox":true //you can also directly set most properties of IsoObject. The example is equivalent to displayBox = true.
+		<br>&emsp;}
+		<br>&emsp;"10": { // executed when 10 percent of the time between min and max have passed
+		<br>&emsp;&emsp;"moveForward":10, //moveForward can be used for moving the object with the moveForward method
+		<br>&emsp;&emsp;"add_animationIndex:1" //you can also add values to properties by writing "add_" at the beginning of their names. Lists will be added element by element. 
+		<br>&emsp;&emsp;"mult_animationIndex:2" //same as "add_" but with multiplication.
+		<br>&emsp;&emsp;"func_animationIndex:customFunc" //This is equivalent to animationIndex = customFunc(animationIndex)
+		<br>&emsp;}
+		<br>&emsp;
+		<br>}</code>
+		<br>Note that <code>image</code> is not a path or url but an image object instead.
+		<br>The array <code>offset</code> defines the x,y and z offset and is used by the World Object to center objects.
+		<br><br>&#x2022; <code>collide(other)</code>: Returns <code>true</code> if the IsoObject and the other IsoObject <code>other</code> collide. Otherwise it returns <code>false</code>.
+		<br><br>&#x2022; <code>layering(other)</code>: Used by the World Objects draw method. It determines whether the IsoObject is in front(<code>1</code>) or behind(<code>1</code>) the IsoObject <code>other</code>
+		<br><br>&#x2022; <code>colliding(world=this.world)</code>: Returns a list containing all IsoObjects of <code>world</code> that collide with the IsoObject. If there are none it returns <code>undefined</code>
+		<br><code>world</code> is by default the world object the IsoObject is part of.
+		<br>
+		<br>
+		<h3>Examples</h3>
+		<br>&#x2022; A simple scene with a movable centered object:
+		<br><br>
+		<pre style="background:lightgrey; text-align: left !important; align-items: start!important; padding: 10px !important; border-radius:10px !important;">
+<code>&lt;html&gt;
+&lt;canvas id="canvas" width="1000px" height="1000px"&gt;&lt;/canvas&gt;
+&lt;script src="https://www.neverstudio.de/isometricEngine.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+setRatio(1/4)
+setCanvas("canvas")
+var every = new World("canvas")
+var centered = new IsoObject(100,100,0,[[-10,-10,0],[10,10,100]],["/image/of/centered/object.png"])
+var other1 = new IsoObject(0,0,0,[[-10,-10,0],[10,10,100]],["image/of/other/object1.png"])
+var other2 = new IsoObject(50,100,0,[[-10,-10,0],[10,10,100]],["image/of/other/object2.png"])
+every.add(centered)
+every.add(other1)
+every.add(other2)
+every.center(centered)
+every.setKeyObject(centered)
+&lt;/script&gt;
+&lt;/html&gt;</code></pre>
+		
+<br>&#x2022; A simple game using the collision property of the IsoObject and other functionalities:
+		<br><br>
+		<pre style="background:lightgrey; text-align: left !important; align-items: start!important; padding: 10px !important; border-radius:10px !important;">
+<code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Isometric Game with Gameplay&lt;/title&gt;
+    &lt;style&gt;
+        #score {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id="score"&gt;Score: 0&lt;/div&gt;
+    &lt;canvas id="gameCanvas" width="800" height="600"&gt;&lt;/canvas&gt;
+
+    &lt;script src="isometricEngine.js"&gt;&lt;/script&gt;
+    &lt;script&gt;
+        // Set the canvas ID and isometric ratio
+        setCanvas("gameCanvas");
+        setRatio(1 / 2);
+
+        // Initialize variables
+        var score = 0;
+        var playerSpeed = 5;
+
+        // Function to update the score
+        function updateScore(newScore) {
+            score = newScore;
+            document.getElementById('score').innerText = 'Score: ' + score;
+        }
+
+        // Create the game world
+        var gameWorld = new World("gameCanvas");
+
+        // Create the player object
+        var player = new IsoObject(100, 100, 0, [[-10, -10, 0], [10, 10, 50]], ["fig1.png"]);
+		
+		//create the collision function for the gems
+		function gemCollision(gem,other){
+			updateScore(score+1)//add points for finding the gem
+			gem.moveTo(random(-200,200),random(-200,200))
+		}
+		
+        // Create collectible items (e.g., gems)
+        var gem1 = new IsoObject(200, 100, 0, [[-10, -10, 0], [10, 10, 70]], ["fig2.png"]);
+        var gem2 = new IsoObject(300, 250, 0, [[-10, -10, 0], [10, 10, 70]], ["fig3.png"]);
+        
+        //Add collision function to gems
+		gem1.collision = gemCollision
+		gem2.collision = gemCollision
+		
+		
+        // Create enemies that move back and forth
+        var enemy1 = new IsoObject(400, 150, 0, [[-10, -10, 0], [10, 10, 70]], ["fig4.png"]);
+        var enemy2 = new IsoObject(150, 300, 0, [[-10, -10, 0], [10, 10, 70]], ["fig4.png"]);
+        
+        //add collision function to enemies:
+        //the game restarts when they collide with something
+		enemy1.collision = resetGame
+		enemy2.collision = resetGame
+		
+		
+        // Add objects to the game world
+        gameWorld.add(player);
+        gameWorld.add(gem1);
+        gameWorld.add(gem2);
+        gameWorld.add(enemy1);
+        gameWorld.add(enemy2);
+
+        // Center the camera on the player and allow movement with the arrow keys
+        gameWorld.center(player);
+        gameWorld.setKeyObject(player);
+
+        // Function to reset the game (called when player hits an enemy)
+        function resetGame() {
+			alert("restart")
+            updateScore(0); // Reset score
+            player.moveTo(100, 100, 0); // Move player back to the start
+        }
+
+        // Move the enemies back and forth
+        function moveEnemies() {
+            var direction = 1;
+            setInterval(function() {
+                // Make enemies move randomly
+                gameWorld.move(enemy1, random(-20,20), random(-20,20), 0);
+                gameWorld.move(enemy2, random(-20,20), random(-20,20), 0);
+            }, 100);
+        }
+        
+        
+        // Game loop to continuously draw the scene and check for collisions
+        function gameLoop() {
+			//draw the world
+            gameWorld.draw(true);
+            
+            requestAnimationFrame(gameLoop);
+        }
+
+        // Start the enemy movement and game loop
+        moveEnemies();
+        gameLoop();
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+
+<br> If you have any questions, you want to report any bugs or if you want to suggest changes to the engine don't hesitate to <a style="color: black;" href="http://www.neverstudio.de/contact.html#contact">contact us</a>.
+</p>
+	 </section>
+	 
+<section id="contact-section" class="full-height-section black-section visible">
+        <h2>Contact Us</h2>
+        <p>Email: info@neverstudio.com</p>
+        <a href="contact.html"><button class="black-button">More information.</button></a>
+    </section>
+</body>
+
+</html>
