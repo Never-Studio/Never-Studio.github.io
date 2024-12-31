@@ -151,11 +151,13 @@
 		The <code>width</code> parameter changes the linewidth.<br>
 		The coordinates are expected to be isometric.<br>
 		<br>
-		&#x2022; <code>drawImage(image,width,height,x,y,z=0)</code> <br>
+		&#x2022; <code>drawImage(image,width,height,x,y,z=0,canvas = canvas, offset = [0,0])</code> <br>
 		Draws an image at the given coordinates on a screen.<br>
 		The <code>image</code> parameter is expected to be a javascript image element.<br>
 		The coordinates are expected to be isometric.<br>
 		Please note that the coordinates are rounded before drawing if <code>pixelized=true</code> was passed to <code>setCanvas</code>.<br>
+	    	The <code>canvas</code> parameter is the canvas to draw on.<br>
+	    	The <code>offset</code> parameter is the x and y offset of the image in canvas coordinates.<br>
 		
 		
 		<br><br><h4>The World Object</h4>
