@@ -272,5 +272,6 @@ a {
 .panel > p{
 	background-color: #000 !important;
 	color:#fff !important;
+	text-align: left !important;
 }
 
