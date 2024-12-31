@@ -114,12 +114,15 @@
 		<br>Sets the default canvas.
 		<br>Set <code>pixelized=true</code> to enable position rounding in the draw function and a pixelated canvas.
 		<br>Set <code>full=true</code> to make the canvas fullscreen.
-	    	<br>There are <code>nWidth</code> and <code>nHeight</code>. You can only set one of them. If you set nHeight to a specific value this will always be the local height of the canvas in Pixels.
+	    	<br>There are <code>nWidth</code> and <code>nHeight</code>. You can only set one of them.
+	    	<br>If you set nHeight to a specific value this will always be the local height of the canvas in Pixels.
 	    	<br> So if the user resizes his screen to double the Height the canvas is stretched twice the amount of the original height. Resizing the screen horizontally will have no effect on the Canvas.
 	    	<br> The same applies the other way around:
 	    	<br> If you set nWidth, only horizontally resizing the screen will have an effect on the canvas and the local width of the Canvas will always stay the same.
 		<h4>TL;DR:</h4>
-	    	If your content relies on the screens width e.g. a platformer you should set nWidth. If your content relies on the screen height you should set nHeight.
+	    	Set either nWidth or nHeight:
+	    	<br>- If your content relies on the screens width e.g. a platformer you should set nWidth.
+	    	<br>- If your content relies on the screen height you should set nHeight.
 	    	
 
 		<br>
