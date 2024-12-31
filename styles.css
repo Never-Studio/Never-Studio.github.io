@@ -197,7 +197,7 @@ body {
 }
 .full-height-section > *:not(#scroll-down-arrow) {
     opacity: 0;
-    overflow: scroll;
+    overflow: auto;
 }
 a {
 	text-decoration: none;
