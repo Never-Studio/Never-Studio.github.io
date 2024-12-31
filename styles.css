@@ -197,6 +197,7 @@ body {
 }
 .full-height-section > *:not(#scroll-down-arrow) {
     opacity: 0;
+    overflow: scroll;
 }
 a {
 	text-decoration: none;
@@ -251,6 +252,8 @@ a {
 	text-align: left;
 	outline: none;
 	transition: 0.4s;
+	border: none;
+	border-radius: 10pt;
 }
 
 .active, .accordion:hover {
@@ -268,7 +271,7 @@ a {
 	overflow: hidden;
 }
 .panel > p{
-	background-color: #fff !important;
-	color:#000 !important;
+	background-color: #000 !important;
+	color:#fff !important;
 }
 
