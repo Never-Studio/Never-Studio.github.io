@@ -71,13 +71,73 @@
 	<br>
          <a href="projects.html"><button class = "white-button" >All projects</button></a>
     </section>
-
+    <section id="faq-section" class="full-height-section black-section">
+		
+		<h2>Frequently Asked Questions (FAQ)</h2>
+		
+		<button class="accordion">What is NeverStudio?</button>
+		<div class="panel">
+		  <p>NeverStudio is a creative studio specializing in AI applications, games, and tools designed to inspire and engage users.</p>
+		</div>
+		
+		<button class="accordion">What types of projects does NeverStudio work on?</button>
+		<div class="panel">
+			<p>
+				NeverStudio focuses on developing innovative AI-powered applications, immersive games, and practical tools for creators and users alike.
+				<br>We are currently developing an isometric game engine for building retro-styled games.
+				<br>This engine allows creators to design intricate environments and unique gameplay mechanics.
+				<br> Alongside this, we are working on AI-driven projects and a new game built entirely with our custom engine.
+			</p>
+		</div>
+		
+		<button class="accordion">Where can I find NeverStudio's projects?</button>
+		<div class="panel">
+		  <p>You can explore NeverStudio's projects on our official website on our <a href="https://www.neverstudio.de/projects.html"> projects page </a> .</p>
+		</div>
+		
+		<button class="accordion">How can I contact NeverStudio?</button>
+		<div class="panel">
+		  <p>You can reach out to NeverStudio through their official email address info@neverstudio.de.</p>
+		</div>
+		
+		<button class="accordion">Is NeverStudio active on social media?</button>
+		<div class="panel">
+		  <p>Yes, NeverStudio maintains an active presence on social media platforms. Links to some of our profiles can be found on <a href="https://www.neverstudio.de/#description-section" > our main page</a>.</p>
+		</div>
+		
+		<button class="accordion">Is NeverStudio currently accepting new project ideas or collaborations?</button>
+		<div class="panel">
+		  <p>For inquiries about new projects or collaborations, please contact us directly at info@neverstudio.de.</p>
+		</div>
+		
+		<button class="accordion">Where can I find more information about NeverStudio's terms of use and privacy policy?</button>
+		<div class="panel">
+		  <p>Details about our terms of use and privacy policies are available on our <a href="https://www.neverstudio.de/contact.html" > contact and privacy page </a>.</p>
+		</div>
+    </section>
     <!-- Contact Section -->
-    <section id="contact-section" class="full-height-section black-section">
+    <section id="contact-section" class="full-height-section white-section">
         <h2>Contact Us</h2>
         <p>Email: info@neverstudio.de</p>
         <a href="contact.html"><button class = "black-button" >Contact and Privacy Information</button></a>
     </section>
+    
+    <script>
+		var acc = document.getElementsByClassName("accordion");
+		var i;
+
+		for (i = 0; i < acc.length; i++) {
+		  acc[i].addEventListener("click", function() {
+			this.classList.toggle("active");
+			var panel = this.nextElementSibling;
+			if (panel.style.display === "block") {
+			  panel.style.display = "none";
+			} else {
+			  panel.style.display = "block";
+			}
+		  });
+		}
+	</script>
     <script src="projects-list.js"></script>
 	<script src="notifications-list.js"></script>
     <script src="script.js"></script>
