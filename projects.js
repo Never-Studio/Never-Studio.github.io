@@ -26,7 +26,7 @@ sections.forEach(section => observer.observe(section));
 
 
 
-function buttonizer(dict){
+/*function buttonizer(dict){
 	let buttons = ""
 	if(dict != undefined){
 		buttons += '<br><p style= "white-space: nowrap;">'
@@ -36,13 +36,14 @@ function buttonizer(dict){
 		buttons += "</p>"
 	}
 	return buttons
-}
-// Adjust viewport height for mobile devices
+}*/
+// Adjust viewport height for mobile devices and load projects
 function adjustViewportHeight() {
     var projDiv = document.getElementById("work-grid")
     projDiv.innerHTML = ""
 	for(let i=0; i< projects.length; i++){
-		projDiv.innerHTML += `<div class="work-item"><div><h3> ${projects[i][0]} </h3> ${projects[i][1]}${buttonizer(projects[i][3])} </div><img src="${projects[i][2]}" alt="Project 1"></div>`;
+		//projDiv.innerHTML += `<div class="work-item"><div><h3> ${projects[i][0]} </h3> ${projects[i][1]}${buttonizer(projects[i][3])} </div><img src="${projects[i][2]}" alt="Project 1"></div>`;
+		projDiv.innerHTML += `<a href="${projects[i][3]} "><div class="work-item"><div><h3> ${projects[i][0]} </h3> </div><img src="${projects[i][2]}" alt="Project 1"></div></a>`;
 	}
 	
 	
