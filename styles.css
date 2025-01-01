@@ -253,6 +253,7 @@ a {
 	transition: 0.4s;
 	border: none;
 	border-radius: 10pt;
+	margin: 10px !important;
 	height: fit-content !important;
 }
 
@@ -278,3 +279,6 @@ a {
 	margin: 10px !important;
 }
 
+#faq-section {
+	height: fit-content !important;
+}
