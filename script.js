@@ -67,7 +67,7 @@ function adjustContainers(){
 		var projDiv = document.getElementById("work-grid")
 		projDiv.innerHTML = ""
 		for(let i=0; i< Math.min((window.innerHeight-500)/500,projects.length); i++){
-			projDiv.innerHTML += `<div class="work-item"><div><h3> ${projects[i][0]} </h3> ${projects[i][1]}${buttonizer(projects[i][3])} </div><img src="${projects[i][2]}" alt="Project 1"></div>`;;
+			projDiv.innerHTML += `<a href="${projects[i][3]}" style ="text-decoration: none !important;"><div class="work-item"><div><h3> ${projects[i][0]} </h3> </div><img src="${projects[i][2]}" alt="${projects[i][4]}"></div></a>`;
 		}
 		
 	}else{
@@ -86,7 +86,7 @@ function adjustContainers(){
 		var projDiv = document.getElementById("work-grid")
 		projDiv.innerHTML = ""
 		for(let i=0; i< Math.min((window.innerHeight-400)/210,projects.length); i++){
-			projDiv.innerHTML += `<a href="${projects[i][3]}" style ="text-decoration: none !important;"><div class="work-item"><div><h3> ${projects[i][0]} </h3> </div><img src="${projects[i][2]}" alt="Project 1"></div></a>`;;
+			projDiv.innerHTML += `<a href="${projects[i][3]}" style ="text-decoration: none !important;"><div class="work-item"><div><h3> ${projects[i][0]} </h3> </div><img src="${projects[i][2]}" alt="${projects[i][4]}"></div></a>`;
 		}
 	}
 }
