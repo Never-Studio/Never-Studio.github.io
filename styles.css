@@ -267,7 +267,6 @@ a {
 	display: none;
 	background-color: white;
 	color:black;
-	overflow: hidden;
 	align-self: start;
 }
 .panel > p{
