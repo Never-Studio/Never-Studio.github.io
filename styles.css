@@ -253,6 +253,7 @@ a {
 	transition: 0.4s;
 	border: none;
 	border-radius: 10pt;
+	height: fit-content !important;
 }
 
 .active, .accordion:hover {
@@ -268,11 +269,12 @@ a {
 	background-color: white;
 	color:black;
 	align-self: start;
+	height: fit-content !important;
 }
 .panel > p{
 	background-color: #000 !important;
 	color:#fff !important;
 	text-align: left !important;
-	margin: 10px;
+	margin: 10px !important;
 }
 
