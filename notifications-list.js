@@ -1,4 +1,4 @@
-var notifications = [["Working on: Never Isometric Engine","The beta is already available. <br> It will be public and free to use. <br> Coming soon!"],
-		     ["Planned: Never World","An infinite ai generated world."],
-		     ["Working on: Never RPG","A pixel rpg with currently limited access."]
+var notifications = [["Working on: Never Isometric Engine","An isometric engine for Retro games. <br> It will be public and free to use. <br> Coming soon!"],
+		     ["Concept Plans: AI OS","An app that makes your OS accessible via AI"],
+		     ["Working on: Never RPG","An isometric pixel rpg that will be based on our engine."]
 		   ]
