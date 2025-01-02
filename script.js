@@ -9,20 +9,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Add fade-in effect to sections on scroll
-const sections = document.querySelectorAll('.full-height-section');
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.intersectionRatio >= 0.5) {
-            entry.target.classList.add('visible');
-        } /*else {
-            entry.target.classList.remove('visible');
-        }*/
-    });
-}, { threshold: 0.5 }); // Changed from 0.1 to 0.5
-
-sections.forEach(section => observer.observe(section));
 function buttonizer(dict,color="white"){
 	let buttons = ""
 	if(dict != undefined){

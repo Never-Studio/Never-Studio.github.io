@@ -5,7 +5,7 @@
 	text-align: center;
 	font-family: Arial, sans-serif;
 	font-size: 20pt;
-	font-weight: bold;
+	 --main-color: #635d9e;
 }
 
 h1 {
@@ -187,19 +187,15 @@ body {
     }
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-.full-height-section > *:not(#scroll-down-arrow) {
-    opacity: 0;
-}
 a {
 	text-decoration: none;
+	cursor: pointer;
+	font-weight: 
+}
+a:hover {
+	text-decoration: underline;
+	cursor: pointer;
+	font-weight: 
 }
 
 .white-section  p {
@@ -208,36 +204,23 @@ a {
  /* unvisited link */
 .white-section  a {
   color: black;
-  cursor: pointer;
-  text-decoration: underline;
 }
 
 .black-section a {
   color: white;
-  text-decoration: underline;
-  cursor: pointer;
+}
+
+@keyframes fadefromblack {
+  from {color: black;}
+  to {color: var(--main-color);}
+}
+
+@keyframes fadefromwhite {
+  from {color: white;}
+  to {color: var(--main-color);}
 }
 
 
-@keyframes fadeInText {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-/* Apply animation to text elements */
-.full-height-section.visible > *:not(#scroll-down-arrow) {
-    animation: fadeInText 1s ease-in-out forwards;
-}
-
-/* Apply animation to sections */
-/*
-.full-height-section.visible {
-    animation: fadeIn 0.5s ease-in-out forwards;
-}*/
 
 
 
@@ -250,7 +233,6 @@ a {
 	border: none;
 	text-align: left;
 	outline: none;
-	transition: 0.4s;
 	border: none;
 	border-radius: 10pt;
 	margin: 10px !important;
@@ -266,17 +248,17 @@ a {
 	background-color: #000 !important;
 	color: #fff !important;
 	padding: 0 18px;
-	display: none;
 	background-color: white;
 	color:black;
 	align-self: start;
-	height: fit-content !important;
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.5s ease-out;
 }
 .panel > p{
 	background-color: #000 !important;
 	color:#fff !important;
 	text-align: left !important;
-	margin: 10px !important;
 }
 
 #faq-section {

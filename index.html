@@ -6,6 +6,12 @@
 	<title>NeverStudio Homepage - who we are and upcoming projects</title>
 	<link rel="canonical" href="https://www.neverstudio.de" />
 	<link rel="stylesheet" href="styles.css">
+	<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+	<style>
+	*{
+			font-family: "Barlow Semi Condensed"
+	}
+	</style>
 	<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
 	<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
 	<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
@@ -19,7 +25,6 @@
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-	<link rel="manifest" href="/manifest.json">
 	<meta name="msapplication-TileColor" content="#ffffff">
 	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
 	<meta name="theme-color" content="#ffffff">
@@ -45,9 +50,9 @@
 
     <!-- Description Section -->
     <section id="description-section" class="full-height-section white-section">
-        <p style ="text-align: center;">
+        <p style ="text-align: left; font-weight: normal;">
 			Hi there!<br>
-			We are Never Studio!<br>
+			We are NeverStudio!<br>
 			We create ai applications, games, tools and more.<br>
 			Feel free to check our <a title="our GitHub projects" href="https://github.com/Never-Studio">GitHub Page</a> and to try out our <a title="a list of our projects" href="#our-work-section">Projects</a>.<br>
 			We are also on <a title="the Neverstudio Reddit account" href="https://www.reddit.com/user/NeverStudio/">Reddit</a> and <a title="the Neverstudio Instagram- Account" href="https://www.instagram.com/neverstudio.de/">Instagram</a>
@@ -65,7 +70,7 @@
 
     <!-- Our Work Section -->
     <section id="our-work-section" class="full-height-section white-section">
-        <h2>Our Work</h2>
+        <colortag><h2>Our Work</h2></colortag>
         <div id="work-grid" class="work-grid">
         </div>
 	<br>
@@ -128,12 +133,18 @@
 
 		for (i = 0; i < acc.length; i++) {
 		  acc[i].addEventListener("click", function() {
+			for(i of acc){
+				if(i != this){
+					i.classList.remove("active");
+					i.nextElementSibling.style.maxHeight = null;
+				}
+			}
 			this.classList.toggle("active");
 			var panel = this.nextElementSibling;
-			if (panel.style.display === "block") {
-			  panel.style.display = "none";
+			if (panel.style.maxHeight) {
+			  panel.style.maxHeight = null;
 			} else {
-			  panel.style.display = "block";
+			  panel.style.maxHeight = panel.scrollHeight + "px";
 			}
 		  });
 		}
