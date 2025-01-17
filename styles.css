@@ -2,7 +2,6 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	text-align: center;
 	font-family: Arial, sans-serif;
 	font-size: 25pt;
 	 --main-color: #635d9e;
@@ -111,11 +110,14 @@ body {
     display: grid;
     grid-template-columns: repeat(1, auto);
     gap: 20px;
-    align-items: center;
+    align-items: start;
+	width: 100%;
+	margin-left: 10px;
 }
 
 .notification-item {
     padding: 25px;
+	text-align: left;
    /* animation: scroll 10s linear infinite;*/
 }
 /*
