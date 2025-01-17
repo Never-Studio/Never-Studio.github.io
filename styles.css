@@ -141,6 +141,9 @@ body {
 	display: flex;
 	flex-direction: row;
 	margin: 10px;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 300px;
 }
 
 .work-item div{
