@@ -54,7 +54,7 @@ function adjustContainers(){
 		var projDiv = document.getElementById("work-grid")
 		projDiv.innerHTML = ""
 		for(let i=0; i< Math.min((window.innerHeight-500)/500,projects.length); i++){
-			projDiv.innerHTML += `<a href="${projects[i][3]}" title="The background image shows: ${projects[i][4]}" style ="text-decoration: none !important;background-image: url("${projects[i][2]}");"><div class="work-item"><div><h3> ${projects[i][0]} </h3> </div></div></a>`;
+			projDiv.innerHTML += `<a href="${projects[i][3]}" title="The background image shows: ${projects[i][4]}" style ="text-decoration: none !important;background-image: url("`+projects[i][2]+`");"><div class="work-item"><div><h3> ${projects[i][0]} </h3> </div></div></a>`;
 		}
 		
 	}else{
