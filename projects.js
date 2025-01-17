@@ -43,7 +43,7 @@ function adjustViewportHeight() {
     projDiv.innerHTML = ""
 	for(let i=0; i< projects.length; i++){
 		//projDiv.innerHTML += `<div class="work-item"><div><h3> ${projects[i][0]} </h3> ${projects[i][1]}${buttonizer(projects[i][3])} </div><img src="${projects[i][2]}" alt="Project 1"></div>`;
-		projDiv.innerHTML += `<a href="${projects[i][3]}" title="The background image shows: ${projects[i][4]}" style ="text-decoration: none !important;background-image: url("${projects[i][2]}");"><div class="work-item"><div><h3> ${projects[i][0]} </h3> </div></div></a>`;
+		projDiv.innerHTML += `<a href="${projects[i][3]}" title="The background image shows: ${projects[i][4]}" style ="text-decoration: none !important;><div class="work-item" style ='background-image: url("${projects[i][2]}");'><div><h3> ${projects[i][0]} </h3> </div></div></a>`;
 	}
 	
 	
