@@ -129,7 +129,9 @@ body {
 .work-grid {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: start;
+	width: 100%;
+	margin-left: 10px;
 	
 }
 
