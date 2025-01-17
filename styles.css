@@ -4,7 +4,7 @@
 	box-sizing: border-box;
 	text-align: center;
 	font-family: Arial, sans-serif;
-	font-size: 20pt;
+	font-size: 25pt;
 	 --main-color: #635d9e;
 }
 
@@ -12,7 +12,8 @@ h1 {
 	font-size: 25pt;
 }
 h2 {
-	font-size: 25pt;
+	font-size: 30pt;
+	margin: 20px;
 }
 body {
 	font-family: Arial, sans-serif;
@@ -54,8 +55,9 @@ body {
 .white-button {
 	display: block;
 	padding: 13px;
+	padding-inline: 20px;
 	border: none;
-	border-radius: 15pt;
+	border-radius: 30pt;
 	color: white;
 	background-color: black;
 	text-decoration: none;
@@ -63,8 +65,9 @@ body {
 .black-button {
 	display: block;
 	padding: 13px;
+	padding-inline: 20px;
 	border: none;
-	border-radius: 15pt;
+	border-radius: 30pt;
 	color: black;
 	background-color: white;
 	text-decoration: none;
