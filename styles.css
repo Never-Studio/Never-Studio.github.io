@@ -187,6 +187,12 @@ body {
 	}
     
 	h2 {
+		font-size: 25pt;
+    	}
+	h1 {
+		font-size: 25pt;
+    	}
+	* {
 		font-size: 20pt;
     	}
     
