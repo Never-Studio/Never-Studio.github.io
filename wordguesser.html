@@ -186,11 +186,6 @@ setTimeout(()=>{
 		for(let i = 0; i < max_; i++){
 			//Laden in das objects dictionary
 			fields[row][i] = document.getElementById('field'+row+'_'+i);
-			//Normales schreiben deaktivieren
-			if(row != 0){
-				fields[row][i].setAttribute('readonly', false);
-			}
-			
 			//Keyhandling implementieren:
 			fields[row][i].addEventListener('keyup', (event) => {
 				if(row == activeRow){
