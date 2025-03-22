@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Wortguesser Creator</title>
+<style>
+*{
+	font-size: 60px;
+	text-align: center;
+	text-decoration: none;
+	color: black;
+}
+
+div{
+	text-align: center;
+	margin: auto;
+	margin-top: 50px;
+	position: absolute;
+	width: 100%;
+}
+p{
+	overflow-wrap: break-word;
+}
+.field{
+	padding: 10px;
+	background-color: white;
+	display: inline-block;
+	outline:none;
+	caret-color: black;
+	border: solid;
+	border-radius: 20px;
+	text-align: center;
+	margin: 10px;
+}
+.field:focus{
+	padding: 10px;
+	background-color: white;
+	display: inline-block;
+	outline:none;
+	caret-color: black;
+	border: solid;
+	border-radius: 20px;
+	text-align: center;
+	margin: 10px;
+	border-width: 5px;
+}
+</style>
+</head>
+
+<body>
+	<script>
+function submitter(){
+	var name = document.getElementById("name").value
+	var word = document.getElementById("word").value.toLowerCase()
+	var rows = document.getElementById("rows").value
+	document.getElementById("code").innerText = "url#"+btoa(name+"|"+word+"|"+rows);
+	document.getElementById("code").href = location.protocol + '//' + location.host+"/wordguesser.html#"+btoa(name+"|"+word+"|"+rows);
+	
+}
+
+
+</script>
+Name: <input id="name" class="field" type="text"><br>
+Wort: <input id="word" class="field" type="text"><br>
+Versuche: <input id="rows" class="field" type="text"><br>
+<button class="field" onclick="submitter()">Link generieren</button>
+<button class="field" onclick='window.location = location.protocol + "//" + location.host+"/wordguesser.html"'>Zur Hauptseite</button>
+<br>
+<a id = "code"></a>
+
+</body>
+
+</html>

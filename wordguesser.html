@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Wortguesser</title>
+<style>
+*{
+	font-size: 60px;
+	text-align: center;
+	text-decoration: none;
+	color: black;
+}
+div{
+	text-align: center;
+	margin: auto;
+	margin-top: 50px;
+	position: absolute;
+	width: 100%;
+}
+p{
+	overflow-wrap: break-word;
+}
+.field{
+	display: inline-block;
+	width: 100px;
+	height: 100px;
+	outline:none;
+	caret-color: transparent;
+	border: solid;
+	border-radius: 20px;
+	text-align: center;
+	margin: 10px;
+}
+.field:focus{
+	display: inline-block;
+	width: 100px;
+	height: 100px;
+	outline:none;
+	caret-color: transparent;
+	border: solid;
+	border-radius: 20px;
+	text-align: center;
+	margin: 10px;
+	border-width: 5px;
+}
+</style>
+<meta charset="utf-8" />
+</head>
+<body>
+
+<div id="word">
+<p id="messages"> Good luck guessing. </p>
+<p id="letters" style="overflow-wrap: anywhere;"></p>
+</div>
+<script>document.getElementById("messages").textContent ="Lade Wörterliste...";</script>
+<script src = "wordlist-guess-noncurated.js"></script>
+<script src="wiki-german3-lower.js"></script>
+<script>
+
+String.prototype.replaceAt = function(index, replacement) {
+	let newString = "";
+	for(let i = 0; i < this.length; i++){
+		if(i == index){
+			newString += replacement;
+		}else{
+			newString += this[i];
+		}
+	}
+    return newString;
+}
+
+var max_ = 5;
+var rows = 5;
+var activeRow = 0;
+var real = ""
+if(window.location.hash.substring(1)!=""){
+	document.getElementById("messages").textContent =atob(decodeURI(window.location.hash.substring(1))).split("|")[0];
+	real = atob(decodeURI(window.location.hash.substring(1))).split("|")[1]
+	rows = atob(decodeURI(window.location.hash.substring(1))).split("|")[2]
+	max_ = real.length;
+	if(rows==undefined || rows==""){
+		rows = max_;
+	}
+}else{
+	while(real.length != max_){
+		real = guess[Math.floor(Math.random() * guess.length)];
+	}
+	document.getElementById("messages").textContent ="Viel Glück beim Raten.";
+}
+
+
+
+
+
+var container = document.getElementById("word");
+var messaging = document.getElementById("messages");
+fields = {};
+
+function enterRes(index){
+	var realword = real;
+	let right = 0;
+	
+	//Bestimmen des Wortes aus den Feldern der aktuellen Zeile
+	word_ = ""
+	for(let i = 0; i < max_; i++){
+		if( String(fields[index][i].value) !=""){
+			word_ += String(fields[index][i].value)
+		}else{
+			word_ +=  " ";
+		}
+		
+	}
+	
+	//markieren der Buchstaben
+	if(allowed.includes(word_)||guess.includes(word_)||word_==real){//Wenn geratenes Wort erlaubt
+		for(let i = 0; i < max_; i++){//Alle vollständig richtigen Buchstaben grün markieren
+			if(String(fields[index][i].value)==realword[i]){
+				fields[index][i].style["border-color"] = "green";
+				fields[index][i].style["color"] = "green";
+				realword = realword.replaceAt(i,"-");
+				document.getElementById("letter_"+String(fields[index][i].value)).style.color = "green"
+				right ++;
+			}
+		}
+		for(let i = 0; i < max_; i++){//Alle halb richtigen Buchstaben orange und die anderen grau markieren
+			if(realword.includes(String(fields[index][i].value)) && fields[index][i].style["color"]!="green"){
+				fields[index][i].style["color"] = "orange";
+				fields[index][i].style["border-color"] = "orange";
+				if(document.getElementById("letter_"+String(fields[index][i].value)).style.color != "green"){
+					document.getElementById("letter_"+String(fields[index][i].value)).style.color = "orange"
+				}
+				realword = realword.replaceAt(realword.indexOf(fields[index][i].value),"-");
+			}else if(fields[index][i].style["color"]!="green" && fields[index][i].style["color"]!="orange"){
+				fields[index][i].style["color"] = "lightgrey";
+				if(document.getElementById("letter_"+String(fields[index][i].value)).style.color != "green" && document.getElementById("letter_"+String(fields[index][i].value)).style.color != "orange"){
+					document.getElementById("letter_"+String(fields[index][i].value)).style.color = "grey"
+				}
+			}
+		}
+		
+		if(right == max_){//Wenn alle Buchstaben richtig geraten wurden...
+			document.getElementById("messages").textContent ="Du hast das Wort gefunden!";//...Nachricht an den Nutzer
+			activeRow = max_;//...Weiteres bearbeiten unmöglich machen 
+		}else{//Wenn nicht alle Buchstaben richtig geraten wurden...
+			activeRow ++//...Nächste Zeile
+			try{
+				fields[index+1][0].focus();
+			}catch{//...Wenn bereits die letzte Spalte erreicht ist...
+				fields[index][0].focus();
+				document.getElementById("messages").textContent = "Schade, vielleicht nächstes mal. Lösung: "+real;//... Nachricht an den Nutzer
+				return
+			}	
+		}
+		if(document.getElementById("messages").textContent == "Nicht in der Wörterliste"){//Nachricht zurücksetzen
+				document.getElementById("messages").textContent = "Viel Glück beim Raten."
+		}
+	}else{//Wenn das Woert nicht in der Wörterliste war, dann wird das gemeldet
+			document.getElementById("messages").textContent = "Nicht in der Wörterliste";
+			fields[index][0].focus()
+	}
+}
+
+setTimeout(()=>{
+	//Felder erzeugen:
+	for(let row = 0; row < rows; row++){
+		fields[row] = {}
+		for(let i = 0; i < max_; i++){
+			container.innerHTML += '<input id = "field'+row+'_'+i+'" class = "field" maxlength="1">';
+		}
+		container.innerHTML += "<br>"
+	}
+	container.innerHTML += '<br><a href="'+location.protocol + '//' + location.host+'/findhashurl.html" style="border: solid;border-radius: 20px;padding: 10px;">Eigenes Wortspiel</a><br>'
+	//Alphabet anzeigen:
+	let alphabet = "qwertzuiopüasdfghjklöäyxcvbnm"
+	for(let index = 0; index < alphabet.length; index++){
+		i = alphabet[index]
+		document.getElementById("letters").innerHTML += '<span id="letter_'+i+'" style="color:black;">'+i.toUpperCase()+' </span>'
+		if(index%10==0 && index!=0){
+			document.getElementById("letters").innerHTML += "<br>"
+		}
+	}
+	
+	
+	//Sichern der Objecte in fields:
+	for(let row = 0; row < rows; row++){
+		fields[row] = {}
+		for(let i = 0; i < max_; i++){
+			//Laden in das objects dictionary
+			fields[row][i] = document.getElementById('field'+row+'_'+i);
+			//Normales schreiben deaktivieren
+			if(row != 0){
+				fields[row][i].setAttribute('readonly', false);
+			}
+			
+			//Keyhandling implementieren:
+			fields[row][i].addEventListener('keyup', (event) => {
+				if(row == activeRow){
+					if(event.key=="ArrowLeft"){
+						try{
+							fields[row][i-1].focus();
+						}catch{
+							fields[row][i].focus();
+						}
+					}else if(event.key=="ArrowRight"){
+						try{
+							fields[row][i+1].focus();
+						}catch{
+							fields[row][i].focus();
+						}
+					}else if(event.key=="Backspace" || event.key=="Delete"){
+						if(fields[row][i].value !=""){
+							fields[row][i].value ="";
+						}else{
+							try{
+								fields[row][i-1].focus();
+							}catch{
+								fields[row][i].focus();
+							}
+						}
+						
+					}else if(event.key=="Enter"){
+						enterRes(row);
+					}else if(event.key.length == 1){
+						if("abcdefghijklmnopqrstuvwxyzöüäß".includes(event.key.toLowerCase())){
+							fields[row][i].value = event.key.toLowerCase();
+						}else{
+							fields[row][i].value = "";
+						}
+						
+						try{
+							fields[row][i+1].focus();
+						}catch{
+							fields[row][i].focus();
+						}
+					}
+				}
+			});
+		}
+	}
+	fields[0][0].focus();
+	
+},0);
+
+
+
+</script>
+
+</body>
