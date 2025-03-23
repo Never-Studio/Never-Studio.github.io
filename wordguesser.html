@@ -191,13 +191,24 @@ function enterRes(index){
 
 document.getElementById('settings').addEventListener("close",saveSettings);
 function saveSettings(){
+	let index = 0;
+	let new_real = "";
+	while(new_real.length != document.getElementById("length").value){
+		index++;
+		new_real = guess[Math.floor(Math.random() * guess.length)];
+		if(index>100000){
+			max_ = 5;
+			rows = 5;
+			alert("Es gibt keine Wörter für diese Zahl an Zeichen.")
+			return;
+		}
+	}
+	alert(index);
+	real = new_real;
 	max_ = document.getElementById("length").value;
 	rows = document.getElementById("tries").value;
 	if(rows==undefined||rows==""){
-		rows = max_;
-	}
-	while(real.length != max_){
-		real = guess[Math.floor(Math.random() * guess.length)];
+			rows = max_
 	}
 	document.getElementById("word").innerHTML = '<p id="messages"> Good luck guessing. </p><p id="letters" style="overflow-wrap: anywhere;"></p>';
 	document.getElementById("letters").innerHTML = "";
