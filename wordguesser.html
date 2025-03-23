@@ -206,13 +206,15 @@ function saveSettings(){
 	real = new_real;
 	max_ = document.getElementById("length").value;
 	rows = document.getElementById("tries").value;
+	fields = {};
+	activeRow = 0;
 	if(rows==undefined||rows==""){
 			rows = max_
 	}
 	document.getElementById("word").innerHTML = '<p id="messages"> Good luck guessing. </p><p id="letters" style="overflow-wrap: anywhere;"></p>';
 	document.getElementById("letters").innerHTML = "";
 	document.getElementById("messages").textContent = "Viel Glück beim Raten.";
-	createAll()
+	setTimeout(createAll,0);
 }
 
 function createAll(){
