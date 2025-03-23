@@ -35,22 +35,52 @@ p{
 	width: 100px;
 	height: 100px;
 	outline:none;
-	caret-color: transparent;
+	caret-color: black;
 	border: solid;
 	border-radius: 20px;
 	text-align: center;
 	margin: 10px;
 	border-width: 5px;
 }
+.norm{
+	background-color: white;
+	display: inline-block;
+	outline:none;
+	caret-color: black;
+	border: solid;
+	border-radius: 20px;
+	text-align: center;
+	margin: 30px;
+}
+.norm:focus{
+	background-color: white;
+	display: inline-block;
+	outline:none;
+	caret-color: transparent;
+	border: solid;
+	border-radius: 20px;
+	text-align: center;
+	margin: 30px;
+	border-width: 5px;
+}
 </style>
 <meta charset="utf-8" />
 </head>
 <body>
-
 <div id="word">
 <p id="messages"> Good luck guessing. </p>
 <p id="letters" style="overflow-wrap: anywhere;"></p>
 </div>
+<dialog id="settings">
+  <p>Einstellungen:</p>
+  <p>Zeichenlänge:</p><input id="length" class = "norm" style="text">
+  <p>Versuche:</p><input id="tries" class = "norm" style="text"><br>
+  <button class = "norm" onclick="document.getElementById('settings').close();">Speichern</button>
+</dialog>
+
+
+
+
 <script>document.getElementById("messages").textContent ="Lade Wörterliste...";</script>
 <script src = "wordlist-guess-noncurated.js"></script>
 <script src="wiki-german3-lower.js"></script>
@@ -159,7 +189,20 @@ function enterRes(index){
 	}
 }
 
-setTimeout(()=>{
+document.getElementById('settings').addEventListener("close",saveSettings);
+function saveSettings(){
+	max_ = document.getElementById("length").value;
+	rows = document.getElementById("tries").value;
+	while(real.length != max_){
+		real = guess[Math.floor(Math.random() * guess.length)];
+	}
+	document.getElementById("word").innerHTML = '<p id="messages"> Good luck guessing. </p><p id="letters" style="overflow-wrap: anywhere;"></p>';
+	document.getElementById("letters").innerHTML = "";
+	document.getElementById("messages").textContent = "Viel Glück beim Raten.";
+	createAll()
+}
+
+function createAll(){
 	//Felder erzeugen:
 	for(let row = 0; row < rows; row++){
 		fields[row] = {}
@@ -168,7 +211,8 @@ setTimeout(()=>{
 		}
 		container.innerHTML += "<br>"
 	}
-	container.innerHTML += '<br><a href="'+location.protocol + '//' + location.host+'/findhashurl.html" style="border: solid;border-radius: 20px;padding: 10px;">Eigenes Wortspiel</a><br>'
+	container.innerHTML += '<br><a href="'+location.protocol + '//' + location.host+'/findhashurl.html" style="border: solid;border-radius: 20px;padding: 10px;">Eigenes Wortspiel</a>'
+	container.innerHTML += '<br><button class = "norm" onclick = "document.getElementById(\'settings\').showModal();" style="border: solid;border-radius: 20px;padding: 10px;">Einstellungen</a><br>'
 	//Alphabet anzeigen:
 	let alphabet = "qwertzuiopüasdfghjklöäyxcvbnm"
 	for(let index = 0; index < alphabet.length; index++){
@@ -235,10 +279,12 @@ setTimeout(()=>{
 	}
 	fields[0][0].focus();
 	
-},0);
+}
+
+
+setTimeout(createAll,0);
 
 
 
 </script>
-
 </body>
