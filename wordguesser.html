@@ -193,6 +193,9 @@ document.getElementById('settings').addEventListener("close",saveSettings);
 function saveSettings(){
 	max_ = document.getElementById("length").value;
 	rows = document.getElementById("tries").value;
+	if(rows==undefined||rows==""){
+		rows = max_;
+	}
 	while(real.length != max_){
 		real = guess[Math.floor(Math.random() * guess.length)];
 	}
