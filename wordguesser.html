@@ -3,6 +3,26 @@
 <head>
 <title>Wortguesser</title>
 <style>
+@keyframes toorange {
+  from {border-color: black; color: black;}
+  to {border-color: orange; color: orange;}
+}
+@keyframes togreen {
+  from {border-color: black; color: black;}
+  to {border-color: green; color: green;}
+}
+@keyframes togrey {
+  from {border-color: black; color: black;}
+  to {border-color: lightgrey; color: lightgrey;}
+}
+@keyframes wrongword {
+  0%   {left:0px;}
+  25%  {left:15px;}
+  50%  {left:0px;}
+  75%  {left:15px;}
+  100% {left:0px;}
+}
+
 *{
 	font-size: 60px;
 	text-align: center;
@@ -29,6 +49,7 @@ p{
 	border-radius: 20px;
 	text-align: center;
 	margin: 10px;
+	border-width: 4px;
 }
 .field:focus{
 	display: inline-block;
@@ -40,7 +61,7 @@ p{
 	border-radius: 20px;
 	text-align: center;
 	margin: 10px;
-	border-width: 5px;
+	border-width: 4px;
 }
 .norm{
 	background-color: white;
@@ -51,6 +72,7 @@ p{
 	border-radius: 20px;
 	text-align: center;
 	margin: 30px;
+	border-width: 4px;
 }
 .norm:focus{
 	background-color: white;
@@ -63,6 +85,19 @@ p{
 	margin: 30px;
 	border-width: 5px;
 }
+dialog{
+	text-align: center;
+	width: fit-content;
+	background-color: white;
+	outline:none;
+	border: none;
+	border-radius: 20px;
+	caret-color: visible;
+	overflow: hidden;
+}
+dialog > *{
+	margin: 20px;
+}
 </style>
 <meta charset="utf-8" />
 </head>
@@ -72,7 +107,7 @@ p{
 <p id="letters" style="overflow-wrap: anywhere;"></p>
 </div>
 <dialog id="settings">
-  <p>Einstellungen:</p>
+  <h2>Einstellungen</h2>
   <p>Zeichenlänge:</p><input id="length" class = "norm" style="text">
   <p>Versuche:</p><input id="tries" class = "norm" style="text"><br>
   <button class = "norm" onclick="document.getElementById('settings').close();">Speichern</button>
@@ -82,222 +117,250 @@ p{
 
 
 <script>document.getElementById("messages").textContent ="Lade Wörterliste...";</script>
-<script src = "wordlist-guess-noncurated.js"></script>
-<script src="wiki-german3-lower.js"></script>
+<script src = "wordlist-guess-noncurated.js" defer></script>
+<script src="wordlist-freq-wiki.js" defer></script>
 <script>
-
-String.prototype.replaceAt = function(index, replacement) {
-	let newString = "";
-	for(let i = 0; i < this.length; i++){
-		if(i == index){
-			newString += replacement;
-		}else{
-			newString += this[i];
-		}
-	}
-    return newString;
-}
-
-var max_ = 5;
-var rows = 5;
-var activeRow = 0;
-var real = ""
-if(window.location.hash.substring(1)!=""){
-	document.getElementById("messages").textContent =atob(decodeURI(window.location.hash.substring(1))).split("|")[0];
-	real = atob(decodeURI(window.location.hash.substring(1))).split("|")[1]
-	rows = atob(decodeURI(window.location.hash.substring(1))).split("|")[2]
-	max_ = real.length;
-	if(rows==undefined || rows==""){
-		rows = max_;
-	}
-}else{
-	while(real.length != max_){
-		real = guess[Math.floor(Math.random() * guess.length)];
-	}
-	document.getElementById("messages").textContent ="Viel Glück beim Raten.";
-}
-
-
-
-
-
-var container = document.getElementById("word");
-var messaging = document.getElementById("messages");
-fields = {};
-
-function enterRes(index){
-	var realword = real;
-	let right = 0;
-	
-	//Bestimmen des Wortes aus den Feldern der aktuellen Zeile
-	word_ = ""
-	for(let i = 0; i < max_; i++){
-		if( String(fields[index][i].value) !=""){
-			word_ += String(fields[index][i].value)
-		}else{
-			word_ +=  " ";
-		}
-		
-	}
-	
-	//markieren der Buchstaben
-	if(allowed.includes(word_)||guess.includes(word_)||word_==real){//Wenn geratenes Wort erlaubt
-		for(let i = 0; i < max_; i++){//Alle vollständig richtigen Buchstaben grün markieren
-			if(String(fields[index][i].value)==realword[i]){
-				fields[index][i].style["border-color"] = "green";
-				fields[index][i].style["color"] = "green";
-				realword = realword.replaceAt(i,"-");
-				document.getElementById("letter_"+String(fields[index][i].value)).style.color = "green"
-				right ++;
+document.addEventListener("DOMContentLoaded", (event) => {
+	String.prototype.replaceAt = function(index, replacement) {
+		let newString = "";
+		for(let i = 0; i < this.length; i++){
+			if(i == index){
+				newString += replacement;
+			}else{
+				newString += this[i];
 			}
 		}
-		for(let i = 0; i < max_; i++){//Alle halb richtigen Buchstaben orange und die anderen grau markieren
-			if(realword.includes(String(fields[index][i].value)) && fields[index][i].style["color"]!="green"){
-				fields[index][i].style["color"] = "orange";
-				fields[index][i].style["border-color"] = "orange";
-				if(document.getElementById("letter_"+String(fields[index][i].value)).style.color != "green"){
-					document.getElementById("letter_"+String(fields[index][i].value)).style.color = "orange"
-				}
-				realword = realword.replaceAt(realword.indexOf(fields[index][i].value),"-");
-			}else if(fields[index][i].style["color"]!="green" && fields[index][i].style["color"]!="orange"){
-				fields[index][i].style["color"] = "lightgrey";
-				if(document.getElementById("letter_"+String(fields[index][i].value)).style.color != "green" && document.getElementById("letter_"+String(fields[index][i].value)).style.color != "orange"){
-					document.getElementById("letter_"+String(fields[index][i].value)).style.color = "grey"
-				}
-			}
-		}
-		
-		if(right == max_){//Wenn alle Buchstaben richtig geraten wurden...
-			document.getElementById("messages").textContent ="Du hast das Wort gefunden!";//...Nachricht an den Nutzer
-			activeRow = max_;//...Weiteres bearbeiten unmöglich machen 
-		}else{//Wenn nicht alle Buchstaben richtig geraten wurden...
-			activeRow ++//...Nächste Zeile
-			try{
-				fields[index+1][0].focus();
-			}catch{//...Wenn bereits die letzte Spalte erreicht ist...
-				fields[index][0].focus();
-				document.getElementById("messages").textContent = "Schade, vielleicht nächstes mal. Lösung: "+real;//... Nachricht an den Nutzer
-				return
-			}	
-		}
-		if(document.getElementById("messages").textContent == "Nicht in der Wörterliste"){//Nachricht zurücksetzen
-				document.getElementById("messages").textContent = "Viel Glück beim Raten."
-		}
-	}else{//Wenn das Woert nicht in der Wörterliste war, dann wird das gemeldet
-			document.getElementById("messages").textContent = "Nicht in der Wörterliste";
-			fields[index][0].focus()
+		return newString;
 	}
-}
 
-document.getElementById('settings').addEventListener("close",saveSettings);
-function saveSettings(){
-	let index = 0;
-	let new_real = "";
-	while(new_real.length != document.getElementById("length").value){
-		index++;
-		new_real = guess[Math.floor(Math.random() * guess.length)];
-		if(index>100000){
-			max_ = 5;
-			rows = 5;
-			alert("Es gibt keine Wörter für diese Zahl an Zeichen.")
-			return;
+	var max_ = 5;
+	var rows = 5;
+	var activeRow = 0;
+	var real = ""
+	var show = true;
+	if(window.location.hash.substring(1)!=""){
+		show = false;
+		document.getElementById("messages").textContent =atob(decodeURI(window.location.hash.substring(1))).split("|")[0];
+		real = atob(decodeURI(window.location.hash.substring(1))).split("|")[1]
+		rows = atob(decodeURI(window.location.hash.substring(1))).split("|")[2]
+		max_ = real.length;
+		if(rows==undefined || rows==""){
+			rows = max_;
 		}
+	}else{
+		while(real.length != max_){
+			real = guess[Math.floor(Math.random() * guess.length)];
+		}
+		document.getElementById("messages").textContent ="Viel Glück beim Raten.";
 	}
-	real = new_real;
-	max_ = document.getElementById("length").value;
-	rows = document.getElementById("tries").value;
+
+
+
+
+
+	var container = document.getElementById("word");
+	var messaging = document.getElementById("messages");
 	fields = {};
-	activeRow = 0;
-	if(rows==undefined||rows==""){
-			rows = max_
-	}
-	document.getElementById("word").innerHTML = '<p id="messages"> Good luck guessing. </p><p id="letters" style="overflow-wrap: anywhere;"></p>';
-	document.getElementById("letters").innerHTML = "";
-	document.getElementById("messages").textContent = "Viel Glück beim Raten.";
-	setTimeout(createAll,0);
-}
-
-function createAll(){
-	//Felder erzeugen:
-	for(let row = 0; row < rows; row++){
-		fields[row] = {}
-		for(let i = 0; i < max_; i++){
-			container.innerHTML += '<input id = "field'+row+'_'+i+'" class = "field" maxlength="1">';
-		}
-		container.innerHTML += "<br>"
-	}
-	container.innerHTML += '<br><a href="'+location.protocol + '//' + location.host+'/findhashurl.html" style="border: solid;border-radius: 20px;padding: 10px;">Eigenes Wortspiel</a>'
-	container.innerHTML += '<br><button class = "norm" onclick = "document.getElementById(\'settings\').showModal();" style="border: solid;border-radius: 20px;padding: 10px;">Einstellungen</a><br>'
-	//Alphabet anzeigen:
-	let alphabet = "qwertzuiopüasdfghjklöäyxcvbnm"
-	for(let index = 0; index < alphabet.length; index++){
-		i = alphabet[index]
-		document.getElementById("letters").innerHTML += '<span id="letter_'+i+'" style="color:black;">'+i.toUpperCase()+' </span>'
-		if(index%10==0 && index!=0){
-			document.getElementById("letters").innerHTML += "<br>"
-		}
-	}
 	
 	
-	//Sichern der Objecte in fields:
-	for(let row = 0; row < rows; row++){
-		fields[row] = {}
-		for(let i = 0; i < max_; i++){
-			//Laden in das objects dictionary
-			fields[row][i] = document.getElementById('field'+row+'_'+i);
-			//Keyhandling implementieren:
-			fields[row][i].addEventListener('keyup', (event) => {
-				if(row == activeRow){
-					if(event.key=="ArrowLeft"){
-						try{
-							fields[row][i-1].focus();
-						}catch{
-							fields[row][i].focus();
-						}
-					}else if(event.key=="ArrowRight"){
-						try{
-							fields[row][i+1].focus();
-						}catch{
-							fields[row][i].focus();
-						}
-					}else if(event.key=="Backspace" || event.key=="Delete"){
-						if(fields[row][i].value !=""){
-							fields[row][i].value ="";
-						}else{
+	function createAll(){
+		//Felder erzeugen:
+		for(let row = 0; row < rows; row++){
+			fields[row] = {}
+			for(let i = 0; i < max_; i++){
+				container.innerHTML += '<input id = "field'+row+'_'+i+'" class = "field" maxlength="1">';
+			}
+			container.innerHTML += "<br>"
+		}
+		container.innerHTML += '<br><a href="'+location.protocol + '//' + location.host+'/findhashurl.html" style="border: solid;border-radius: 20px;padding: 10px;">Eigenes Wortspiel</a>'
+		container.innerHTML += '<br><button class = "norm" onclick = "document.getElementById(\'settings\').showModal();" style="border: solid;border-radius: 20px;padding: 10px;">Einstellungen</a><br>'
+		//Alphabet anzeigen:
+		let alphabet = "qwertzuiopüasdfghjklöäyxcvbnm"
+		for(let index = 0; index < alphabet.length; index++){
+			i = alphabet[index]
+			document.getElementById("letters").innerHTML += '<span id="letter_'+i+'" style="color:black;">'+i.toUpperCase()+' </span>'
+			if(index%10==0 && index!=0){
+				document.getElementById("letters").innerHTML += "<br>"
+			}
+		}
+		
+		
+		//Sichern der Objecte in fields:
+		for(let row = 0; row < rows; row++){
+			fields[row] = {}
+			for(let i = 0; i < max_; i++){
+				//Laden in das objects dictionary
+				fields[row][i] = document.getElementById('field'+row+'_'+i);
+				//Keyhandling implementieren:
+				fields[row][i].addEventListener('keyup', (event) => {
+					if(row == activeRow){
+						if(event.key=="ArrowLeft"){
 							try{
 								fields[row][i-1].focus();
 							}catch{
 								fields[row][i].focus();
 							}
+						}else if(event.key=="ArrowRight"){
+							try{
+								fields[row][i+1].focus();
+							}catch{
+								fields[row][i].focus();
+							}
+						}else if(event.key=="Backspace" || event.key=="Delete"){
+							if(fields[row][i].value !=""){
+								fields[row][i].value ="";
+							}else{
+								try{
+									fields[row][i-1].focus();
+								}catch{
+									fields[row][i].focus();
+								}
+							}
+							
+						}else if(event.key=="Enter"){
+							enterRes(row);
+						}else if(event.key.length == 1){
+							if("abcdefghijklmnopqrstuvwxyzöüäß".includes(event.key.toLowerCase())){
+								fields[row][i].value = event.key.toLowerCase();
+							}else{
+								fields[row][i].value = "";
+							}
+							
+							try{
+								fields[row][i+1].focus();
+							}catch{
+								fields[row][i].focus();
+							}
 						}
-						
-					}else if(event.key=="Enter"){
-						enterRes(row);
-					}else if(event.key.length == 1){
-						if("abcdefghijklmnopqrstuvwxyzöüäß".includes(event.key.toLowerCase())){
-							fields[row][i].value = event.key.toLowerCase();
-						}else{
+					}else{
 							fields[row][i].value = "";
-						}
-						
-						try{
-							fields[row][i+1].focus();
-						}catch{
-							fields[row][i].focus();
-						}
 					}
-				}else{
-						fields[row][i].value = "";
+				});
+			}
+		}
+		fields[0][0].focus();
+		
+	}
+	
+	function showMessage(text,delay=2000){
+		const dialog = document.createElement("DIALOG");
+		const textNode = document.createTextNode(text);
+		dialog.setAttribute("open","open");
+		dialog.appendChild(textNode);
+		document.body.appendChild(dialog);
+		let offset =(window.innerWidth- dialog.offsetWidth)/2+window.scrollY
+		dialog.style = "position: fixed;left: 50%;top: 50%;transform: translate(-50%,-50%);"
+		setTimeout(()=>{dialog.removeAttribute("open");},delay);
+	}
+	
+	
+	function enterRes(index){
+		var realword = real;
+		let right = 0;
+		
+		//Bestimmen des Wortes aus den Feldern der aktuellen Zeile
+		word_ = ""
+		for(let i = 0; i < max_; i++){
+			if( String(fields[index][i].value) !=""){
+				word_ += String(fields[index][i].value)
+			}else{
+				word_ +=  " ";
+			}
+			
+		}
+		
+		//markieren der Buchstaben
+		let lettertime = "0.5s";
+		let letterdelay = 0.3; 
+		if(allowed.includes(word_)||guess.includes(word_)||word_==real){//Wenn geratenes Wort erlaubt
+			for(let i = 0; i < max_; i++){//Alle vollständig richtigen Buchstaben grün markieren
+				if(String(fields[index][i].value)==realword[i]){
+					fields[index][i].style.animation = "togreen "+lettertime
+					fields[index][i].style.animationDelay = i*letterdelay+"s"
+					fields[index][i].style.animationFillMode = "forwards"
+					realword = realword.replaceAt(i,"-");
+					document.getElementById("letter_"+String(fields[index][i].value)).style.color = "green"
+					right ++;
+				}else if(realword.includes(String(fields[index][i].value))){
+					fields[index][i].style.animation = "toorange "+lettertime
+					fields[index][i].style.animationDelay = i*letterdelay+"s"
+					fields[index][i].style.animationFillMode = "forwards"
+					if(document.getElementById("letter_"+String(fields[index][i].value)).style.color != "green"){
+						document.getElementById("letter_"+String(fields[index][i].value)).style.color = "orange"
+					}
+					realword = realword.replaceAt(realword.indexOf(fields[index][i].value),"-");
+				}else if(fields[index][i].style["color"]!="green" && fields[index][i].style["color"]!="orange"){
+					fields[index][i].style.animation = "togrey "+lettertime
+					fields[index][i].style.animationDelay = i*letterdelay+"s"
+					fields[index][i].style.animationFillMode = "forwards"
+					if(document.getElementById("letter_"+String(fields[index][i].value)).style.color != "green" && document.getElementById("letter_"+String(fields[index][i].value)).style.color != "orange"){
+						document.getElementById("letter_"+String(fields[index][i].value)).style.color = "grey"
+					}
 				}
-			});
+			}
+			
+			if(right == max_){//Wenn alle Buchstaben richtig geraten wurden...
+				document.getElementById("messages").textContent ="Du hast das Wort gefunden!";
+				showMessage("Du hast das Wort gefunden!")//...Nachricht an den Nutzer
+				activeRow = max_;//...Weiteres bearbeiten unmöglich machen 
+			}else{//Wenn nicht alle Buchstaben richtig geraten wurden...
+				activeRow ++//...Nächste Zeile
+				try{
+					fields[index+1][0].focus();
+				}catch{//...Wenn bereits die letzte Spalte erreicht ist...
+					fields[index][0].focus();
+					document.getElementById("messages").textContent = "Schade, vielleicht nächstes mal.";//... Nachricht an den Nutzer
+					if(show){
+						showMessage("Die Lösung war: "+real.toUpperCase())
+					}
+					return
+				}	
+			}
+			if(document.getElementById("messages").textContent == "Nicht in der Wörterliste"){//Nachricht zurücksetzen
+					document.getElementById("messages").textContent = "Viel Glück beim Raten."
+			}
+		}else{//Wenn das Wort nicht in der Wörterliste war, dann wird das gemeldet
+				document.getElementById("messages").textContent = "Nicht in der Wörterliste";
+				let el = document.getElementById("word")
+				el.style.animation = 'none';
+				el.offsetHeight; /* trigger reflow */
+				el.style.animation = "wrongword 0.4s"
+				fields[index][0].focus()
 		}
 	}
-	fields[0][0].focus();
-	
-}
+
+	document.getElementById('settings').addEventListener("close",saveSettings);
+	function saveSettings(){
+		let index = 0;
+		let new_real = "";
+		while(new_real.length != document.getElementById("length").value){
+			index++;
+			new_real = guess[Math.floor(Math.random() * guess.length)];
+			if(index>100000){
+				max_ = 5;
+				rows = 5;
+				alert("Es gibt keine Wörter für diese Zahl an Zeichen.")
+				return;
+			}
+		}
+		real = new_real;
+		max_ = document.getElementById("length").value;
+		rows = document.getElementById("tries").value;
+		fields = {};
+		activeRow = 0;
+		if(rows==undefined||rows==""){
+				rows = max_
+		}
+		document.getElementById("word").innerHTML = '<p id="messages"> Good luck guessing. </p><p id="letters" style="overflow-wrap: anywhere;"></p>';
+		document.getElementById("letters").innerHTML = "";
+		document.getElementById("messages").textContent = "Viel Glück beim Raten.";
+		setTimeout(createAll,0);
+	}
 
 
-setTimeout(createAll,0);
+	setTimeout(createAll,0);
+});
+
 
 
 
