@@ -317,12 +317,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
 					}
 				}
 			}
-			console.log(points)
 			if(right == max_){//Wenn alle Buchstaben richtig geraten wurden...
 				points += max_*(rows-activeRow-1)*10
 				document.getElementById("messages").textContent ="Du hast das Wort gefunden!";
 				showMessage("Du hast das Wort gefunden! \n Points: "+points)//...Nachricht an den Nutzer
-				console.log("final",points)
 				activeRow = max_;//...Weiteres bearbeiten unmöglich machen 
 			}else{//Wenn nicht alle Buchstaben richtig geraten wurden...
 				activeRow ++//...Nächste Zeile
