@@ -2,7 +2,9 @@
 <html>
 <head>
 <title>Wortguesser</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 <style>
+	
 @keyframes toorange {
   from {border-color: black; color: black;}
   to {border-color: orange; color: orange;}
@@ -24,7 +26,8 @@
 }
 
 *{
-	font-size: 60px;
+	font-family: "Montserrat", sans-serif;
+	font-size: 50px;
 	text-align: center;
 	text-decoration: none;
 	color: black;
@@ -78,12 +81,18 @@ p{
 	background-color: white;
 	display: inline-block;
 	outline:none;
-	caret-color: transparent;
 	border: solid;
 	border-radius: 20px;
 	text-align: center;
 	margin: 30px;
-	border-width: 5px;
+	border-width: 4px;
+}
+@keyframes blurback {
+  from {backdrop-filter: blur(0px);}
+  to {backdrop-filter: blur(10px);}
+}
+dialog::backdrop {
+	animation: 0.5s blurback forwards ease-out;
 }
 dialog{
 	text-align: center;
@@ -92,7 +101,6 @@ dialog{
 	outline:none;
 	border: none;
 	border-radius: 20px;
-	caret-color: visible;
 	overflow: hidden;
 }
 dialog > *{
@@ -104,6 +112,7 @@ dialog > *{
 <body>
 <div id="word">
 <p id="messages"> Good luck guessing. </p>
+<span id="fields"></span>
 <p id="letters" style="overflow-wrap: anywhere;"></p>
 </div>
 <dialog id="settings">
@@ -118,9 +127,10 @@ dialog > *{
 
 <script>document.getElementById("messages").textContent ="Lade Wörterliste...";</script>
 <script src = "wordlist-guess-noncurated.js" defer></script>
-<script src="wiki-german3-lower.js" defer></script>
+<script src="20-wordlist-freq-wiki.js" defer></script>
 <script>
 document.addEventListener("DOMContentLoaded", (event) => {
+	
 	String.prototype.replaceAt = function(index, replacement) {
 		let newString = "";
 		for(let i = 0; i < this.length; i++){
@@ -136,6 +146,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	var max_ = 5;
 	var rows = 5;
 	var activeRow = 0;
+	var points = 0;
 	var real = ""
 	var show = true;
 	if(window.location.hash.substring(1)!=""){
@@ -160,6 +171,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
 	var container = document.getElementById("word");
 	var messaging = document.getElementById("messages");
+	var field_con = document.getElementById("fields");
 	fields = {};
 	
 	
@@ -168,9 +180,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
 		for(let row = 0; row < rows; row++){
 			fields[row] = {}
 			for(let i = 0; i < max_; i++){
-				container.innerHTML += '<input id = "field'+row+'_'+i+'" class = "field" maxlength="1">';
+				field_con.innerHTML += '<input id = "field'+row+'_'+i+'" class = "field" maxlength="1">';
 			}
-			container.innerHTML += "<br>"
+			field_con.innerHTML += "<br>"
 		}
 		container.innerHTML += '<br><a href="'+location.protocol + '//' + location.host+'/findhashurl.html" style="border: solid;border-radius: 20px;padding: 10px;">Eigenes Wortspiel</a>'
 		container.innerHTML += '<br><button class = "norm" onclick = "document.getElementById(\'settings\').showModal();" style="border: solid;border-radius: 20px;padding: 10px;">Einstellungen</a><br>'
@@ -255,7 +267,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	
 	
 	function enterRes(index){
-		var realword = real;
+		let realword = real;
 		let right = 0;
 		
 		//Bestimmen des Wortes aus den Feldern der aktuellen Zeile
@@ -271,17 +283,23 @@ document.addEventListener("DOMContentLoaded", (event) => {
 		
 		//markieren der Buchstaben
 		let lettertime = "0.5s";
-		let letterdelay = 0.3; 
+		let letterdelay = 0.3;
+		let green = [];
 		if(allowed.includes(word_)||guess.includes(word_)||word_==real){//Wenn geratenes Wort erlaubt
 			for(let i = 0; i < max_; i++){//Alle vollständig richtigen Buchstaben grün markieren
 				if(String(fields[index][i].value)==realword[i]){
+					green.push(i)
 					fields[index][i].style.animation = "togreen "+lettertime
 					fields[index][i].style.animationDelay = i*letterdelay+"s"
 					fields[index][i].style.animationFillMode = "forwards"
 					realword = realword.replaceAt(i,"-");
 					document.getElementById("letter_"+String(fields[index][i].value)).style.color = "green"
 					right ++;
-				}else if(realword.includes(String(fields[index][i].value))){
+					points += 5;
+				}
+			}
+			for(let i = 0; i < max_; i++){
+				if(realword.includes(String(fields[index][i].value)) && !(green.includes(i))){
 					fields[index][i].style.animation = "toorange "+lettertime
 					fields[index][i].style.animationDelay = i*letterdelay+"s"
 					fields[index][i].style.animationFillMode = "forwards"
@@ -289,7 +307,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
 						document.getElementById("letter_"+String(fields[index][i].value)).style.color = "orange"
 					}
 					realword = realword.replaceAt(realword.indexOf(fields[index][i].value),"-");
-				}else if(fields[index][i].style["color"]!="green" && fields[index][i].style["color"]!="orange"){
+					points += 1;
+				}else if(!green.includes(i)){
 					fields[index][i].style.animation = "togrey "+lettertime
 					fields[index][i].style.animationDelay = i*letterdelay+"s"
 					fields[index][i].style.animationFillMode = "forwards"
@@ -298,10 +317,12 @@ document.addEventListener("DOMContentLoaded", (event) => {
 					}
 				}
 			}
-			
+			console.log(points)
 			if(right == max_){//Wenn alle Buchstaben richtig geraten wurden...
+				points += max_*(rows-activeRow-1)*10
 				document.getElementById("messages").textContent ="Du hast das Wort gefunden!";
-				showMessage("Du hast das Wort gefunden!")//...Nachricht an den Nutzer
+				showMessage("Du hast das Wort gefunden! \n Points: "+points)//...Nachricht an den Nutzer
+				console.log("final",points)
 				activeRow = max_;//...Weiteres bearbeiten unmöglich machen 
 			}else{//Wenn nicht alle Buchstaben richtig geraten wurden...
 				activeRow ++//...Nächste Zeile
@@ -311,7 +332,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 					fields[index][0].focus();
 					document.getElementById("messages").textContent = "Schade, vielleicht nächstes mal.";//... Nachricht an den Nutzer
 					if(show){
-						showMessage("Die Lösung war: "+real.toUpperCase())
+						showMessage("Die Lösung war: "+real.toUpperCase()+" \n Points: "+points)
 					}
 					return
 				}	
