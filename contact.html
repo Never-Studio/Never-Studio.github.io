@@ -6,61 +6,19 @@
 	<meta name='description' content='You can find our Contact Information, our Legal Notice and our Terms of Services below.'>
     <title>NeverStudio - contact and legal notice</title>
     <link rel="stylesheet" href="styles.css">
-	<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 	<style>
-	*{
-			font-family: "Montserrat"
-	}
+		.section{
+		  flex-direction: column;
+		}
+		.section{
+		  flex-direction: column;
+		}
 	</style>
-    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
-	<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
-	<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
-	<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
-	<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
-	<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
-	<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
-	<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-	<link rel="manifest" href="/manifest.json">
-	<meta name="msapplication-TileColor" content="#ffffff">
-	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-	<meta name="theme-color" content="#ffffff">
-	<style>
-	* {
-		opacity: 1 !important;
-	}
-	#privacy {
-		display: block !important;
-		opacity: 1 !important;
-		font-size: 17px;
-		text-align: left !important;
-	}
-	#privacy b {
-		opacity: 1 !important;
-		font-size: 17px;
-		text-align: left!important;
-	}
-	#privacy h3 {
-		opacity: 1 !important;
-		font-size: 20px;
-		text-align: left !important;
-	}
-	#privacy h2 {
-		opacity: 1 !important;
-		text-align: left !important;
-	}
-	</style>
-	
 </head>
 <body>
-	<a top= "0px" href="https://www.neverstudio.de" id="mainmenu" ><button class = "sticky" >Back to the main page &rarr; </button></a>
-	<script src="back.js"></script>
 	
-    <section id="description-section" class="full-height-section white-section">
+    <div id="description-section" class="section">
 	<h1>Contact Information and Terms of Use</h1>
         <p>
 			We are Never Studio!<br>
@@ -68,19 +26,19 @@
 			Feel free to check our <a href="https://github.com/Never-Studio">GitHub Page</a> and to try out our <a href="https://www.neverstudio.de/projects.html">Projects</a><br>
 			We are also on <a href="https://www.reddit.com/user/NeverStudio/">Reddit</a> and <a href="https://www.instagram.com/neverstudio.de/">Instagram</a>.
         </p>
-    </section>
+    </div>
 	
 	
-	<section id="contact" class="full-height-section black-section">
+	<div id="contact" class="section">
         <h2>Contact Us</h2>
-	<p>Name: </p>
-        <p>Email: info@neverstudio.de</p>
-        <p>Instagram: <a href="https://www.instagram.com/neverstudio.de/">here</a></p>
-        <p>Address: Lenzstraße 13, Karlsruhe, Deutschland</p>
-    </section>
-    
-    <section id="privacy" class="full-height-section white-section" style="height: fit-content; min-height: 100vh; padding: 20px; color: black; align-items: start !important;">
-		<h2>Terms of Use</h2>
+	<p style ="margin: 0px;">Name: Michel and Nils H&auml;u&szlig;ler</p>
+        <p style ="margin: 0px;">Email: info@neverstudio.de</p>
+        <p style ="margin: 0px;">Instagram: <a href="https://www.instagram.com/neverstudio.de/">here</a></p>
+        <p style ="margin: 0px;">Address: Lenzstraße 13, Karlsruhe, Deutschland</p>
+    </div>
+<div id="legaltext" style="scroll-snap-align: start; overflow: scroll !important; height: 100vh; margin: 10%;">
+<p id="privacy" style="height: fit-content; align-items: start !important; text-align: left !important; display: block; !important">
+<h2>Terms of Use</h2>
 <b>Effective Date:</b> 12th September 2024<br>
 Welcome to neverstudio.de (“the Website”).
 <br> By accessing or using the Website, you agree to comply with the following Terms of Use. Please read them carefully before proceeding.<br>
@@ -92,7 +50,7 @@ By using the Website, you agree not to engage in the following prohibited activi
 <h3>2. User Content</h3>
 Users are responsible for the content they upload or share on the Website. <br>We reserve the right to remove content that violates these Terms.<br>
 <h3>3. Account Security</h3>
-You are responsible for maintaining the confidentiality of your account credentials. <br>Please notify us immediately if you detect any unauthorized use of your account.<br> You can <a  style="color: black; font-size: 17px !important;" href="#contact">contact us here</a>.<br>
+You are responsible for maintaining the confidentiality of your account credentials. <br>Please notify us immediately if you detect any unauthorized use of your account.<br> You can <a  href="#contact">contact us here</a>.<br>
 <h3>4. Termination</h3>
 We reserve the right to terminate or suspend your account if you violate these Terms of Use.<br>
 We also reserve the right to block you from visiting this website. <br>
@@ -120,11 +78,23 @@ We implement appropriate security measures to protect your personal data from un
 <h3>4. Third-Party Sharing</h3>
 We do not sell or share your personal information with third parties except as necessary to comply with legal obligations.<br>
 <h3>5. Your Rights</h3>
-You have the right to request access to or deletion of your personal data. If you wish to exercise these rights, please <a style="color: black;font-size: 17px !important;" href="#contact">contact us here</a> .<br>
+You have the right to request access to or deletion of your personal data. If you wish to exercise these rights, please <a href="#contact">contact us here</a> .<br>
 <h3>6. Changes to the Privacy Policy</h3>
 We may update this Privacy Policy from time to time. We encourage you to review it periodically for any changes.<br>
 <br>
-By using the Website, you agree to the collection and use of your data as outlined in this Privacy Policy. If you have any questions, please <a style="color: black;font-size: 17px !important;" href="#contact">contact us here</a>.
-	<br><br><br><br><br><br> </section>
+By using the Website, you agree to the collection and use of your data as outlined in this Privacy Policy. If you have any questions, please <a href="#contact">contact us here</a>.
+</p>
+</div>
+<div class="section">
+<a href="https://www.neverstudio.de" id="mainmenu" >Back to the main page &rarr;</a>
+</div>
+<div class="section">
+<span>
+<b>Contact and Terms of Services </b><br>
+Here is our <a href="contact.html">Contact and Legal information</a>.<br>
+&copy; 2025 Michel and Nils H&auml;u&szlig;ler.<br>All rights reserved.
+</p>
+</div>
+
 </body>
 </html>
