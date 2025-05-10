@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Wortguesser</title>
+<title>Neverword</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 <style>
 	
@@ -127,7 +127,7 @@ dialog > *{
 
 <script>document.getElementById("messages").textContent ="Lade Wörterliste...";</script>
 <script src = "wordlist-guess-noncurated.js" defer></script>
-<script src="wordlist-freq-wiki.js" defer></script>
+<script src="20-wordlist-freq-wiki.js" defer></script>
 <script>
 document.addEventListener("DOMContentLoaded", (event) => {
 	
@@ -146,7 +146,18 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	var max_ = 5;
 	var rows = 5;
 	var activeRow = 0;
-	var points = 0;
+	try{
+		if(window.localStorage.getItem("inGame") == "true"){
+			showMessage("Nicht Neuladen während man in einem Spiel ist. Strafpunkte -200.")
+			var points = Math.max(0,parseInt(window.localStorage.getItem("points")) - 200);
+			window.localStorage.setItem("points",points);
+		}else{
+			var points = parseInt(window.localStorage.getItem("points"));
+		}
+	}catch{	
+		var points = 0;
+	}
+	window.localStorage.setItem("inGame","true")
 	var real = ""
 	var show = true;
 	if(window.location.hash.substring(1)!=""){
@@ -162,7 +173,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 		while(real.length != max_){
 			real = guess[Math.floor(Math.random() * guess.length)];
 		}
-		document.getElementById("messages").textContent ="Viel Glück beim Raten.";
+		document.getElementById("messages").textContent ="Viel Glück beim Raten. "+points+" Punkte bisher.";
 	}
 
 
@@ -176,6 +187,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	
 	
 	function createAll(){
+		container = document.getElementById("word");
+		messaging = document.getElementById("messages");
+		field_con = document.getElementById("fields");
 		//Felder erzeugen:
 		for(let row = 0; row < rows; row++){
 			fields[row] = {}
@@ -317,10 +331,13 @@ document.addEventListener("DOMContentLoaded", (event) => {
 					}
 				}
 			}
+			document.getElementById("messages").textContent = "Viel Glück beim Raten.  "+points+" Punkte bisher."
 			if(right == max_){//Wenn alle Buchstaben richtig geraten wurden...
 				points += max_*(rows-activeRow-1)*10
-				document.getElementById("messages").textContent ="Du hast das Wort gefunden!";
-				showMessage("Du hast das Wort gefunden! \n Points: "+points)//...Nachricht an den Nutzer
+				window.localStorage.setItem("points", points);
+				window.localStorage.setItem("inGame","false")
+				document.getElementById("messages").textContent ="Du hast das Wort gefunden!  "+points+" Punkte.";
+				showMessage("Du hast das Wort gefunden! \n Points: "+points,4000)//...Nachricht an den Nutzer
 				activeRow = max_;//...Weiteres bearbeiten unmöglich machen 
 			}else{//Wenn nicht alle Buchstaben richtig geraten wurden...
 				activeRow ++//...Nächste Zeile
@@ -328,18 +345,17 @@ document.addEventListener("DOMContentLoaded", (event) => {
 					fields[index+1][0].focus();
 				}catch{//...Wenn bereits die letzte Spalte erreicht ist...
 					fields[index][0].focus();
-					document.getElementById("messages").textContent = "Schade, vielleicht nächstes mal.";//... Nachricht an den Nutzer
+					document.getElementById("messages").textContent = "Schade, vielleicht nächstes mal. "+points+" Punkte.";//... Nachricht an den Nutzer
+					window.localStorage.setItem("points", points);
+					window.localStorage.setItem("inGame","false");
 					if(show){
-						showMessage("Die Lösung war: "+real.toUpperCase()+" \n Points: "+points)
+						showMessage("Die Lösung war: "+real.toUpperCase()+" \n Points: "+points,4000)
 					}
 					return
 				}	
 			}
-			if(document.getElementById("messages").textContent == "Nicht in der Wörterliste"){//Nachricht zurücksetzen
-					document.getElementById("messages").textContent = "Viel Glück beim Raten."
-			}
 		}else{//Wenn das Wort nicht in der Wörterliste war, dann wird das gemeldet
-				document.getElementById("messages").textContent = "Nicht in der Wörterliste";
+				document.getElementById("messages").textContent = "Nicht in der Wörterliste  "+points+" Punkte bisher.";
 				let el = document.getElementById("word")
 				el.style.animation = 'none';
 				el.offsetHeight; /* trigger reflow */
@@ -370,13 +386,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
 		if(rows==undefined||rows==""){
 				rows = max_
 		}
-		document.getElementById("word").innerHTML = '<p id="messages"> Good luck guessing. </p><p id="letters" style="overflow-wrap: anywhere;"></p>';
-		document.getElementById("letters").innerHTML = "";
-		document.getElementById("messages").textContent = "Viel Glück beim Raten.";
+		document.getElementById("word").innerHTML = '<p id="messages"> Viel Glück beim Raten. </p><span id="fields"></span><p id="letters" style="overflow-wrap: anywhere;"></p>';
 		setTimeout(createAll,0);
 	}
-
-
 	setTimeout(createAll,0);
 });
 
