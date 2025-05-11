@@ -5,8 +5,21 @@
   font-style: normal;
   font-weight: 400;
   align-self: center;
-  background-color: black;
   color: white;
+}
+* {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+*::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
+canvas {
+	margin: 0px;
+	padding: 0px;
+	left: 0px;
+	position: absolute;
 }
 html{
   scroll-snap-type: y mandatory;
@@ -35,6 +48,7 @@ b{
 }
 h1{
 	font-size: 100pt;
+	overflow: scroll;
 }
 h2{
 	font-size: 50pt;
@@ -43,12 +57,25 @@ h2{
 .section > :not(:is(h1,h2,h3,h4,h5,h6)) {
   font-size: 25pt;
   margin: auto;
-  width: 40%;
+  max-width: 40%;
+  width: fit-content;
 }
 
+.section > :only-child:not(:is(h1,h2,h3,h4,h5,h6)) {
+  position: absolute;
+  left: 10%;
+  font-size: 25pt;
+  margin: auto;
+  max-width: 80%;
+  width: fit-content;
+}
 
 img {
-  border-radius: 10vw;
+  border-radius: 8vw;
+  margin: auto;
+}
+video {
+  border-radius: 8vw;
   margin: auto;
 }
 
