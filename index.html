@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>neverstudio</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@v0.176.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@v0.176.0/examples/jsm/"
+  }
+}
+</script>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="titleDiv" style="width: 100vw; scroll-snap-align: start; height: 100vh; width: 100vw; padding: 0px; margin: 0px; left: 0px;">
+</div>
+
+
+
+<div id="description-section" class="section" >
+        <p>
+			<b>We are Never Studio!</b><br>
+			We create AI, Games, Tools and more.<br>
+			Feel free to check our <a href="https://github.com/Never-Studio">GitHub Page</a> and to try out our <a href="#projects">Projects</a>.<br>
+			You can follow us on <a href="https://www.reddit.com/user/NeverStudio/">Reddit</a> and <a href="https://www.instagram.com/neverstudio.de/">Instagram</a>.
+        </p>
+</div>
+<div class="section" id="projects">
+<h1>Projects</h1>
+</div>
+<a href="wordle-project.html" style="text-decoration: none;">
+<div class="section">
+<img src="createnw.png">
+<p><b>Never</b>word<br>
+<br>
+A wordguessing game with custom word length and word topics.</p>
+</div>
+</a>
+<a href="engine-project.html" style="text-decoration: none;">
+<div class="section">
+<img src="https://www.neverstudio.de/neverRPG.png">
+<p><b>Never</b>isometric<br>
+<br>
+An engine for creating retro-styled pixel games.
+With support for custom ratios and tile-free layering.</p>
+</div>
+</a>
+<div class="section">
+<h1>FAQ</h1>
+</div>
+<div class="section">
+<p>
+<b>What is Neverstudio?</b><br>
+A website that publishes
+programming projects,
+maintained by two brothers who are
+interested in programming.<br>
+</p>
+</div>
+<div class="section">
+<p>
+<b>How can I try out a
+project?</b><br>
+Visit its project page by
+clicking on the description/
+photo. If there is a demo,
+you 'll likely find it there.<br>
+</p>
+</div>
+<div class="section">
+<p>
+<b>What social media
+platforms is neverstudio present on?</b><br>
+We have accounts on <a title="the Neverstudio Instagram- Account" href="https://www.instagram.com/neverstudio.de/">Instagram</a>, <a title="the Neverstudio Reddit account" href="https://www.reddit.com/user/NeverStudio/">Reddit</a>, <a title="the Neverstudio Bluesky account" href="https://bsky.app/profile/neverstudio.bsky.social">Bluesky</a>,
+<a title="our GitHub account" href="https://github.com/Never-Studio">GitHub</a> and many
+other platforms. Not all of these
+accounts are actively
+maintained though.
+</p>
+</div>
+<div class="section">
+<p>
+<b>Contact and Terms of Services </b><br>
+Here is our <a href="contact.html">Contact and Legal information</a>.<br>
+&copy; 2025 Michel and Nils H&auml;u&szlig;ler.<br>All rights reserved.
+</p>
+</div>
+<script type="module">
+
+        
+const container = document.getElementById("titleDiv");
+var textMesh;
+var textMaterial;
+
+import * as THREE from 'three';
+import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+
+let bcolors = ["#E34234","#4d673a","#6495ed","#ff8c00"];
+var backgroundC = bcolors[Math.floor(Math.random()*bcolors.length)];
+document.body.style.backgroundColor = backgroundC;
+
+const scene = new THREE.Scene();
+
+
+const dLight = new THREE.RectAreaLight( backgroundC, 5 , 100,100);
+dLight.position.y = -1
+dLight.lookAt(0, 0, 0)
+scene.add( dLight );
+
+const light = new THREE.PointLight( 0xFFFFFF, 500, 0 , 1.5);
+light.position.set( 0, 0, 20 );
+scene.add( light );
+
+const lightAround = new THREE.AmbientLight( 0xFFFFFF, 2 );
+scene.add( lightAround );
+
+const camera = new THREE.PerspectiveCamera( 50, container.offsetWidth/container.offsetHeight, 0.1, 1000 );
+
+
+const renderer = new THREE.WebGLRenderer({antialias: true});
+renderer.setSize(container.offsetWidth,container.offsetHeight);
+renderer.setClearColor(backgroundC, 1);
+renderer.setPixelRatio( window.devicePixelRatio );
+container.appendChild(renderer.domElement)
+window.scrollTo(0,0)
+
+
+
+
+var loadedFont;
+const loader = new FontLoader();
+loader.load(
+    'https://esm.sh/@compai/font-montserrat/data/typefaces/normal-700.json',
+    function (font) {
+		loadedFont = font;
+        const textGeometry = new TextGeometry("n", {
+            font: font,
+			size: 80,
+			depth: 25,
+			curveSegments: 100,
+			bevelEnabled: false,
+			bevelThickness: 5,
+			bevelSize: 0,
+			bevelOffset: 0,
+			bevelSegments: 10
+        });
+        
+        
+        textMaterial = new THREE.MeshStandardMaterial({ color: 0xFFFFFF, roughness: 1, metalness: 0.7});
+        textMesh = new THREE.Mesh(textGeometry, textMaterial);
+        textMesh.position.set(0, 0, 0);
+        
+        textGeometry.computeBoundingBox();
+
+		if (textGeometry.boundingBox) {
+			textGeometry.translate(-textGeometry.boundingBox.max.x / 2, 0, 0);
+		}
+        
+        scene.add(textMesh);
+    }
+);
+
+var alpha;
+var rX;
+var rY;
+var xDif;
+var zDif;
+var yDif;
+var rDif; 
+
+let firstFuncSetup = ()=>{
+	alpha = Math.PI/180 * 15;
+	rX = 42;
+	rY = 110;
+	xDif = 0;
+	yDif = -25;
+	rDif = -1; 
+
+	camera.position.x = 40;
+	camera.position.y = -5;
+	camera.position.z = 40;
+}
+
+let firstFunc = ()=>{
+	let newX = Math.cos(alpha + 2* Math.PI/360) * (rX+rDif) + xDif;
+	let newY = Math.sin(alpha + 2* Math.PI/360) * (rY+rDif) + yDif;
+	
+	camera.lookAt(new THREE.Vector3(newX, newY, 36))
+	
+	camera.position.x = Math.cos(alpha) * rX + xDif;
+	camera.position.y = Math.sin(alpha) * rY + yDif;
+	camera.up.set(0,1,0).applyQuaternion(camera.quaternion);
+	alpha += Math.PI/360;
+	return alpha < Math.PI*0.3
+}
+let secondFuncSetup = ()=>{
+	alpha = 0;
+	rX = 2;
+	rY = 50;
+	xDif = 7;
+	yDif = -30;
+	rDif = 2; 
+
+	camera.position.z = 12.5;
+	camera.up.set(0,1,0);
+
+}
+
+let secondFunc = ()=>{
+	let newX = Math.cos(alpha + Math.PI/360) * (rX+rDif) + xDif;
+	let newY = Math.sin(alpha + Math.PI/360) * (rY+rDif) + yDif;
+	
+	camera.lookAt(new THREE.Vector3(newX, newY, 12.5))
+	
+	camera.position.x = Math.cos(alpha) * rX + xDif;
+	camera.position.y = Math.sin(alpha) * rY + yDif;
+	camera.up.set(0,1,0).applyQuaternion(camera.quaternion);
+	alpha += Math.PI/90
+	return alpha < Math.PI*0.7
+
+}
+
+let thirdFuncSetup = ()=>{
+	xDif = -10;
+	zDif = -10;
+
+	camera.position.x = 40;
+	camera.position.y = 15;
+	camera.position.z = 40;
+	
+	camera.up.set(0,1,0);
+}
+
+let thirdFunc = ()=>{
+	
+	camera.lookAt(new THREE.Vector3(0,0,0));
+	
+	camera.position.y -= 0.5
+	camera.position.x += 0.2
+	return camera.position.y>-10
+}
+let lastFuncSetup = ()=>{
+	alpha = 0;
+	textMesh.geometry.dispose()
+	textMesh.geometry = new TextGeometry("neverstudio", {
+            font: loadedFont,
+			size: 80,
+			depth: 1,
+			curveSegments: 100,
+			bevelEnabled: false,
+			bevelThickness: 5,
+			bevelSize: 0,
+			bevelOffset: 0,
+			bevelSegments: 10
+        });
+    textMesh.geometry.computeBoundingBox();
+
+	if (textMesh.geometry.boundingBox) {
+		textMesh.geometry.translate(-textMesh.geometry.boundingBox.max.x / 2, 0, 0);
+	}
+	camera.position.x = 0;
+	camera.position.y = 50;
+	camera.position.z = 100;
+	camera.lookAt(new THREE.Vector3(0, camera.position.y,0))
+	camera.up.set(0,1,0);
+
+}
+var changeSize = 0.5;
+let lastFunc = ()=>{
+	changeSize = Math.cbrt(changeSize**2.2);
+	
+	textMesh.scale.x*= changeSize;
+	textMesh.scale.y*= changeSize;
+	camera.position.y *= changeSize;
+	camera.lookAt(new THREE.Vector3(0, camera.position.y,0))
+	return textMesh.scale.x>1/8;
+}
+
+var setups = [firstFuncSetup,secondFuncSetup,thirdFuncSetup,lastFuncSetup]
+var animations = [firstFunc,secondFunc,thirdFunc,lastFunc]
+var index = 0;
+setups[index]();
+
+function animate() {
+	if(!animations[index]()){
+		if(index+1 < setups.length){
+			index ++
+			setups[index]()
+			animations[index]()
+		}else{
+			renderer.setAnimationLoop( null );
+		}
+	}
+	
+	renderer.render( scene, camera );
+}
+renderer.setAnimationLoop( animate );
+</script>
+</body>
+</html>
+
