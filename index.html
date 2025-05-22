@@ -249,9 +249,10 @@ let thirdFunc = ()=>{
 let lastFuncSetup = ()=>{
 	alpha = 0;
 	textMesh.geometry.dispose()
+	let font_size = window.innerWidth*80/1273;
 	textMesh.geometry = new TextGeometry("neverstudio", {
             font: loadedFont,
-			size: 60,
+			size: font_size,
 			depth: 1,
 			curveSegments: 100,
 			bevelEnabled: false,
