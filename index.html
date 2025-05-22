@@ -286,7 +286,7 @@ var setups = [firstFuncSetup,secondFuncSetup,thirdFuncSetup,lastFuncSetup]
 var animations = [firstFunc,secondFunc,thirdFunc,lastFunc]
 var index = 0;
 setups[index]();
-
+animations[index]();
 function animate() {
 	if(!animations[index]()){
 		if(index+1 < setups.length){
@@ -300,6 +300,7 @@ function animate() {
 	
 	renderer.render( scene, camera );
 }
+	
 var animating = false;
 function startAnimation(e){
 	
