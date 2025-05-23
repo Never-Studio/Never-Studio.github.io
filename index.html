@@ -91,6 +91,11 @@ Here is our <a href="contact.html">Contact and Legal information</a>.<br>
 &copy; 2025 Michel and Nils H&auml;u&szlig;ler.<br>All rights reserved.
 </p>
 </div>
+<script>
+let bcolors = ["#E34234","#4d673a","#6495ed","#ff8c00"];
+var backgroundC = bcolors[Math.floor(Math.random()*bcolors.length)];
+document.body.style.backgroundColor = backgroundC;
+</script>
 <script type="module" defer>
 
 
@@ -102,9 +107,7 @@ import * as THREE from 'three';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 
-let bcolors = ["#E34234","#4d673a","#6495ed","#ff8c00"];
-var backgroundC = bcolors[Math.floor(Math.random()*bcolors.length)];
-document.body.style.backgroundColor = backgroundC;
+
 
 const scene = new THREE.Scene();
 
