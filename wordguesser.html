@@ -230,6 +230,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
 				//Laden in das objects dictionary
 				fields[row][i] = document.getElementById('field'+row+'_'+i);
 				//Keyhandling implementieren:
+				fields[row][i].addEventListener('keypress', (event) => {event.preventDefault()});
+				fields[row][i].addEventListener('keydown', (event) => {event.preventDefault()});
 				fields[row][i].addEventListener('keyup', (event) => {
 					if(row == activeRow){
 						if(event.key=="ArrowLeft"){
@@ -245,16 +247,18 @@ document.addEventListener("DOMContentLoaded", (event) => {
 								fields[row][i].focus();
 							}
 						}else if(event.key=="Backspace" || event.key=="Delete"){
-							if(fields[row][i].value !=""){
+							if(fields[row][i].value ==""){
+								try{
+									fields[row][i-1].focus();
+									fields[row][i-1].value ="";
+									
+								}catch{
+									fields[row][i].focus();
+								}
+							}else{
 								fields[row][i].value ="";
 							}
-							try{
-								fields[row][i-1].focus();
-								//fields[row][i-1].value =""
-								
-							}catch{
-								fields[row][i].focus();
-							}
+							
 						}else if(event.key=="Enter"){
 							enterRes(row);
 						}else if(event.key.length == 1){
@@ -273,6 +277,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
 					}else{
 							fields[row][i].value = "";
 					}
+					event.preventDefault();
+					
 				});
 			}
 		}
