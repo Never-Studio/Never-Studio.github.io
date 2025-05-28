@@ -1,8 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Wortguesser</title>
+<title>Neverword</title>
+<meta name='description' content='A free wordguessing game. Create your own games and share them.'>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" media="screen and (min-width: 700px)"  href="styles.css">
+<link rel="stylesheet" media="screen and (max-width: 700px)"  href="styles-phone.css">
+    <style>
+    img {
+		border-radius: 7vw;
+	}
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 <style>
 	
 @keyframes toorange {
@@ -67,6 +76,7 @@ p{
 	border-width: 4px;
 }
 .norm{
+	color: black;
 	background-color: white;
 	display: inline-block;
 	outline:none;
@@ -78,6 +88,7 @@ p{
 	border-width: 4px;
 }
 .norm:focus{
+	color: black;
 	background-color: white;
 	display: inline-block;
 	outline:none;
@@ -110,6 +121,7 @@ dialog > *{
 <meta charset="utf-8" />
 </head>
 <body>
+<h1>neverword</h1>
 <div id="word">
 <p id="messages"> Good luck guessing. </p>
 <span id="fields"></span>
@@ -176,15 +188,17 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	
 	
 	function createAll(){
+		container = document.getElementById("word");
+		messaging = document.getElementById("messages");
+		field_con = document.getElementById("fields");
 		//Felder erzeugen:
 		for(let row = 0; row < rows; row++){
-			fields[row] = {}
 			for(let i = 0; i < max_; i++){
 				field_con.innerHTML += '<input id = "field'+row+'_'+i+'" class = "field" maxlength="1">';
 			}
 			field_con.innerHTML += "<br>"
 		}
-		container.innerHTML += '<br><a href="'+location.protocol + '//' + location.host+'/findhashurl.html" style="border: solid;border-radius: 20px;padding: 10px;">Eigenes Wortspiel</a>'
+		container.innerHTML += '<br><a href="'+location.protocol + '//' + location.host+'/findhashurl.html" style="border: solid;border-radius: 20px;padding: 10px; color: black; background-color: white; text-decoration: none;">Eigenes Wortspiel</a>'
 		container.innerHTML += '<br><button class = "norm" onclick = "document.getElementById(\'settings\').showModal();" style="border: solid;border-radius: 20px;padding: 10px;">Einstellungen</a><br>'
 		//Alphabet anzeigen:
 		let alphabet = "qwertzuiopüasdfghjklöäyxcvbnm"
@@ -201,6 +215,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 		for(let row = 0; row < rows; row++){
 			fields[row] = {}
 			for(let i = 0; i < max_; i++){
+				console.log(row,i)
 				//Laden in das objects dictionary
 				fields[row][i] = document.getElementById('field'+row+'_'+i);
 				//Keyhandling implementieren:
@@ -221,14 +236,14 @@ document.addEventListener("DOMContentLoaded", (event) => {
 						}else if(event.key=="Backspace" || event.key=="Delete"){
 							if(fields[row][i].value !=""){
 								fields[row][i].value ="";
-							}else{
-								try{
-									fields[row][i-1].focus();
-								}catch{
-									fields[row][i].focus();
-								}
 							}
-							
+							try{
+								fields[row][i-1].focus();
+								//fields[row][i-1].value =""
+								
+							}catch{
+								fields[row][i].focus();
+							}
 						}else if(event.key=="Enter"){
 							enterRes(row);
 						}else if(event.key.length == 1){
@@ -352,7 +367,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	function saveSettings(){
 		let index = 0;
 		let new_real = "";
-		while(new_real.length != document.getElementById("length").value){
+		let new_length = document.getElementById("length").value;
+		if(new_length=="" || new_length == undefined){
+				new_length = max_
+		}
+		while(new_real.length != new_length){
 			index++;
 			new_real = guess[Math.floor(Math.random() * guess.length)];
 			if(index>100000){
@@ -363,16 +382,17 @@ document.addEventListener("DOMContentLoaded", (event) => {
 			}
 		}
 		real = new_real;
-		max_ = document.getElementById("length").value;
+		max_ = new_length
 		rows = document.getElementById("tries").value;
 		fields = {};
 		activeRow = 0;
 		if(rows==undefined||rows==""){
 				rows = max_
 		}
-		document.getElementById("word").innerHTML = '<p id="messages"> Good luck guessing. </p><p id="letters" style="overflow-wrap: anywhere;"></p>';
+		document.getElementById("word").innerHTML = '<p id="messages"> Good luck guessing. </p><span id="fields"></span><p id="letters" style="overflow-wrap: anywhere;"></p>';
 		document.getElementById("letters").innerHTML = "";
 		document.getElementById("messages").textContent = "Viel Glück beim Raten.";
+		console.log(max_,rows,real)
 		setTimeout(createAll,0);
 	}
 
@@ -383,5 +403,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
 
 
+</script>
+<script>
+window.onload = ()=>{let bcolors = ["#E34234","#4d673a","#5F92EC","#ff8c00"];document.body.style.backgroundColor = bcolors[Math.floor(Math.random()*bcolors.length)];}
 </script>
 </body>

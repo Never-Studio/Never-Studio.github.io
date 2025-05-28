@@ -1,56 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>neverstudio - coding projects</title>
+<link rel="canonical" href="https://neverstudio.de/" />
+<title>neverstudio - coding projects and who we are</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="The main page of neverstudio.de: An overview of our projects (e.g. neverengine and neverword) and the FAQs.">
+<meta name="description" content="neverstudio.de - Coding projects: Find an overview of what we do and who we are. You can explore games and more.">
 <link rel="stylesheet" media="screen and (min-width: 700px)"  href="styles.css">
 <link rel="stylesheet" media="screen and (max-width: 700px)"  href="styles-phone.css">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" defer>
 </head>
 
 <body>
 <div id="titleDiv" title="Neverstudio title animation" style="width: 100vw; scroll-snap-align: start; height: 100vh; width: 100vw; padding: 0px; margin: 0px; left: 0px;display: flex; align-items: center;justify-content: center;">
 	<div id="removeText" style="text-align: center;" title= "neverstudio">
+		<h1>neverstudio</h1>
 		<p>Click or press any key to start</p>
 	</div>
 </div>
 
 <div class="section" id="about us">
-<h1>Who we are</h1>
+<h2>Who we are</h2>
 </div>
 
 <div id="description-section" class="section" >
         <p>
-			<b>We are Never Studio!</b><br>
+			<b>We are Never Studio!</b><br><br>
 			Neverstudio.de is a website that publishes coding projects.<br>
 		        We are interested in Game Developement, AI and other tech-related topics.<br>
-			Feel free to check our <a href="https://github.com/Never-Studio">GitHub Page</a> and to try out a <a href="#projects">Project</a>.<br>
-			You can follow us on <a href="https://www.reddit.com/user/NeverStudio/">Reddit</a> and <a href="https://www.instagram.com/neverstudio.de/">Instagram</a>.
+			Feel free to check our <a href="https://github.com/Never-Studio" title="neverstudio Github Page">GitHub Page</a> and to try out a <a href="#projects" title="project list">Project</a>.<br>
+			You can follow us on <a href="https://www.reddit.com/user/NeverStudio/" title="neverstudio Reddit Page">Reddit</a> and <a href="https://www.instagram.com/neverstudio.de/" title="neverstudio Instagram page">Instagram</a>.
         </p>
 </div>
 <div class="section" id="projects">
-<h1>Projects</h1>
+<h2>Projects</h2>
 </div>
 <a href="wordle-project.html" style="text-decoration: none;">
 <div class="section">
-<img src="createnw.png" alt="A Wordle-like wordguessing game" loading="lazy">
-<p><b>Never</b>word<br>
+<img src="createnw.png" alt="A Wordle-like wordguessing game" title="A Wordle-like wordguessing game" loading="lazy">
+<p><b>neverword</b><br>
 <br>
 A wordguessing game with custom word length and word topics.</p>
 </div>
 </a>
 <a href="engine-project.html" style="text-decoration: none;">
 <div class="section">
-<img src="https://www.neverstudio.de/neverRPG.png" alt="A pixel-art figure in front of the text hello" loading="lazy">
-<p><b>Never</b>isometric<br>
+<img src="https://www.neverstudio.de/neverRPG.png" alt="A pixel-art figure in front of the text hello" title="A pixel-art figure in front of the text hello" loading="lazy">
+<p><b>neverisometric</b><br>
 <br>
 An engine for creating retro-styled pixel games.
 With support for custom ratios and tile-free layering.</p>
 </div>
 </a>
 <div class="section">
-<h1>FAQ</h1>
+<h2>FAQ</h2>
 </div>
 <div class="section">
 <p>
@@ -88,13 +90,13 @@ maintained though.
 <a title="neverstudio homepage" href="https://neverstudio.de/">Neverstudio.de</a> exists for publishing coding projects.<br>
 While we have only published a wordguessing game yet, we plan to publicly release our engine in the future.<br>
 We also intend to do some AI-related things.<br>
-We might also publish a game a some point.
+We might also publish a game at some point.
 </p>
 </div>
 <div class="section">
 <p>
 <b>Contact and Terms of Services </b><br>
-Here is our <a href="contact.html">Contact and Legal information</a>.<br>
+Here is our <a href="contact.html" title="contact and legal information">Contact and Legal information</a>.<br>
 &copy; 2025 Michel and Nils H&auml;u&szlig;ler.<br>All rights reserved.
 </p>
 </div>
@@ -268,7 +270,7 @@ let lastFuncSetup = ()=>{
 	alpha = 0;
 	textMesh.geometry.dispose()
 	let font_size = window.innerWidth*80/1273;
-	textMesh.geometry = new TextGeometry("neverstudio", {
+	textMesh.geometry = new TextGeometry("never give up", {
             font: loadedFont,
 			size: font_size,
 			depth: 1,
@@ -332,7 +334,6 @@ function startAnimation(e){
 }
 document.body.addEventListener("click",startAnimation)
 document.body.addEventListener("keydown",startAnimation)
-
 </script>
 </body>
 </html>

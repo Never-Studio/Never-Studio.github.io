@@ -2,13 +2,19 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>Wortguesser Creator</title>
+<title>Neverword creator</title>
+<meta name='description' content='Create your own neverword games and share them here. With support for custom wordlengths.'>
+<link rel="stylesheet" media="screen and (min-width: 700px)"  href="styles.css">
+<link rel="stylesheet" media="screen and (max-width: 700px)"  href="styles-phone.css">
+    <style>
+    img {
+		border-radius: 7vw;
+	}
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 <style>
 *{
-	font-size: 60px;
-	text-align: center;
-	text-decoration: none;
-	color: black;
+	font-size: 25pt;
 }
 
 div{
@@ -22,17 +28,19 @@ p{
 	overflow-wrap: break-word;
 }
 .field{
+	color: black;
 	padding: 10px;
 	background-color: white;
 	display: inline-block;
 	outline:none;
 	caret-color: black;
-	border: solid;
+	border: none;
 	border-radius: 20px;
 	text-align: center;
 	margin: 10px;
 }
 .field:focus{
+	color: black;
 	padding: 10px;
 	background-color: white;
 	display: inline-block;
@@ -42,12 +50,13 @@ p{
 	border-radius: 20px;
 	text-align: center;
 	margin: 10px;
-	border-width: 5px;
+	border-width: 2px;
 }
 </style>
 </head>
 
 <body>
+	<h1>neverword creator</h1>
 	<script>
 function submitter(){
 	var name = document.getElementById("name").value
@@ -67,7 +76,9 @@ Versuche: <input id="rows" class="field" type="text"><br>
 <button class="field" onclick='window.location = location.protocol + "//" + location.host+"/wordguesser.html"'>Zur Hauptseite</button>
 <br>
 <a id = "code"></a>
-
+<script>
+window.onload = ()=>{let bcolors = ["#E34234","#4d673a","#5F92EC","#ff8c00"];document.body.style.backgroundColor = bcolors[Math.floor(Math.random()*bcolors.length)];}
+</script>
 </body>
 
 </html>
