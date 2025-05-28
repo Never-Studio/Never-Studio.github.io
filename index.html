@@ -286,6 +286,7 @@ let lastFuncSetup = ()=>{
 	if (textMesh.geometry.boundingBox) {
 		textMesh.geometry.translate(-textMesh.geometry.boundingBox.max.x / 2, 0, 0);
 	}
+	textMesh.position.y += 5;
 	camera.position.x = 0;
 	camera.position.y = 50;
 	camera.position.z = 100;
