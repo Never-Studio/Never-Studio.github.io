@@ -61,10 +61,8 @@ let urls = ["https://www.neverstudio.de/",
 "https://www.neverstudio.de/contact.html",
 "https://www.neverstudio.de/wordguesser.html",
 "https://www.neverstudio.de/neverisometric.html",
-"https://www.neverstudio.de/neverword.html",
-"https://www.neverstudio.de/instagram.html"]
-let substitutes = {"https://www.neverstudio.de/neverword.html":"https://www.neverstudio.de/wordguesser.html",
-	"https://www.neverstudio.de/instagram.html":"https://www.neverstudio.de/contact.html"}
+"https://www.neverstudio.de/neverword.html"]
+let substitutes = {"https://www.neverstudio.de/neverword.html":"https://www.neverstudio.de/wordguesser.html"}
 let currentUrl = document.URL;
 urls.sort(function(a, b){return dist(b,currentUrl)-dist(a,currentUrl);})
 let suggest = urls[0];
@@ -72,7 +70,7 @@ if(Object.keys(substitutes).includes(suggest)){
 	suggest = substitutes[suggest]
 }
 let helper = document.getElementById("help");
-helper.innerHTML = 'Did you mean <a title="correction suggestion" href="'+suggest+'">'+suggest+'</a>?<br>'+helper.innerHTML
+helper.innerHTML = 'Did you mean <a title="correction suggestion" href="'+suggest+'">'+suggest+'</a>?<br><br>'+helper.innerHTML
 </script>
 </body>
 </html>
