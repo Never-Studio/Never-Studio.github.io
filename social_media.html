@@ -73,11 +73,6 @@ document.getElementById("loaded").scrollIntoView()
     console.log(progress)
  };
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js')
-    .then(() => console.log('Service worker registered'))
-    .catch(err => console.error('Service worker failed:', err));
-}
 
 // Using CreateMLCEngine
 const engine = await CreateMLCEngine("Llama-3.2-1B-Instruct-q4f16_1-MLC", { initProgressCallback });
@@ -95,17 +90,8 @@ let tGroup = document.getElementById("target_group")
 form.onsubmit = async (event)=>{
 	
 	
-	let url = document.getElementById("urlIn").value
-	let urlResponse = await fetch(url,{method: "GET"})
-	let urlHtml = await urlResponse.text()
-	let parser = new DOMParser()
-	let doc = parser.parseFromString(urlHtml.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script\s*>/gi,""), "text/html")
-	let text = doc.body.textContent.replace((/  |\r\n|\n|\r/gm)," ").slice(0,100)
-	alert(text)
-	
-	
 	tGroup.scrollIntoView()
-	//let text = document.getElementById("urlIn").value
+	let text = document.getElementById("urlIn").value
 	let messages = [
 		{ role: "system", content: "You are an expert for finding an organisations target groups." },
 		{ role: "user", content: "Text:\n```"+text+"```\n\nMake a brief list of 5 groups who might be interested in the organisation the text belongs to. No individual explanations are needed." }
