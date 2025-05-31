@@ -47,11 +47,11 @@ b{
   text-align: center;
 }
 h1{
-	font-size: 45pt;
+	font-size: 40pt;
 	overflow: scroll;
 }
 h2{
-	font-size: 25pt;
+	font-size: 30pt;
 }
 
 .section > :not(:is(h1,h2,h3,h4,h5,h6)) {
