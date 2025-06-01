@@ -1,0 +1,196 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link href="https://neverstudio.de/" rel="canonical"/>
+<title>Neverstudio nevercontent- ai social media content creator</title>
+<meta name="description" content="Create a target group analysis and posts for free. With an LLM that runs in your browser!">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="styles-phone.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" defer>
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "nevercontent",
+      "browserRequirements":"Javascript has to be enabled. The LLMs need large amounts of browser storage and RAM (about 5GBs). WebGPU has to be supported by your browser.",
+      "operatingSystem": "All",
+      "applicationCategory": "GameApplication",
+      "featureList":"Analyses your input text for target groups. Creates post texts.",
+      "offers": {
+        "@type": "Offer",
+        "price": 0,
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+</head>
+
+<body>
+<div id="titleDiv" title="Nevercontent itle" style="width: 100vw; scroll-snap-align: start; height: 100vh; width: 100vw; padding: 0px; margin: 0px; left: 0px;display: flex; align-items: center;justify-content: center;">
+	<div id="removeText" style="text-align: center;" title= "nevercontent">
+		<h1>nevercontent</h1>
+		<p title="never just a studio">scroll down to start</p>
+	</div>
+</div>
+<div class="section">
+<b>Loading model</b><br>
+<p id="loaded">Loading...</p>
+</div>
+<div class="section">
+	<form name="myForm" id="myForm" action="javascript:void(0);">
+	Your company/project description (e.g. text from your website) that will be used as basis for the post: <br>
+	<br><textarea id="urlIn" style="background-color: transparent;border: white 1px solid;border-radius:1em;width: 80%;height:fit-content;text-size:20pt;field-sizing: content;"></textarea>
+	<br><input type="submit" style="background-color: transparent;border: white 1px solid;border-radius:1em;text-size:20pt;"value="Submit">
+	</form>
+</div>
+<div class="section">
+<b>Target group</b><br>
+<p id="target_group">Thinking...</p>
+</div>
+<span id="posts">Writing...</span>
+<script src=" https://cdn.jsdelivr.net/npm/showdown@1.9.0/dist/showdown.min.js">
+</script>
+<script type="module">
+
+import * as webllm from "https://esm.run/@mlc-ai/web-llm";
+import { CreateMLCEngine, MLCEngine } from "https://esm.run/@mlc-ai/web-llm";
+document.getElementById("loaded").scrollIntoView()
+ // Initialize with a progress callback
+ const initProgressCallback = (progress) => {
+    document.getElementById("loaded").innerHTML = "Loaded "+Math.round(progress.progress*100)+"%"
+    console.log(progress)
+ };
+
+
+// Using CreateMLCEngine
+const engine = await CreateMLCEngine("Llama-3.2-1B-Instruct-q4f16_1-MLC", { initProgressCallback });
+
+//create markdown to HTML converter
+var converter = new showdown.Converter()
+document.getElementById("loaded").innerHTML = "Model fully loaded! Scroll further down!"
+
+let form = document.getElementById("myForm")
+form.scrollIntoView()
+
+let tGroup = document.getElementById("target_group")
+
+function showMessage(text, delay = 2000) {
+  let toast = document.createElement("div");
+  toast.textContent = text;
+  toast.style = `
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    color: black;
+    padding: 0.5em 1em;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    z-index: 10000;
+    font-weight: bold;
+  `;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), delay);
+}
+
+form.onsubmit = async (event)=>{
+	
+	
+	tGroup.scrollIntoView()
+	let text = document.getElementById("urlIn").value
+	let messages = [
+		{ role: "system", content: "You are an expert for finding an organisations target groups." },
+		{ role: "user", content: "Text:\n```"+text+"```\n\nMake a brief list of 5 groups who might be interested in the organisation the text belongs to. No individual explanations are needed." }
+	];
+
+	let target_group = await engine.chat.completions.create({
+		messages,
+	});
+
+	tGroup.innerHTML = converter.makeHtml(target_group.choices[0].message.content);
+
+
+
+	let postsSpan = document.getElementById("posts")
+
+
+	let items= ["bluesky (a twitter alternative)","reddit","facebook","twitter (now called X)"]
+	for(let platform of items){
+		messages = [
+			{ role: "system", content: "You are an expert for social media posting." },
+			{ role: "user", content: "Text:\n```"+text+"```\n Target groups: \n"+target_group+"\n\nAnswer with a short "+platform+" post created out of the text. Answer with the posting only." }
+		];
+
+		let posting = await engine.chat.completions.create({
+			messages,
+		});
+		let postText = converter.makeHtml(posting.choices[0].message.content.replaceAll('"','').replaceAll('<h1>','').replaceAll('</h1>','').replaceAll('<h2>','').replaceAll('</h2>','').replaceAll('<p>','').replaceAll('</p>',''))
+		let postText2 = ""
+		if(platform == "reddit"){
+			messages = [
+			{ role: "system", content: "You are an expert for social media posting." },
+			{ role: "user", content: "Text:\n```"+text+"```\n Target groups: \n"+target_group+"\n\nAnswer with a short "+platform+" post created out of the text. Answer with the posting only." },
+			{ role: "assistant", content: postText },
+			{ role: "user", content: "Please tell me in what subreddits should I share the post?" }
+			];
+
+			let additional_posting = await engine.chat.completions.create({
+				messages,
+			});
+			postText2 = converter.makeHtml(additional_posting.choices[0].message.content).replaceAll('<p>','').replaceAll('</p>','')
+		}
+		
+		let sharings = {"bluesky (a twitter alternative)":'<a target="_blank" href="https://bsky.app/intent/compose?text='+encodeURIComponent(postText)+'">Share on Bluesky</a>',
+			"reddit":"<a target=\"_blank\" href=\"https://www.reddit.com/submit?type=TEXT\">Share on Reddit</a>",
+			"facebook":"<a target=\"_blank\" href=\"https://www.facebook.com/sharer/sharer.php\">Share on Facebook</a>",
+			"twitter (now called X)":'<a target="_blank" href="https://twitter.com/intent/tweet?text='+encodeURIComponent(postText)+'">Share on Twitter (X)</a>'}
+
+		if(postsSpan.innerHTML == 'Writing...'){
+			postsSpan.innerHTML = ""
+		}
+		console.log(platform)
+		postsSpan.insertAdjacentHTML("beforeend", '<div class="section" style="height: fit-content;flex-direction:column;width: 100%;"><b>'+platform+'</b><br><span id="'+platform.slice(0,5)+'">'+postText+'</span>'+postText2+'<br>'+sharings[platform]+'</div>');
+		let doc = document.getElementById(platform.slice(0,5))
+		doc.scrollIntoView()
+		doc.addEventListener("click",async function(){
+			try {
+			  await navigator.clipboard.writeText(doc.textContent);
+			  console.log('Content copied to clipboard');
+			} catch (err) {
+			  console.error('Failed to copy: ', err);
+			}
+			showMessage("Copied post!")
+		});
+		console.log(doc)
+	}
+
+	event.preventDefault();
+	return false;
+}
+
+
+
+</script>
+<div class="section">
+<p>
+<b>Contact and Terms of Services </b><br>
+Here is our <a href="contact.html" title="contact and legal information">Contact and Legal information</a>.<br>
+&copy; 2025 Michel and Nils H&auml;u&szlig;ler.<br>All rights reserved.
+</p>
+</div>
+<script>
+let bcolors = ["#E34234","#4d673a","#5F92EC","#ff8c00"];
+var backgroundC = bcolors[Math.floor(Math.random()*bcolors.length)];
+document.body.style.backgroundColor = backgroundC;
+</script>
+</body>
+</html>
+
