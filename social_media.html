@@ -22,7 +22,7 @@
       "browserRequirements":"Javascript has to be enabled. The LLMs need large amounts of browser storage and RAM (about 5GBs). WebGPU has to be supported by your browser.",
       "operatingSystem": "All",
       "applicationCategory": "GameApplication",
-      "featureList":"Analyses your input text for target groups. Creates post texts.",
+      "featureList":"Analyses websites for target groups. Creates posts and platform suggestions.",
       "offers": {
         "@type": "Offer",
         "price": 0,
@@ -40,8 +40,10 @@
 	</div>
 </div>
 <div class="section">
+<p>
 <b>Loading model</b><br>
 <p id="loaded">Loading...</p>
+</p>
 </div>
 <div class="section">
 	<form name="myForm" id="myForm" action="javascript:void(0);">
@@ -51,10 +53,13 @@
 	</form>
 </div>
 <div class="section">
+<p>
 <b>Target group</b><br>
 <p id="target_group">Thinking...</p>
+</p>
 </div>
-<span id="posts">Writing...</span>
+<span id="posts">
+</span>
 <script src=" https://cdn.jsdelivr.net/npm/showdown@1.9.0/dist/showdown.min.js">
 </script>
 <script type="module">
@@ -81,25 +86,6 @@ form.scrollIntoView()
 
 let tGroup = document.getElementById("target_group")
 
-function showMessage(text, delay = 2000) {
-  let toast = document.createElement("div");
-  toast.textContent = text;
-  toast.style = `
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: white;
-    color: black;
-    padding: 0.5em 1em;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
-    z-index: 10000;
-    font-weight: bold;
-  `;
-  document.body.appendChild(toast);
-  setTimeout(() => toast.remove(), delay);
-}
 
 form.onsubmit = async (event)=>{
 	
@@ -132,8 +118,7 @@ form.onsubmit = async (event)=>{
 		let posting = await engine.chat.completions.create({
 			messages,
 		});
-		let postText = converter.makeHtml(posting.choices[0].message.content.replaceAll('"','').replaceAll('<h1>','').replaceAll('</h1>','').replaceAll('<h2>','').replaceAll('</h2>','').replaceAll('<p>','').replaceAll('</p>',''))
-		let postText2 = ""
+		let postText = converter.makeHtml(posting.choices[0].message.content.replace('"','').replace('<h1>','').replace('</h1>','').replace('<h2>','').replace('</h2>',''))
 		if(platform == "reddit"){
 			messages = [
 			{ role: "system", content: "You are an expert for social media posting." },
@@ -145,31 +130,21 @@ form.onsubmit = async (event)=>{
 			let additional_posting = await engine.chat.completions.create({
 				messages,
 			});
-			postText2 = converter.makeHtml(additional_posting.choices[0].message.content).replaceAll('<p>','').replaceAll('</p>','')
+			postText += converter.makeHtml(additional_posting.choices[0].message.content)
 		}
 		
-		let sharings = {"bluesky (a twitter alternative)":'<a target="_blank" href="https://bsky.app/intent/compose?text='+encodeURIComponent(postText)+'">Share on Bluesky</a>',
-			"reddit":"<a target=\"_blank\" href=\"https://www.reddit.com/submit?type=TEXT\">Share on Reddit</a>",
-			"facebook":"<a target=\"_blank\" href=\"https://www.facebook.com/sharer/sharer.php\">Share on Facebook</a>",
-			"twitter (now called X)":'<a target="_blank" href="https://twitter.com/intent/tweet?text='+encodeURIComponent(postText)+'">Share on Twitter (X)</a>'}
+		let sharings = {"bluesky (a twitter alternative)":"<a href=\"https://bsky.app/intent/compose?text="+posting+"\">Share on Bluesky</a>",
+			"reddit":"<a href=\"https://www.reddit.com/submit/\">Share on Reddit</a>",
+			"facebook":"<a href=\"https://www.facebook.com/sharer/sharer.php\">Share on Facebook</a>",
+			"twitter (now called X)":"<a href=\"https://twitter.com/intent/tweet?text="+posting+"\">Share on Twitter (X)</a>"}
 
-		if(postsSpan.innerHTML == 'Writing...'){
+		if(postsSpan.innerHTML.replace("\n","") == '<div class="section"><p><p id="target_group">Writing...</p></p></div>'){
 			postsSpan.innerHTML = ""
 		}
-		console.log(platform)
-		postsSpan.insertAdjacentHTML("beforeend", '<div class="section" style="height: fit-content;flex-direction:column;width: 100%;"><b>'+platform+'</b><br><span id="'+platform.slice(0,5)+'">'+postText+'</span>'+postText2+'<br>'+sharings[platform]+'</div>');
-		let doc = document.getElementById(platform.slice(0,5))
-		doc.scrollIntoView()
-		doc.addEventListener("click",async function(){
-			try {
-			  await navigator.clipboard.writeText(doc.textContent);
-			  console.log('Content copied to clipboard');
-			} catch (err) {
-			  console.error('Failed to copy: ', err);
-			}
-			showMessage("Copied post!")
-		});
-		console.log(doc)
+		postsSpan.innerHTML += '<div class="section" id="'+platform+'" style="height: fit-content;flex-direction:column;width: 100%;"><b>'+platform+'</b><br>'+postText+sharings[platform]+'</div>'
+		document.getElementById(platform).scrollIntoView()
+		
+		
 	}
 
 	event.preventDefault();
