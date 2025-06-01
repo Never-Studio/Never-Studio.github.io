@@ -37,10 +37,12 @@
 	<div id="removeText" style="text-align: center;" title= "nevercontent">
 		<h1>nevercontent</h1>
 		<p title="never just a studio">scroll down to start</p>
+		<noscript>You have to enable JS to use this tool!</noscript>
 	</div>
 </div>
 <div class="section">
 <b>Loading model</b><br>
+<p>Leave this tab open in the background and come back later.</p>
 <p id="loaded">Loading...</p>
 </div>
 <div class="section">
@@ -54,33 +56,10 @@
 <b>Target group</b><br>
 <p id="target_group">Thinking...</p>
 </div>
-<span id="posts">Writing...</span>
+<span id="posts"></span>
 <script src=" https://cdn.jsdelivr.net/npm/showdown@1.9.0/dist/showdown.min.js">
 </script>
-<script type="module">
-
-import * as webllm from "https://esm.run/@mlc-ai/web-llm";
-import { CreateMLCEngine, MLCEngine } from "https://esm.run/@mlc-ai/web-llm";
-document.getElementById("loaded").scrollIntoView()
- // Initialize with a progress callback
- const initProgressCallback = (progress) => {
-    document.getElementById("loaded").innerHTML = "Loaded "+Math.round(progress.progress*100)+"%"
-    console.log(progress)
- };
-
-
-// Using CreateMLCEngine
-const engine = await CreateMLCEngine("Llama-3.2-1B-Instruct-q4f16_1-MLC", { initProgressCallback });
-
-//create markdown to HTML converter
-var converter = new showdown.Converter()
-document.getElementById("loaded").innerHTML = "Model fully loaded! Scroll further down!"
-
-let form = document.getElementById("myForm")
-form.scrollIntoView()
-
-let tGroup = document.getElementById("target_group")
-
+<script>
 function showMessage(text, delay = 2000) {
   let toast = document.createElement("div");
   toast.textContent = text;
@@ -100,10 +79,41 @@ function showMessage(text, delay = 2000) {
   document.body.appendChild(toast);
   setTimeout(() => toast.remove(), delay);
 }
+if (!navigator.gpu) {
+	showMessage("Your browser does not support WebGPU. Use Chrome, Edge or Opera.",4000)
+}
+</script>
+<script type="module">
 
+import * as webllm from "https://esm.run/@mlc-ai/web-llm";
+import { CreateMLCEngine, MLCEngine } from "https://esm.run/@mlc-ai/web-llm";
+document.getElementById("loaded").scrollIntoView()
+ // Initialize with a progress callback
+ 
+var engine = undefined;
+try{
+const initProgressCallback = (progress) => {
+    document.getElementById("loaded").innerHTML = "Loaded "+Math.round(progress.progress*100)+"%"
+    console.log(progress)
+ };
+
+
+// Using CreateMLCEngine
+engine = await CreateMLCEngine("Llama-3.2-1B-Instruct-q4f16_1-MLC", { initProgressCallback });
+
+
+document.getElementById("loaded").innerHTML = "Model fully loaded! Scroll further down!"
+}catch(e){
+	showMessage("Error when loading model. Check your internet connection and if your browser cache is big enough. Reload to try again.",3000)
+	console.error(e)
+}
+
+//create markdown to HTML converter
+var converter = new showdown.Converter()
+
+let tGroup = document.getElementById("target_group")
+let form = document.getElementById("myForm")
 form.onsubmit = async (event)=>{
-	
-	
 	tGroup.scrollIntoView()
 	let text = document.getElementById("urlIn").value
 	let messages = [
@@ -115,7 +125,7 @@ form.onsubmit = async (event)=>{
 		messages,
 	});
 
-	tGroup.innerHTML = converter.makeHtml(target_group.choices[0].message.content);
+	tGroup.innerHTML = converter.makeHtml(target_group.choices[0].message.content) +"<br> The posts are being generated below.";
 
 
 
@@ -126,7 +136,7 @@ form.onsubmit = async (event)=>{
 	for(let platform of items){
 		messages = [
 			{ role: "system", content: "You are an expert for social media posting." },
-			{ role: "user", content: "Text:\n```"+text+"```\n Target groups: \n"+target_group+"\n\nAnswer with a short "+platform+" post created out of the text. Answer with the posting only." }
+			{ role: "user", content: "Text:\n```"+text+"```\n Target groups for the post: \n"+target_group.choices[0].message.content+"\n\nAnswer with a short "+platform+" post created out of the text. Answer with the posting only." }
 		];
 
 		let posting = await engine.chat.completions.create({
@@ -137,7 +147,7 @@ form.onsubmit = async (event)=>{
 		if(platform == "reddit"){
 			messages = [
 			{ role: "system", content: "You are an expert for social media posting." },
-			{ role: "user", content: "Text:\n```"+text+"```\n Target groups: \n"+target_group+"\n\nAnswer with a short "+platform+" post created out of the text. Answer with the posting only." },
+			{ role: "user", content: "Text:\n```"+text+"```\n Target groups for the post: \n"+target_group.choices[0].message.content+"\n\nAnswer with a short "+platform+" post created out of the text. Answer with the posting only." },
 			{ role: "assistant", content: postText },
 			{ role: "user", content: "Please tell me in what subreddits should I share the post?" }
 			];
@@ -145,7 +155,7 @@ form.onsubmit = async (event)=>{
 			let additional_posting = await engine.chat.completions.create({
 				messages,
 			});
-			postText2 = converter.makeHtml(additional_posting.choices[0].message.content).replaceAll('<p>','').replaceAll('</p>','')
+			postText2 = '<span style="font-size:15pt;">'+converter.makeHtml(additional_posting.choices[0].message.content).replaceAll('<p>','').replaceAll('</p>','')+'</span>'
 		}
 		
 		let sharings = {"bluesky (a twitter alternative)":'<a target="_blank" href="https://bsky.app/intent/compose?text='+encodeURIComponent(postText)+'">Share on Bluesky</a>',
@@ -159,7 +169,7 @@ form.onsubmit = async (event)=>{
 		console.log(platform)
 		postsSpan.insertAdjacentHTML("beforeend", '<div class="section" style="height: fit-content;flex-direction:column;width: 100%;"><b>'+platform+'</b><br><span id="'+platform.slice(0,5)+'">'+postText+'</span>'+postText2+'<br>'+sharings[platform]+'</div>');
 		let doc = document.getElementById(platform.slice(0,5))
-		doc.scrollIntoView()
+		//doc.scrollIntoView()
 		doc.addEventListener("click",async function(){
 			try {
 			  await navigator.clipboard.writeText(doc.textContent);
