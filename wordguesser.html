@@ -162,6 +162,7 @@ dialog > *{
 <script src = "wordlist-guess-noncurated.js" defer></script>
 <script src="wordlist-freq-wiki.js" defer></script>
 <script>
+var focusField = undefined
 document.addEventListener("DOMContentLoaded", (event) => {
 	
 	String.prototype.replaceAt = function(index, replacement) {
@@ -179,14 +180,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	var max_ = 5;
 	var rows = 5;
 	var activeRow = 0;
-	var points = 0;
-	if(localStorage.getItem("points")=="playing"){
+	var points = parseInt(localStorage.getItem("points"))||0;
+	if(localStorage.getItem("pointsSaved")=="unsaved"){
 		showMessage("Finish a game to save the points.",1000)
-	}else{
-		points = parseInt(localStorage.getItem("points"))||0;
-		localStorage.setItem("points","playing")
 	}
-	
+	localStorage.setItem("pointsSaved","unsaved")
 	var real = ""
 	var show = true;
 	if(window.location.hash.substring(1)!=""){
@@ -232,7 +230,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 		let alphabet = "qwertzuiopüasdfghjklöäyxcvbnm"
 		for(let index = 0; index < alphabet.length; index++){
 			i = alphabet[index]
-			document.getElementById("letters").innerHTML += '<span id="letter_'+i+'" style="color:black;">'+i.toUpperCase()+' </span>'
+			document.getElementById("letters").innerHTML += '<span id="letter_'+i+'" style="color:black;" onclick="focusField.focus();focusField.dispatchEvent(new KeyboardEvent(\'keyup\',{\'key\':\''+i+'\'}))">'+i.toUpperCase()+' </span>'
 			if(index%10==0 && index!=0){
 				document.getElementById("letters").innerHTML += "<br>"
 			}
@@ -247,9 +245,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
 				//Laden in das objects dictionary
 				fields[row][i] = document.getElementById('field'+row+'_'+i);
 				//Keyhandling implementieren:
+				fields[row][i].onfocus = () => {focusField = fields[row][i];console.log(focusField);}
 				fields[row][i].addEventListener('keypress', (event) => {event.preventDefault()});
 				fields[row][i].addEventListener('keydown', (event) => {event.preventDefault()});
 				fields[row][i].addEventListener('keyup', (event) => {
+					console.log(focusField)
 					if(row == activeRow){
 						if(event.key=="ArrowLeft"){
 							try{
@@ -305,9 +305,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	
 	function showMessage(text,delay=2000){
 		const dialog = document.createElement("DIALOG");
-		const textNode = document.createTextNode(text);
 		dialog.setAttribute("open","open");
-		dialog.appendChild(textNode);
+		dialog.insertAdjacentHTML("beforeend",text);
 		document.body.appendChild(dialog);
 		let offset =(window.innerWidth- dialog.offsetWidth)/2+window.scrollY
 		dialog.style = "position: fixed;left: 50%;top: 50%;transform: translate(-50%,-50%);"
@@ -369,8 +368,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
 			if(right == max_){//Wenn alle Buchstaben richtig geraten wurden...
 				points += max_*(rows-activeRow-1)*10
 				document.getElementById("messages").textContent ="Du hast das Wort gefunden!";
-				showMessage("Du hast das Wort gefunden! \n Points: "+points)//...Nachricht an den Nutzer
+				showMessage("Du hast das Wort gefunden! \n Points: "+points+"<br><a href=\""+document.location+"\" style=\"color:black\">Neues Spiel</a>",3000)//...Nachricht an den Nutzer
 				localStorage.setItem("points", points);
+				localStorage.setItem("pointsSaved", "saved");
 				activeRow = max_;//...Weiteres bearbeiten unmöglich machen 
 			}else{//Wenn nicht alle Buchstaben richtig geraten wurden...
 				document.getElementById("messages").textContent ="Viel Glück beim Raten. Punkte: "+points;
@@ -381,8 +381,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
 					fields[index][0].focus();
 					document.getElementById("messages").textContent = "Schade, vielleicht nächstes mal.";//... Nachricht an den Nutzer
 					localStorage.setItem("points", points);
+					localStorage.setItem("pointsSaved", "saved");
 					if(show){
-						showMessage("Die Lösung war: "+real.toUpperCase()+" \n Points: "+points)
+						showMessage("Die Lösung war: "+real.toUpperCase()+" \n Points: "+points+"<br><a href=\""+document.location+"\" style=\"color:black\">Neues Spiel</a>",3000)
 					}
 					return
 				}	
@@ -392,6 +393,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 			}
 		}else{//Wenn das Wort nicht in der Wörterliste war, dann wird das gemeldet
 				document.getElementById("messages").textContent = "Nicht in der Wörterliste";
+				showMessage("Kein richtiges Wort")
 				let el = document.getElementById("word")
 				el.style.animation = 'none';
 				el.offsetHeight; /* trigger reflow */
