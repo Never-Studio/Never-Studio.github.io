@@ -369,7 +369,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 			if(oldPoints<1000&&points>1000){
 					document.body.style="background-image: url('https://cdn.vox-cdn.com/thumbor/CDa3RiA30jDt9Oy0Skya0fJzivo=/0x0:719x477/1200x800/filters:focal(303x182:417x296):no_upscale()/cdn.vox-cdn.com/uploads/chorus_image/image/55557235/giphy__6_.0.gif');background-size: cover;";
 					showMessage("You reached 1000 points!")
-					document.setTimeout(()=>{let bcolors = ["#E34234","#4d673a","#5F92EC","#ff8c00"];document.body.style.backgroundColor = bcolors[Math.floor(Math.random()*bcolors.length)];},5000)
+					setTimeout(()=>{let bcolors = ["#E34234","#4d673a","#5F92EC","#ff8c00"];document.body.style.backgroundColor = bcolors[Math.floor(Math.random()*bcolors.length)];},5000)
 			}
 			if(right == max_){//Wenn alle Buchstaben richtig geraten wurden...
 				points += max_*(rows-activeRow-1)*10
