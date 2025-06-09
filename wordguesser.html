@@ -1,8 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Neverword</title>
+
+<title>Neverword - a wordguessing game</title>
+ <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "neverword",
+      "browserRequirements":"Javascript has to be enabled. Local browser storage is needed for saving the points and the wordlist accross sessions.",
+      "operatingSystem": "All",
+      "applicationCategory": "GameApplication",
+      "featureList":"A word-guessing game. Enables creation of custom games. The wordlength can be changed.",
+      "offers": {
+        "@type": "Offer",
+        "price": 0,
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name='description' content='Play for free or create your own games and share them.'>
+
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" media="screen and (min-width: 700px)"  href="styles.css">
+<link rel="stylesheet" media="screen and (max-width: 700px)"  href="styles-phone.css">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+    <style>
+    img {
+		border-radius: 7vw;
+	}
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 <style>
 	
 @keyframes toorange {
@@ -67,6 +99,7 @@ p{
 	border-width: 4px;
 }
 .norm{
+	color: black;
 	background-color: white;
 	display: inline-block;
 	outline:none;
@@ -78,6 +111,7 @@ p{
 	border-width: 4px;
 }
 .norm:focus{
+	color: black;
 	background-color: white;
 	display: inline-block;
 	outline:none;
@@ -101,7 +135,7 @@ dialog{
 	outline:none;
 	border: none;
 	border-radius: 20px;
-	overflow: hidden;
+	overflow: scroll;
 }
 dialog > *{
 	margin: 20px;
@@ -110,6 +144,7 @@ dialog > *{
 <meta charset="utf-8" />
 </head>
 <body>
+<h1>Neverword</h1>
 <div id="word">
 <p id="messages"> Good luck guessing. </p>
 <span id="fields"></span>
@@ -129,6 +164,7 @@ dialog > *{
 <script src = "wordlist-guess-noncurated.js" defer></script>
 <script src="20-wordlist-freq-wiki.js" defer></script>
 <script>
+var focusField = undefined
 document.addEventListener("DOMContentLoaded", (event) => {
 	
 	String.prototype.replaceAt = function(index, replacement) {
@@ -146,18 +182,13 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	var max_ = 5;
 	var rows = 5;
 	var activeRow = 0;
-	try{
-		if(window.localStorage.getItem("inGame") == "true"){
-			showMessage("Nicht Neuladen während man in einem Spiel ist. Strafpunkte -200.")
-			var points = Math.max(0,parseInt(window.localStorage.getItem("points")) - 200);
-			window.localStorage.setItem("points",points);
-		}else{
-			var points = parseInt(window.localStorage.getItem("points"));
-		}
-	}catch{	
-		var points = 0;
+
+	var points = parseInt(localStorage.getItem("points"))||0;
+	if(localStorage.getItem("pointsSaved")=="unsaved"){
+		showMessage("Finish a game to save the points.",1000)
 	}
-	window.localStorage.setItem("inGame","true")
+	localStorage.setItem("pointsSaved","unsaved")
+
 	var real = ""
 	var show = true;
 	if(window.location.hash.substring(1)!=""){
@@ -173,7 +204,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
 		while(real.length != max_){
 			real = guess[Math.floor(Math.random() * guess.length)];
 		}
-		document.getElementById("messages").textContent ="Viel Glück beim Raten. "+points+" Punkte bisher.";
+
+		document.getElementById("messages").textContent ="Viel Glück beim Raten. Punkte: "+points;
+
 	}
 
 
@@ -192,19 +225,18 @@ document.addEventListener("DOMContentLoaded", (event) => {
 		field_con = document.getElementById("fields");
 		//Felder erzeugen:
 		for(let row = 0; row < rows; row++){
-			fields[row] = {}
 			for(let i = 0; i < max_; i++){
 				field_con.innerHTML += '<input id = "field'+row+'_'+i+'" class = "field" maxlength="1">';
 			}
 			field_con.innerHTML += "<br>"
 		}
-		container.innerHTML += '<br><a href="'+location.protocol + '//' + location.host+'/findhashurl.html" style="border: solid;border-radius: 20px;padding: 10px;">Eigenes Wortspiel</a>'
+		container.innerHTML += '<br><a href="'+location.protocol + '//' + location.host+'/findhashurl.html" style="border: solid;border-radius: 20px;padding: 10px; color: black; background-color: white; text-decoration: none;">Eigenes Wortspiel</a>'
 		container.innerHTML += '<br><button class = "norm" onclick = "document.getElementById(\'settings\').showModal();" style="border: solid;border-radius: 20px;padding: 10px;">Einstellungen</a><br>'
 		//Alphabet anzeigen:
 		let alphabet = "qwertzuiopüasdfghjklöäyxcvbnm"
 		for(let index = 0; index < alphabet.length; index++){
 			i = alphabet[index]
-			document.getElementById("letters").innerHTML += '<span id="letter_'+i+'" style="color:black;">'+i.toUpperCase()+' </span>'
+			document.getElementById("letters").innerHTML += '<span id="letter_'+i+'" style="color:black;" onclick="focusField.focus();focusField.dispatchEvent(new KeyboardEvent(\'keyup\',{\'key\':\''+i+'\'}))">'+i.toUpperCase()+' </span>'
 			if(index%10==0 && index!=0){
 				document.getElementById("letters").innerHTML += "<br>"
 			}
@@ -215,10 +247,15 @@ document.addEventListener("DOMContentLoaded", (event) => {
 		for(let row = 0; row < rows; row++){
 			fields[row] = {}
 			for(let i = 0; i < max_; i++){
+				console.log(row,i)
 				//Laden in das objects dictionary
 				fields[row][i] = document.getElementById('field'+row+'_'+i);
 				//Keyhandling implementieren:
+				fields[row][i].onfocus = () => {focusField = fields[row][i];console.log(focusField);}
+				fields[row][i].addEventListener('keypress', (event) => {event.preventDefault()});
+				fields[row][i].addEventListener('keydown', (event) => {event.preventDefault()});
 				fields[row][i].addEventListener('keyup', (event) => {
+					console.log(focusField)
 					if(row == activeRow){
 						if(event.key=="ArrowLeft"){
 							try{
@@ -233,14 +270,16 @@ document.addEventListener("DOMContentLoaded", (event) => {
 								fields[row][i].focus();
 							}
 						}else if(event.key=="Backspace" || event.key=="Delete"){
-							if(fields[row][i].value !=""){
-								fields[row][i].value ="";
-							}else{
+							if(fields[row][i].value ==""){
 								try{
 									fields[row][i-1].focus();
+									fields[row][i-1].value ="";
+									
 								}catch{
 									fields[row][i].focus();
 								}
+							}else{
+								fields[row][i].value ="";
 							}
 							
 						}else if(event.key=="Enter"){
@@ -261,6 +300,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
 					}else{
 							fields[row][i].value = "";
 					}
+					event.preventDefault();
+					
 				});
 			}
 		}
@@ -270,9 +311,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	
 	function showMessage(text,delay=2000){
 		const dialog = document.createElement("DIALOG");
-		const textNode = document.createTextNode(text);
 		dialog.setAttribute("open","open");
-		dialog.appendChild(textNode);
+		dialog.insertAdjacentHTML("beforeend",text);
 		document.body.appendChild(dialog);
 		let offset =(window.innerWidth- dialog.offsetWidth)/2+window.scrollY
 		dialog.style = "position: fixed;left: 50%;top: 50%;transform: translate(-50%,-50%);"
@@ -299,6 +339,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 		let lettertime = "0.5s";
 		let letterdelay = 0.3;
 		let green = [];
+		let oldPoints = points
 		if(allowed.includes(word_)||guess.includes(word_)||word_==real){//Wenn geratenes Wort erlaubt
 			for(let i = 0; i < max_; i++){//Alle vollständig richtigen Buchstaben grün markieren
 				if(String(fields[index][i].value)==realword[i]){
@@ -331,31 +372,46 @@ document.addEventListener("DOMContentLoaded", (event) => {
 					}
 				}
 			}
-			document.getElementById("messages").textContent = "Viel Glück beim Raten.  "+points+" Punkte bisher."
+
+			if(oldPoints<1000&&points>1000){
+					document.body.style="background-image: url('https://cdn.vox-cdn.com/thumbor/CDa3RiA30jDt9Oy0Skya0fJzivo=/0x0:719x477/1200x800/filters:focal(303x182:417x296):no_upscale()/cdn.vox-cdn.com/uploads/chorus_image/image/55557235/giphy__6_.0.gif');background-size: cover;";
+					showMessage("You reached 1000 points!")
+					setTimeout(()=>{let bcolors = ["#E34234","#4d673a","#5F92EC","#ff8c00"];document.body.style.backgroundColor = bcolors[Math.floor(Math.random()*bcolors.length)];},5000)
+			}
 			if(right == max_){//Wenn alle Buchstaben richtig geraten wurden...
 				points += max_*(rows-activeRow-1)*10
-				window.localStorage.setItem("points", points);
-				window.localStorage.setItem("inGame","false")
-				document.getElementById("messages").textContent ="Du hast das Wort gefunden!  "+points+" Punkte.";
-				showMessage("Du hast das Wort gefunden! \n Points: "+points,4000)//...Nachricht an den Nutzer
+				document.getElementById("messages").textContent ="Du hast das Wort gefunden!";
+				showMessage("Du hast das Wort gefunden! \n Points: "+points+"<br><a href=\""+document.location+"\" style=\"color:black\">Neues Spiel</a>",3000)//...Nachricht an den Nutzer
+				localStorage.setItem("points", points);
+				localStorage.setItem("pointsSaved", "saved");
+
 				activeRow = max_;//...Weiteres bearbeiten unmöglich machen 
 			}else{//Wenn nicht alle Buchstaben richtig geraten wurden...
+				document.getElementById("messages").textContent ="Viel Glück beim Raten. Punkte: "+points;
 				activeRow ++//...Nächste Zeile
 				try{
 					fields[index+1][0].focus();
 				}catch{//...Wenn bereits die letzte Spalte erreicht ist...
 					fields[index][0].focus();
-					document.getElementById("messages").textContent = "Schade, vielleicht nächstes mal. "+points+" Punkte.";//... Nachricht an den Nutzer
-					window.localStorage.setItem("points", points);
-					window.localStorage.setItem("inGame","false");
+
+					document.getElementById("messages").textContent = "Schade, vielleicht nächstes mal.";//... Nachricht an den Nutzer
+					localStorage.setItem("points", points);
+					localStorage.setItem("pointsSaved", "saved");
 					if(show){
-						showMessage("Die Lösung war: "+real.toUpperCase()+" \n Points: "+points,4000)
+						showMessage("Die Lösung war: "+real.toUpperCase()+" \n Points: "+points+"<br><a href=\""+document.location+"\" style=\"color:black\">Neues Spiel</a>",3000)
+
 					}
 					return
 				}	
 			}
+
+			if(document.getElementById("messages").textContent == "Nicht in der Wörterliste"){//Nachricht zurücksetzen
+					document.getElementById("messages").textContent = "Viel Glück beim Raten. Punkte: "+points
+			}
 		}else{//Wenn das Wort nicht in der Wörterliste war, dann wird das gemeldet
-				document.getElementById("messages").textContent = "Nicht in der Wörterliste  "+points+" Punkte bisher.";
+				document.getElementById("messages").textContent = "Nicht in der Wörterliste";
+				showMessage("Kein richtiges Wort")
+
 				let el = document.getElementById("word")
 				el.style.animation = 'none';
 				el.offsetHeight; /* trigger reflow */
@@ -368,7 +424,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	function saveSettings(){
 		let index = 0;
 		let new_real = "";
-		while(new_real.length != document.getElementById("length").value){
+		let new_length = document.getElementById("length").value;
+		if(new_length=="" || new_length == undefined){
+				new_length = max_
+		}
+		while(new_real.length != new_length){
 			index++;
 			new_real = guess[Math.floor(Math.random() * guess.length)];
 			if(index>100000){
@@ -379,14 +439,19 @@ document.addEventListener("DOMContentLoaded", (event) => {
 			}
 		}
 		real = new_real;
-		max_ = document.getElementById("length").value;
+		max_ = new_length
 		rows = document.getElementById("tries").value;
 		fields = {};
 		activeRow = 0;
 		if(rows==undefined||rows==""){
 				rows = max_
 		}
-		document.getElementById("word").innerHTML = '<p id="messages"> Viel Glück beim Raten. </p><span id="fields"></span><p id="letters" style="overflow-wrap: anywhere;"></p>';
+
+		document.getElementById("word").innerHTML = '<p id="messages"> Good luck guessing. </p><span id="fields"></span><p id="letters" style="overflow-wrap: anywhere;"></p>';
+		document.getElementById("letters").innerHTML = "";
+		document.getElementById("messages").textContent = "Viel Glück beim Raten. Punkte: "+points;
+		console.log(max_,rows,real)
+
 		setTimeout(createAll,0);
 	}
 	setTimeout(createAll,0);
@@ -394,6 +459,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
 
 
+
+</script>
+<script>
+window.onload = ()=>{let bcolors = ["#E34234","#4d673a","#5F92EC","#ff8c00"];document.body.style.backgroundColor = bcolors[Math.floor(Math.random()*bcolors.length)];}
 
 </script>
 </body>

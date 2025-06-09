@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neverword - a wordle-like game</title>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "installUrl":"https://www.neverstudio.de/wordguesser.html",
+      "name": "neverword",
+      "browserRequirements":"Javascript has to be enabled. Local browser storage is needed for saving the points and the wordlist accross sessions.",
+      "operatingSystem": "All",
+      "applicationCategory": "GameApplication",
+      "featureList":"A word-guessing game. Enables creation of custom games. The wordlength can be changed.",
+      "offers": {
+        "@type": "Offer",
+        "price": 0,
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    <meta name='description' content='Neverword is a free wordguessing game with support for custom word riddles and sharing your own neverword games.'>
+    <meta name="description" content="The project page of neverword: Neverword is a wordle-like game that allows for custom word-lengths and sharing your own neverwords with custom solutions.">
+    <link rel="stylesheet" media="screen and (min-width: 700px)"  href="styles.css">
+	<link rel="stylesheet" media="screen and (max-width: 700px)"  href="styles-phone.css">
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+    <style>
+    img {
+		border-radius: 7vw;
+	}
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+	
+    <div id="description-section" class="section" style="flex-direction: column;">
+	<h1><b>Neverword</b></h1>
+        <p>
+			Welcome to the neverword project page.<br>
+			Neverword is a wordle-like wordguessing game.<br>
+        </p>
+    </div>
+	
+	
+	<div id="contact" class="section">
+       <img alt="The user-interface of neverword. It shows the words katze and neues." src="createnw.png" loading="lazy"><p>Play wordgames. Earn points.</p>
+    </div>
+    <div id="contact" class="section">
+       <img alt="The settings of neverword. Showing the field for setting the custom word-length." src="settingsnw.png" loading="lazy"><p>Customize wordlengths. You can also guess 10-character words for examnple.</p>
+    </div>
+    <div id="contact" class="section">
+       <img alt="The neverword user-interface. It's still empty and shows the custom message 'own'."src="ownnw.png" loading="lazy"><p>Create your own neverword.<br><br> Customize:<br>- the initial message<br>- word length<br>- total tries</p>
+    </div>
+     <div id="contact" class="section">
+      <img alt="A screenshot of the Safari website sharing menu showing the icon of neverstudio.de"src="sharenw.png" loading="lazy"><p>Share custom neverword games with friends.</p>
+    </div>
+    <div id="contact" class="section">
+      <a title = "neverword wordguessing game" href="https://www.neverstudio.de/wordguesser.html">Try out:  &rarr;</a>
+    </div>
+<div class="section">
+<a title = "neverstudio main page" href="https://www.neverstudio.de" id="mainmenu" >Back to main page &rarr;</a>
+</div>
+<div class="section">
+<span>
+<b>Contact and Terms of Services </b><br>
+Here is our <a href="contact.html">Contact and Legal information</a>.<br>
+&copy; 2025 Michel and Nils H&auml;u&szlig;ler.<br>All rights reserved.
+
+</span>
+</div>
+<script>
+window.onload = ()=>{let bcolors = ["#E34234","#4d673a","#5F92EC","#ff8c00"];document.body.style.backgroundColor = bcolors[Math.floor(Math.random()*bcolors.length)];}
+</script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name='description' content='Neverengine is a JavaScript engine for creating retro-styled isometric games. Tile-free, with support for custom aspect ratios.'>
+    <title>Neverengine - an isometric js engine</title>
+     <link rel="stylesheet" media="screen and (min-width: 700px)"  href="styles.css">
+<link rel="stylesheet" media="screen and (max-width: 700px)"  href="styles-phone.css">
+    <style>
+    img {
+		border-radius: 7vw;
+	}
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+	
+    <div id="description-section" class="section" style="flex-direction: column;">
+	<h1><b>neverengine</b></h1>
+        <p style="width: 80%; text-align: center;">
+			Welcome to the neverengine project page.<br>
+			The neverengine is an isometric game engine.<br>
+        </p>
+    </div>
+	
+	<div id="contact" class="section">
+      <p>Create semi-3d objects with sprite sheets and bounding boxes.</p>
+    </div>
+	<div id="contact" class="section">
+      <video title="Boxes with outlines in different colors collide and bounce back and forth." autoplay loop><source src="demo1_2.mp4" type="video/mp4">Your browser does not support the video tag.</video><p>Use the physics. Add custom collision actions.</p>
+    </div>
+    <div id="contact" class="section">
+       <video title="A small grey box moves through an area full of other bigger boxes in multiple colors. It showcases that neverengine is able to accurately layer the objects." autoplay loop><source src="layering.mp4" type="video/mp4">Your browser does not support the video tag.</video><p>Layer objects with tile-free layering.</p>
+    </div>
+    <div id="contact" class="section">
+       <p>Animate objects with the animate method.</p>
+    </div>
+    <div id="contact" class="section">
+      <video title="A small grey box moves sideways through a cluster of multiple bigger colorful boxes. The bigger boxes are also moving." autoplay loop><source src="demo3_2.mp4" type="video/mp4">Your browser does not support the video tag.</video><p>Create your own game.</p>
+    </div>
+    <div id="contact" class="section">
+      <a title="neverengine documentation"  href="https://www.neverstudio.de/neverisometric.html">Visit the documentation:  &rarr;</a>
+    </div>
+<div class="section">
+<a title="neverstudio main page"  href="https://www.neverstudio.de" id="mainmenu" >Back to main page &rarr;</a>
+</div>
+<div class="section">
+<span>
+<b>Contact and Terms of Services </b><br>
+Here is our <a href="contact.html">Contact and Legal information</a>.<br>
+&copy; 2025 Michel and Nils H&auml;u&szlig;ler.<br>All rights reserved.
+
+</span>
+</div>
+<script>
+window.onload = ()=>{let bcolors = ["#E34234","#4d673a","#5F92EC","#ff8c00"];document.body.style.backgroundColor = bcolors[Math.floor(Math.random()*bcolors.length)];}
+</script>
+</body>
+</html>

@@ -22,7 +22,7 @@
       "browserRequirements":"Javascript has to be enabled. The LLMs need large amounts of browser storage and RAM (about 5GBs). WebGPU has to be supported by your browser.",
       "operatingSystem": "All",
       "applicationCategory": "GameApplication",
-      "featureList":"Analyses websites for target groups. Creates posts and platform suggestions.",
+      "featureList":"Analyses your input text for target groups. Creates post texts.",
       "offers": {
         "@type": "Offer",
         "price": 0,
@@ -37,13 +37,15 @@
 	<div id="removeText" style="text-align: center;" title= "nevercontent">
 		<h1>nevercontent</h1>
 		<p title="never just a studio">scroll down to start</p>
+
+		<noscript>You have to enable JS to use this tool!</noscript>
 	</div>
 </div>
 <div class="section">
-<p>
 <b>Loading model</b><br>
+<p>Leave this tab open in the background and come back later.</p>
 <p id="loaded">Loading...</p>
-</p>
+
 </div>
 <div class="section">
 	<form name="myForm" id="myForm" action="javascript:void(0);">
@@ -53,59 +55,75 @@
 	</form>
 </div>
 <div class="section">
-<p>
+
 <b>Target group</b><br>
 <p id="target_group">Thinking...</p>
-</p>
 </div>
-<span id="posts">
-</span>
+<span id="posts"></span>
 <script src=" https://cdn.jsdelivr.net/npm/showdown@1.9.0/dist/showdown.min.js">
 </script>
+<script>
+function showMessage(text, delay = 2000) {
+  let toast = document.createElement("div");
+  toast.textContent = text;
+  toast.style = `
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    color: black;
+    padding: 0.5em 1em;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    z-index: 10000;
+    font-weight: bold;
+  `;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), delay);
+}
+if (!navigator.gpu) {
+	showMessage("Your browser does not support WebGPU. Use Chrome, Edge or Opera.",4000)
+}
+</script>
+
 <script type="module">
 
 import * as webllm from "https://esm.run/@mlc-ai/web-llm";
 import { CreateMLCEngine, MLCEngine } from "https://esm.run/@mlc-ai/web-llm";
 document.getElementById("loaded").scrollIntoView()
  // Initialize with a progress callback
- const initProgressCallback = (progress) => {
+
+ 
+var engine = undefined;
+try{
+const initProgressCallback = (progress) => {
+
     document.getElementById("loaded").innerHTML = "Loaded "+Math.round(progress.progress*100)+"%"
     console.log(progress)
  };
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js')
-    .then(() => console.log('Service worker registered'))
-    .catch(err => console.error('Service worker failed:', err));
-}
+
 
 // Using CreateMLCEngine
-const engine = await CreateMLCEngine("Llama-3.2-1B-Instruct-q4f16_1-MLC", { initProgressCallback });
+engine = await CreateMLCEngine("Llama-3.2-1B-Instruct-q4f16_1-MLC", { initProgressCallback });
+
+
+document.getElementById("loaded").innerHTML = "Model fully loaded! Scroll further down!"
+}catch(e){
+	showMessage("Error when loading model. Check your internet connection and if your browser cache is big enough. Reload to try again.",3000)
+	console.error(e)
+}
 
 //create markdown to HTML converter
 var converter = new showdown.Converter()
-document.getElementById("loaded").innerHTML = "Model fully loaded! Scroll further down!"
-
-let form = document.getElementById("myForm")
-form.scrollIntoView()
 
 let tGroup = document.getElementById("target_group")
-
-
+let form = document.getElementById("myForm")
 form.onsubmit = async (event)=>{
-	
-	
-	let url = document.getElementById("urlIn").value
-	let urlResponse = await fetch(url,{method: "GET"})
-	let urlHtml = await urlResponse.text()
-	let parser = new DOMParser()
-	let doc = parser.parseFromString(urlHtml.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script\s*>/gi,""), "text/html")
-	let text = doc.body.textContent.replace((/  |\r\n|\n|\r/gm)," ").slice(0,100)
-	alert(text)
-	
-	
 	tGroup.scrollIntoView()
-	//let text = document.getElementById("urlIn").value
+	let text = document.getElementById("urlIn").value
+
 	let messages = [
 		{ role: "system", content: "You are an expert for finding an organisations target groups." },
 		{ role: "user", content: "Text:\n```"+text+"```\n\nMake a brief list of 5 groups who might be interested in the organisation the text belongs to. No individual explanations are needed." }
@@ -115,7 +133,9 @@ form.onsubmit = async (event)=>{
 		messages,
 	});
 
-	tGroup.innerHTML = converter.makeHtml(target_group.choices[0].message.content);
+
+	tGroup.innerHTML = converter.makeHtml(target_group.choices[0].message.content) +"<br> The posts are being generated below.";
+
 
 
 
@@ -126,17 +146,22 @@ form.onsubmit = async (event)=>{
 	for(let platform of items){
 		messages = [
 			{ role: "system", content: "You are an expert for social media posting." },
-			{ role: "user", content: "Text:\n```"+text+"```\n Target groups: \n"+target_group+"\n\nAnswer with a short "+platform+" post created out of the text. Answer with the posting only." }
+
+			{ role: "user", content: "Text:\n```"+text+"```\n Target groups for the post: \n"+target_group.choices[0].message.content+"\n\nAnswer with a short "+platform+" post created out of the text. Answer with the posting only." }
+
 		];
 
 		let posting = await engine.chat.completions.create({
 			messages,
 		});
-		let postText = converter.makeHtml(posting.choices[0].message.content.replace('"','').replace('<h1>','').replace('</h1>','').replace('<h2>','').replace('</h2>',''))
+
+		let postText = converter.makeHtml(posting.choices[0].message.content.replaceAll('"','').replaceAll('<h1>','').replaceAll('</h1>','').replaceAll('<h2>','').replaceAll('</h2>','').replaceAll('<p>','').replaceAll('</p>',''))
+		let postText2 = ""
 		if(platform == "reddit"){
 			messages = [
 			{ role: "system", content: "You are an expert for social media posting." },
-			{ role: "user", content: "Text:\n```"+text+"```\n Target groups: \n"+target_group+"\n\nAnswer with a short "+platform+" post created out of the text. Answer with the posting only." },
+			{ role: "user", content: "Text:\n```"+text+"```\n Target groups for the post: \n"+target_group.choices[0].message.content+"\n\nAnswer with a short "+platform+" post created out of the text. Answer with the posting only." },
+
 			{ role: "assistant", content: postText },
 			{ role: "user", content: "Please tell me in what subreddits should I share the post?" }
 			];
@@ -144,21 +169,33 @@ form.onsubmit = async (event)=>{
 			let additional_posting = await engine.chat.completions.create({
 				messages,
 			});
-			postText += converter.makeHtml(additional_posting.choices[0].message.content)
+
+			postText2 = '<span style="font-size:15pt;">'+converter.makeHtml(additional_posting.choices[0].message.content).replaceAll('<p>','').replaceAll('</p>','')+'</span>'
 		}
 		
-		let sharings = {"bluesky (a twitter alternative)":"<a href=\"https://bsky.app/intent/compose?text="+posting+"\">Share on Bluesky</a>",
-			"reddit":"<a href=\"https://www.reddit.com/submit/\">Share on Reddit</a>",
-			"facebook":"<a href=\"https://www.facebook.com/sharer/sharer.php\">Share on Facebook</a>",
-			"twitter (now called X)":"<a href=\"https://twitter.com/intent/tweet?text="+posting+"\">Share on Twitter (X)</a>"}
+		let sharings = {"bluesky (a twitter alternative)":'<a target="_blank" href="https://bsky.app/intent/compose?text='+encodeURIComponent(postText)+'">Share on Bluesky</a>',
+			"reddit":"<a target=\"_blank\" href=\"https://www.reddit.com/submit?type=TEXT\">Share on Reddit</a>",
+			"facebook":"<a target=\"_blank\" href=\"https://www.facebook.com/sharer/sharer.php\">Share on Facebook</a>",
+			"twitter (now called X)":'<a target="_blank" href="https://twitter.com/intent/tweet?text='+encodeURIComponent(postText)+'">Share on Twitter (X)</a>'}
 
-		if(postsSpan.innerHTML.replace("\n","") == '<div class="section"><p><p id="target_group">Writing...</p></p></div>'){
+		if(postsSpan.innerHTML == 'Writing...'){
 			postsSpan.innerHTML = ""
 		}
-		postsSpan.innerHTML += '<div class="section" id="'+platform+'" style="height: fit-content;flex-direction:column;width: 100%;"><b>'+platform+'</b><br>'+postText+sharings[platform]+'</div>'
-		document.getElementById(platform).scrollIntoView()
-		
-		
+		console.log(platform)
+		postsSpan.insertAdjacentHTML("beforeend", '<div class="section" style="height: fit-content;flex-direction:column;width: 100%;"><b>'+platform+'</b><br><span id="'+platform.slice(0,5)+'">'+postText+'</span>'+postText2+'<br>'+sharings[platform]+'</div>');
+		let doc = document.getElementById(platform.slice(0,5))
+		//doc.scrollIntoView()
+		doc.addEventListener("click",async function(){
+			try {
+			  await navigator.clipboard.writeText(doc.textContent);
+			  console.log('Content copied to clipboard');
+			} catch (err) {
+			  console.error('Failed to copy: ', err);
+			}
+			showMessage("Copied post!")
+		});
+		console.log(doc)
+
 	}
 
 	event.preventDefault();

@@ -4,26 +4,39 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+
 <url>
   <loc>https://www.neverstudio.de/</loc>
-  <lastmod>2024-10-17T16:09:30+00:00</lastmod>
+  <lastmod>2025-05-23T07:35:13+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
-  <loc>https://www.neverstudio.de/notifications.html</loc>
-  <lastmod>2024-10-17T16:09:30+00:00</lastmod>
+  <loc>https://www.neverstudio.de/wordle-project.html</loc>
+  <lastmod>2025-05-23T07:35:13+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://www.neverstudio.de/projects.html</loc>
-  <lastmod>2024-10-17T16:09:30+00:00</lastmod>
+  <loc>https://www.neverstudio.de/engine-project.html</loc>
+  <lastmod>2025-05-23T07:35:13+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://www.neverstudio.de/contact.html</loc>
-  <lastmod>2024-10-17T16:09:30+00:00</lastmod>
+  <lastmod>2025-05-23T07:35:13+00:00</lastmod>
   <priority>0.80</priority>
 </url>
+<url>
+  <loc>https://www.neverstudio.de/wordguesser.html</loc>
+  <lastmod>2025-05-23T07:35:13+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.neverstudio.de/neverisometric.html</loc>
+  <lastmod>2025-05-23T07:35:13+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+
 
 
 </urlset>
