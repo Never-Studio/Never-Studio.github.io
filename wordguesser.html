@@ -59,11 +59,14 @@
 
 *{
 	font-family: "Montserrat", sans-serif;
-	font-size: 50px;
+	font-size: min(8vw,50px);
 	text-align: center;
 	text-decoration: none;
 	color: black;
 }
+
+
+
 div{
 	text-align: center;
 	margin: auto;
@@ -76,6 +79,8 @@ p{
 }
 .field{
 	display: inline-block;
+	width: 15vw;
+	height: 15vw;
 	max-width: 1.5em;
 	max-height: 1.5em;
 	outline:none;
@@ -83,11 +88,13 @@ p{
 	border: solid;
 	border-radius: 20px;
 	text-align: center;
-	margin: 10px;
+	margin: 1vw;
 	border-width: 4px;
 }
 .field:focus{
 	display: inline-block;
+	width: 15vw;
+	height: 15vw;
 	max-width: 1.5em;
 	max-height: 1.5em;
 	outline:none;
@@ -95,10 +102,11 @@ p{
 	border: solid;
 	border-radius: 20px;
 	text-align: center;
-	margin: 10px;
+	margin: 1vw;
 	border-width: 4px;
 }
 .norm{
+	max-width: 80vw;
 	color: black;
 	background-color: white;
 	display: inline-block;
@@ -111,6 +119,7 @@ p{
 	border-width: 4px;
 }
 .norm:focus{
+	max-width: 80vw;
 	color: black;
 	background-color: white;
 	display: inline-block;
