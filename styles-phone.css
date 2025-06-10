@@ -4,7 +4,6 @@
   font-optical-sizing: auto;
   font-style: normal;
   font-weight: 400;
-  align-self: center;
   color: white;
 }
 * {
@@ -20,10 +19,6 @@ canvas {
 	padding: 0px;
 	left: 0px;
 	position: absolute;
-}
-html{
-  scroll-snap-type: y mandatory;
-  scroll-snap-stop: normal;
 }
 
 b{
@@ -71,11 +66,11 @@ h2{
 }
 
 img {
-  border-radius: 3vw;
+  border-radius: 2vw;
   margin: auto;
 }
 video {
-  border-radius: 3vw;
+  border-radius: 2vw;
   margin: 10%;
 }
 
