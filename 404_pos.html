@@ -20,8 +20,10 @@
 		<p id="help">The subpage you tried to access is unavailable.
 		You can go back to the <a title="neverstudio homepage" href="https://neverstudio.de/">main page</a>.<br>
 		Or you can play a <a title = "neverword wordguessing game" href="https://www.neverstudio.de/wordguesser.html">neverword game</a>.</p>
+		<p id ="pos"></p>
+		<button onclick = "activateAccel()">Start</button>
 	</div>
-	<p id ="pos">--</p>
+	
 </div>
 
 <div class="section">
@@ -30,7 +32,6 @@
 Here is our <a href="contact.html" title="contact and legal information">Contact and Legal information</a>.<br>
 &copy; 2025 Michel and Nils H&auml;u&szlig;ler.<br>All rights reserved.
 </p>
-
 </div>
 <script>
 var vX = 0;
@@ -39,7 +40,8 @@ var vZ = 0;
 var posX = 0;
 var posY = 0;
 var posZ = 0;
-if (window.DeviceMotionEvent == undefined) {
+function activateAccel(){
+	if (window.DeviceMotionEvent == undefined) {
         //No accelerometer is present. Use buttons. 
         alert("no accelerometer");
     }
@@ -56,6 +58,8 @@ if (window.DeviceMotionEvent == undefined) {
 		  document.getElementById("pos").innerHTML = posX+","+posY+","+posZ
 		});
 }
+}
+
 </script>
 <script>
 let bcolors = ["#E34234","#4d673a","#5F92EC","#ff8c00"];
