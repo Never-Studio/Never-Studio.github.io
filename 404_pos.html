@@ -52,9 +52,9 @@ function handleMotion(event){
 
 	const dt = (currentTime - lastTime) / 1000;
 	lastTime = currentTime;
-	posX += event.acceleration.x*dt
-	posY += event.acceleration.y*dt
-	posZ += event.acceleration.z*dt
+	vX += event.acceleration.x*dt
+	vY += event.acceleration.y*dt
+	vZ += event.acceleration.z*dt
 	posX += vX*dt
 	posY += vY*dt
 	posZ += vZ*dt
