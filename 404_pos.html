@@ -40,24 +40,31 @@ var vZ = 0;
 var posX = 0;
 var posY = 0;
 var posZ = 0;
-function activateAccel(){
-	if (window.DeviceMotionEvent == undefined) {
-        //No accelerometer is present. Use buttons. 
-        alert("no accelerometer");
-    }
-    else {
-        alert("accelerometer found");
-		window.addEventListener("devicemotion", (event) => {
-		  vX += event.acceleration.x
-		  vY += event.acceleration.y
-		  vZ += event.acceleration.z
-		  posX += vX
-		  posY += vY
-		  posZ += vZ
-		  alert("hi")
-		  document.getElementById("pos").innerHTML = posX+","+posY+","+posZ
-		});
+
+function handleMotion(event){
+	vX += event.acceleration.x
+	vY += event.acceleration.y
+	vZ += event.acceleration.z
+	posX += vX
+	posY += vY
+	posZ += vZ
+	alert("hi")
+	document.getElementById("pos").innerHTML = posX+","+posY+","+posZ	
 }
+function activateAccel(){
+	if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
+        DeviceMotionEvent.requestPermission()
+            .then(response => {
+                if (response === 'granted') {
+                    window.addEventListener('devicemotion', handleMotion);
+                } else {
+                    console.error('Permission to access motion sensors was denied.');
+                }
+            })
+            .catch(console.error);
+    } else {
+        window.addEventListener('devicemotion', handleMotion);
+    }
 }
 
 </script>
