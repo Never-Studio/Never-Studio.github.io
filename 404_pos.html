@@ -34,6 +34,7 @@ Here is our <a href="contact.html" title="contact and legal information">Contact
 </p>
 </div>
 <script>
+let lastTime = null;
 var vX = 0;
 var vY = 0;
 var vZ = 0;
@@ -41,14 +42,22 @@ var posX = 0;
 var posY = 0;
 var posZ = 0;
 
+setInterval()()=>{document.getElementById("pos").innerHTML = posX+","+posY+","+posZ;},1000;
 function handleMotion(event){
-	vX += event.acceleration.x
-	vY += event.acceleration.y
-	vZ += event.acceleration.z
-	posX += vX
-	posY += vY
-	posZ += vZ
-	document.getElementById("pos").innerHTML = posX+","+posY+","+posZ	
+	const currentTime = Date.now();
+	if (lastTime === null || !acc) {
+		lastTime = currentTime;
+		return;
+	}
+
+	const dt = (currentTime - lastTime) / 1000;
+	lastTime = currentTime;
+	posX += event.acceleration.x*dt
+	posY += event.acceleration.y*dt
+	posZ += event.acceleration.z*dt
+	posX += vX*dt
+	posY += vY*dt
+	posZ += vZ*dt
 }
 function activateAccel(){
 	if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
