@@ -44,7 +44,7 @@ var posZ = 0;
 
 function handleMotion(event){
 	const currentTime = Date.now();
-	if (lastTime === null || !acc) {
+	if (lastTime === null) {
 		lastTime = currentTime;
 		return;
 	}
