@@ -42,6 +42,7 @@ var posX = 0;
 var posY = 0;
 var posZ = 0;
 
+setInterval(()=>{document.getElementById("pos").innerHTML = posX+","+posY+","+posZ;},1000);
 function handleMotion(event){
 	const currentTime = Date.now();
 	if (lastTime === null) {
@@ -57,7 +58,6 @@ function handleMotion(event){
 	posX += vX*dt
 	posY += vY*dt
 	posZ += vZ*dt
-	document.getElementById("pos").innerHTML = posX+","+posY+","+posZ;
 }
 function activateAccel(){
 	if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
