@@ -38,16 +38,23 @@ var vZ = 0;
 var posX = 0;
 var posY = 0;
 var posZ = 0;
-window.addEventListener("devicemotion", (event) => {
-  vX += event.acceleration.x
-  vY += event.acceleration.y
-  vZ += event.acceleration.z
-  posX += vX
-  posY += vY
-  posZ += vZ
-  alert("hi")
-  document.getElementById("pos").innerHTML = posX+","+posY+","+posZ
-});
+if (window.DeviceMotionEvent == undefined) {
+        //No accelerometer is present. Use buttons. 
+        alert("no accelerometer");
+    }
+    else {
+        alert("accelerometer found");
+		window.addEventListener("devicemotion", (e) => {
+		  vX += event.acceleration.x
+		  vY += event.acceleration.y
+		  vZ += event.acceleration.z
+		  posX += vX
+		  posY += vY
+		  posZ += vZ
+		  alert("hi")
+		  document.getElementById("pos").innerHTML = posX+","+posY+","+posZ
+		});
+}
 </script>
 <script>
 let bcolors = ["#E34234","#4d673a","#5F92EC","#ff8c00"];
