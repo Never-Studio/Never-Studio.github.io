@@ -42,7 +42,7 @@ var posX = 0;
 var posY = 0;
 var posZ = 0;
 
-setInterval()()=>{document.getElementById("pos").innerHTML = posX+","+posY+","+posZ;},1000;
+setInterval(()=>{document.getElementById("pos").innerHTML = posX+","+posY+","+posZ;},1000);
 function handleMotion(event){
 	const currentTime = Date.now();
 	if (lastTime === null || !acc) {
