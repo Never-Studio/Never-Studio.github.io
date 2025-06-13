@@ -79,10 +79,10 @@ let urls = ["https://www.neverstudio.de/",
 "https://www.neverstudio.de/wordle-project.html",
 "https://www.neverstudio.de/engine-project.html",
 "https://www.neverstudio.de/contact.html",
-"https://www.neverstudio.de/wordguesser.html",
+"https://www.neverstudio.de/de/wordguesser.html",
 "https://www.neverstudio.de/neverisometric.html",
 "https://www.neverstudio.de/neverword.html"]
-let substitutes = {"https://www.neverstudio.de/neverword.html":"https://www.neverstudio.de/wordguesser.html"}
+let substitutes = {"https://www.neverstudio.de/neverword.html":"https://www.neverstudio.de/de/wordguesser.html"}
 let currentUrl = document.URL;
 urls.sort(function(a, b){return dist(b,currentUrl)-dist(a,currentUrl);})
 let suggest = urls[0];
