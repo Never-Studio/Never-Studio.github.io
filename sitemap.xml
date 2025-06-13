@@ -14,27 +14,48 @@
 <url>
   <loc>https://www.neverstudio.de/wordle-project.html</loc>
   <lastmod>2025-05-23T07:35:13+00:00</lastmod>
-  <priority>0.80</priority>
+  <priority>0.6</priority>
 </url>
 <url>
   <loc>https://www.neverstudio.de/engine-project.html</loc>
   <lastmod>2025-05-23T07:35:13+00:00</lastmod>
-  <priority>0.80</priority>
+  <priority>0.6</priority>
 </url>
 <url>
   <loc>https://www.neverstudio.de/contact.html</loc>
   <lastmod>2025-05-23T07:35:13+00:00</lastmod>
-  <priority>0.80</priority>
+  <priority>0.5</priority>
 </url>
 <url>
-  <loc>https://www.neverstudio.de/wordguesser.html</loc>
-  <lastmod>2025-05-23T07:35:13+00:00</lastmod>
-  <priority>0.64</priority>
+  <loc>https://www.neverstudio.de/de/wordguesser.html</loc>
+  <lastmod>2025-06-13</lastmod>
+  <priority>0.7</priority>
+</url>
+<url>
+  <loc>https://www.neverstudio.de/de/contact.html</loc>
+  <lastmod>2025-06-13</lastmod>
+  <priority>0.7</priority>
+</url>
+<url>
+  <loc>https://www.neverstudio.de/de/index.html</loc>
+  <lastmod>2025-06-13</lastmod>
+  <priority>0.7</priority>
+</url>
+<url>
+  <loc>https://www.neverstudio.de/de/wordle-project.html</loc>
+  <lastmod>2025-06-13</lastmod>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://www.neverstudio.de/de/engine-project.html</loc>
+  <lastmod>2025-06-13</lastmod>
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>https://www.neverstudio.de/neverisometric.html</loc>
   <lastmod>2025-05-23T07:35:13+00:00</lastmod>
-  <priority>0.64</priority>
+  <priority>1.00</priority>
 </url>
 
 
