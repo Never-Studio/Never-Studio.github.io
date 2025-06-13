@@ -13,6 +13,16 @@
 *::-webkit-scrollbar { 
     display: none;  /* Safari and Chrome */
 }
+.langBar{
+	width: fit-content;
+	position: fixed;
+	top: 0px;
+	padding: 10px;
+	border-radius: 2px;
+	left: 0px;
+	z-index: 10;
+	background-color: inherit;
+}
 
 canvas {
 	margin: 0px;

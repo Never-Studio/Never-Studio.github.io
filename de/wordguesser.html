@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
 
-<title>Neverword - a wordguessing game</title>
+<title>Neverword - ein Worträtsel</title>
  <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
+      "installUrl":"https://www.neverstudio.de/wordguesser.html",
       "name": "neverword",
-      "browserRequirements":"Javascript has to be enabled. Local browser storage is needed for saving the points and the wordlist accross sessions.",
-      "operatingSystem": "All",
+      "browserRequirements":"JavaScript muss aktiviert sein. Lokaler Browser-Speicher wird benötigt, um Punkte und Wortlisten zwischen den Sitzungen zu speichern.",
+      "operatingSystem": "Alle",
       "applicationCategory": "GameApplication",
-      "featureList":"A word-guessing game. Enables creation of custom games. The wordlength can be changed.",
+      "featureList":"Ein Wortratespiel. Ermöglicht das Erstellen eigener Spiele. Die Wortlänge kann angepasst werden.",
       "offers": {
         "@type": "Offer",
         "price": 0,
@@ -19,16 +20,17 @@
       }
     }
     </script>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name='description' content='Play for free or create your own games and share them.'>
 
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" media="screen and (min-width: 700px)"  href="styles.css">
-<link rel="stylesheet" media="screen and (max-width: 700px)"  href="styles-phone.css">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name='description' content='Errate Wörter und erstelle deine eigenen Rätsel für andere.'>
+
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+	<link rel="stylesheet" media="screen and (min-width: 700px)"  href="https://www.neverstudio.de/styles.css">
+	<link rel="stylesheet" media="screen and (max-width: 700px)"  href="https://www.neverstudio.de/styles-phone.css">
+	<link rel="apple-touch-icon" sizes="180x180" href="https://www.neverstudio.de/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="https://www.neverstudio.de/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="https://www.neverstudio.de/favicon-16x16.png">
+	<link rel="manifest" href="https://www.neverstudio.de/site.webmanifest">
     <style>
     img {
 		border-radius: 7vw;
@@ -235,7 +237,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 			}
 			field_con.innerHTML += "<br>"
 		}
-		container.innerHTML += '<br><a href="'+location.protocol + '//' + location.host+'/findhashurl.html" style="border: solid;border-radius: 20px;padding: 10px; color: black; background-color: white; text-decoration: none;">Eigenes Wortspiel</a>'
+		container.innerHTML += '<br><a href="findhashurl.html" style="border: solid;border-radius: 20px;padding: 10px; color: black; background-color: white; text-decoration: none;">Eigenes Wortspiel</a>'
 		container.innerHTML += '<br><button class = "norm" onclick = "document.getElementById(\'settings\').showModal();" style="border: solid;border-radius: 20px;padding: 10px;">Einstellungen</a><br>'
 		//Alphabet anzeigen:
 		let alphabet = "qwertzuiopüasdfghjklöäyxcvbnm"
@@ -355,7 +357,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
 					realword = realword.replaceAt(i,"-");
 					document.getElementById("letter_"+String(fields[index][i].value)).style.color = "green"
 					right ++;
-					points += 5;
+					if(show){
+						points += 5;
+					}
 				}
 			}
 			for(let i = 0; i < max_; i++){
@@ -367,7 +371,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
 						document.getElementById("letter_"+String(fields[index][i].value)).style.color = "orange"
 					}
 					realword = realword.replaceAt(realword.indexOf(fields[index][i].value),"-");
-					points += 1;
+					if(show){
+						points += 1;
+					}
 				}else if(!green.includes(i)){
 					fields[index][i].style.animation = "togrey "+lettertime
 					fields[index][i].style.animationDelay = i*letterdelay+"s"
@@ -384,12 +390,18 @@ document.addEventListener("DOMContentLoaded", (event) => {
 					setTimeout(()=>{let bcolors = ["#E34234","#4d673a","#5F92EC","#ff8c00"];document.body.style.backgroundColor = bcolors[Math.floor(Math.random()*bcolors.length)];},5000)
 			}
 			if(right == max_){//Wenn alle Buchstaben richtig geraten wurden...
-				points += max_*(rows-activeRow-1)*10
+				if(show){
+					points += max_*(rows-activeRow-1)*10
+				}
 				document.getElementById("messages").textContent ="Du hast das Wort gefunden!";
-				showMessage("Du hast das Wort gefunden! \n Points: "+points+"<br><a href=\""+document.location+"\" style=\"color:black\">Neues Spiel</a>",3000)//...Nachricht an den Nutzer
-				localStorage.setItem("points", points);
-				localStorage.setItem("pointsSaved", "saved");
-
+				
+				if(show){
+					showMessage("Du hast das Wort gefunden! \n Points: "+points+"<br><a href=\""+document.location+"\" style=\"color:black\">Neues Spiel</a>",3000)//...Nachricht an den Nutzer
+					localStorage.setItem("points", points);
+					localStorage.setItem("pointsSaved", "saved");
+				}else{
+						showMessage("Du hast das Wort gefunden!<br><a href=\""+document.location+"\" style=\"color:black\">Neues Spiel</a>",3000)//...Nachricht an den Nutzer
+				}
 				activeRow = max_;//...Weiteres bearbeiten unmöglich machen 
 			}else{//Wenn nicht alle Buchstaben richtig geraten wurden...
 				document.getElementById("messages").textContent ="Viel Glück beim Raten. Punkte: "+points;
@@ -400,11 +412,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
 					fields[index][0].focus();
 
 					document.getElementById("messages").textContent = "Schade, vielleicht nächstes mal.";//... Nachricht an den Nutzer
-					localStorage.setItem("points", points);
-					localStorage.setItem("pointsSaved", "saved");
 					if(show){
+						localStorage.setItem("points", points);
+						localStorage.setItem("pointsSaved", "saved");
 						showMessage("Die Lösung war: "+real.toUpperCase()+" \n Points: "+points+"<br><a href=\""+document.location+"\" style=\"color:black\">Neues Spiel</a>",3000)
-
 					}
 					return
 				}	

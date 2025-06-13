@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="alternate" hreflang="en" href="https://neverstudio.de/engine-project.html" />
+	<link rel="alternate" hreflang="de" href="https://neverstudio.de/de/engine-project.html" />
+	<meta name='description' content='Neverengine ist eine JavaScript-Engine zum Erstellen von isometrischen Spielen im Retro-Stil. Kachel-frei, mit Unterstützung für benutzerdefinierte Seitenverhältnisse.'>
+    <title>Neverengine – eine isometrische JS-Engine</title>
+    <link rel="stylesheet" media="screen and (min-width: 700px)"  href="https://neverstudio.de/styles.css">
+    <link rel="stylesheet" media="screen and (max-width: 700px)"  href="https://neverstudio.de/styles-phone.css">
+    <style>
+    img {
+		border-radius: 7vw;
+	}
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+	<script>
+		function switchToGerman() {
+		  const path = window.location.pathname;
+		  if (!path.startsWith('/de')) {
+			window.location.href = '/de' + path;
+		  }
+		}
+		function switchToEnglish() {
+		  const path = window.location.pathname;
+		  if (path.startsWith('/de')) {
+			window.location.href = path.replace("/de","");
+		  }
+		}
+	</script>
+	<div class="langBar">
+	<a href="#" onclick="switchToGerman()">de</a> / <a href="#" onclick="switchToEnglish()">en</a>
+	</div>
+    <div id="description-section" class="section" style="flex-direction: column;">
+	<h1><b>neverengine</b></h1>
+        <p style="width: 80%; text-align: center;">
+			Willkommen auf der Projektseite von neverengine.<br>
+			Neverengine ist eine isometrische Game-Engine.<br>
+        </p>
+    </div>
+	
+	<div id="contact" class="section">
+      <p>Erstelle semi-dreidimensionale Objekte mit Sprite-Sheets und Bounding Boxes.</p>
+    </div>
+	<div id="contact" class="section">
+      <video title="Kisten mit farbigen Umrandungen kollidieren und prallen hin und her." autoplay loop>
+        <source src="https://neverstudio.de/demo1_2.mp4" type="video/mp4">
+        Dein Browser unterstützt das Video-Tag nicht.
+      </video>
+      <p>Nutze die Physics. Füge eigene Kollisionsaktionen hinzu.</p>
+    </div>
+    <div id="contact" class="section">
+       <video title="Eine kleine graue Box bewegt sich durch einen Bereich voller größerer, farbiger Boxen und zeigt korrektes Layering." autoplay loop>
+        <source src="https://neverstudio.de/layering.mp4" type="video/mp4">
+        Dein Browser unterstützt das Video-Tag nicht.
+      </video>
+      <p>Schichte Objekte mit tile-free Layering.</p>
+    </div>
+    <div id="contact" class="section">
+       <p>Animieren von Objekten mit der <code>animate</code>-Methode.</p>
+    </div>
+    <div id="contact" class="section">
+      <video title="Eine kleine graue Box bewegt sich seitlich durch eine Gruppe größerer, bunter Boxen. Auch die größeren Boxen bewegen sich." autoplay loop>
+        <source src="https://neverstudio.de/demo3_2.mp4" type="video/mp4">
+        Dein Browser unterstützt das Video-Tag nicht.
+      </video>
+      <p>Erstelle dein eigenes Spiel.</p>
+    </div>
+    <div id="contact" class="section">
+      <a title="neverengine Dokumentation" href="https://www.neverstudio.de/neverisometric.html">Zur Dokumentation (leider aktuell nur auf englisch) &rarr;</a>
+    </div>
+<div class="section">
+<a title="neverstudio Hauptseite" href="index.html" id="mainmenu">Zurück zur Hauptseite &rarr;</a>
+</div>
+<div class="section">
+<span>
+<b>Kontakt und Nutzungsbedingungen</b><br>
+Hier findest du unsere <a href="contact.html">Kontakt- und rechtlichen Informationen</a>.<br>
+&copy; 2025 Michel und Nils Häußler.<br>Alle Rechte vorbehalten.
+</span>
+</div>
+<script>
+window.onload = () => {
+	let bcolors = ["#E34234", "#4d673a", "#5F92EC", "#ff8c00"];
+	document.body.style.backgroundColor = bcolors[Math.floor(Math.random() * bcolors.length)];
+}
+</script>
+</body>
+</html>

@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="alternate" hreflang="en" href="https://neverstudio.de/wordle-project.html" />
+	<link rel="alternate" hreflang="de" href="https://neverstudio.de/de/wordle-project.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Neverword - a wordle-like game</title>
     <script type="application/ld+json">
@@ -37,7 +39,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
-	
+	<script>
+		function switchToGerman() {
+		  const path = window.location.pathname;
+		  if (!path.startsWith('/de')) {
+			window.location.href = '/de' + path;
+		  }
+		}
+		function switchToEnglish() {
+		  const path = window.location.pathname;
+		  if (path.startsWith('/de')) {
+			window.location.href = path.replace("/de","");
+		  }
+		}
+	</script>
+	<div class="langBar">
+	<a href="#" onclick="switchToGerman()">de</a> / <a href="#" onclick="switchToEnglish()">en</a>
+	</div>
     <div id="description-section" class="section" style="flex-direction: column;">
 	<h1><b>Neverword</b></h1>
         <p>
@@ -60,7 +78,7 @@
       <img alt="A screenshot of the Safari website sharing menu showing the icon of neverstudio.de"src="sharenw.png" loading="lazy"><p>Share custom neverword games with friends.</p>
     </div>
     <div id="contact" class="section">
-      <a title = "neverword wordguessing game" href="https://www.neverstudio.de/wordguesser.html">Try out:  &rarr;</a>
+      <a title = "neverword wordguessing game" href="https://www.neverstudio.de/de/wordguesser.html">Try out:  &rarr;</a>
     </div>
 <div class="section">
 <a title = "neverstudio main page" href="https://www.neverstudio.de" id="mainmenu" >Back to main page &rarr;</a>

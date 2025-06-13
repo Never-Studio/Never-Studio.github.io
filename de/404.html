@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
+<meta charset="UTF-8">
 <link href="https://neverstudio.de/" rel="canonical"/>
-<title>neverstudio - 404 error</title>
-<link rel="alternate" hreflang="de" href="https://neverstudio.de/de/404.html" />
 <link rel="alternate" hreflang="en" href="https://neverstudio.de/404.html" />
+<link rel="alternate" hreflang="de" href="https://neverstudio.de/de/404.html" />
+<title>neverstudio - 404 error</title>
 <link rel="apple-touch-icon" sizes="180x180" href="https://neverstudio.de/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://neverstudio.de/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="https://neverstudio.de/favicon-16x16.png">
 <link rel="manifest" href="https://neverstudio.de/site.webmanifest">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Something is wrong with the link.">
+<meta name="description" content="Irgendetwas stimmt nicht mit dem Link." >
 <link rel="stylesheet" media="screen and (min-width: 850px)"  href="https://neverstudio.de/styles.css">
 <link rel="stylesheet" media="screen and (max-width: 850px)"  href="https://neverstudio.de/styles-phone.css">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" defer>
@@ -33,21 +34,20 @@
 <div class="langBar">
 <a href="#" onclick="switchToGerman()">de</a> / <a href="#" onclick="switchToEnglish()">en</a>
 </div>
-
 <div id="titleDiv" title="neverstudio 404" style="width: 100vw; scroll-snap-align: start; height: 100vh; width: 100vw; padding: 0px; margin: 0px; left: 0px;display: flex; align-items: center;justify-content: center;">
 	<div id="removeText" style="text-align: center;" title= "neverstudio">
 		<h1>404</h1>
-		<p id="help">The subpage you tried to access is unavailable.
-		You can go back to the <a title="neverstudio homepage" href="https://neverstudio.de/">main page</a>.<br>
-		Or you can play a <a title = "neverword wordguessing game" href="https://www.neverstudio.de/de/wordguesser.html">neverword game</a>.</p>
+		<p id="help">Die Unterseite, auf die Sie zugreifen wollten, ist nicht verfügbar.
+		Sie können zurück zur <a title="neverstudio homepage" href="https://neverstudio.de/de/index.html">Homepage</a> gehen.<br>
+		Oder Sie können ein <a title = "Neverword Wordguessing Spiel" href="https://www.neverstudio.de/de/wordguesser.html">Neverword Spiel</a> spielen.</p>
 	</div>
 </div>
 
 <div class="section">
 <p>
-<b>Contact and Terms of Services </b><br>
-Here is our <a href="contact.html" title="contact and legal information">Contact and Legal information</a>.<br>
-&copy; 2025 Michel and Nils H&auml;u&szlig;ler.<br>All rights reserved.
+<b>Kontakt und Nutzungsbedingungen </b><br>
+Hier sind unsere <a href="contact.html" title="Kontakt- und rechtliche Informationen">rechtlichen und Konatktinformationen</a>.<br>
+&copy; 2025 Michel und Nils H&auml;u&szlig;ler.<br>Alle Rechte vorbehalten.
 </p>
 </div>
 <script>
@@ -79,10 +79,10 @@ let urls = ["https://www.neverstudio.de/",
 "https://www.neverstudio.de/wordle-project.html",
 "https://www.neverstudio.de/engine-project.html",
 "https://www.neverstudio.de/contact.html",
-"https://www.neverstudio.de/de/wordguesser.html",
+"https://www.neverstudio.de/wordguesser.html",
 "https://www.neverstudio.de/neverisometric.html",
 "https://www.neverstudio.de/neverword.html"]
-let substitutes = {"https://www.neverstudio.de/neverword.html":"https://www.neverstudio.de/de/wordguesser.html"}
+let substitutes = {"https://www.neverstudio.de/neverword.html":"https://www.neverstudio.de/wordguesser.html"}
 let currentUrl = document.URL;
 urls.sort(function(a, b){return dist(b,currentUrl)-dist(a,currentUrl);})
 let suggest = urls[0];
@@ -90,7 +90,7 @@ if(Object.keys(substitutes).includes(suggest)){
 	suggest = substitutes[suggest]
 }
 let helper = document.getElementById("help");
-helper.innerHTML = 'Did you mean <a title="correction suggestion" href="'+suggest+'">'+suggest+'</a>?<br><br>'+helper.innerHTML
+helper.innerHTML = 'Meinten Sie <a title="correction suggestion" href="'+suggest+'">'+suggest+'</a>?<br><br>'+helper.innerHTML
 </script>
 </body>
 </html>

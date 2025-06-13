@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="alternate" hreflang="en" href="https://neverstudio.de/contact.html" />
+	<link rel="alternate" hreflang="de" href="https://neverstudio.de/de/contact.html" />
 	<meta name='description' content='Find our Contact Information, our Legal Notice and our Terms of Services.'>
     <title>Neverstudio - contact and legal notice</title>
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -22,7 +24,23 @@
 	</style>
 </head>
 <body>
-	
+	<script>
+	function switchToGerman() {
+	  const path = window.location.pathname;
+	  if (!path.startsWith('/de')) {
+		window.location.href = '/de' + path;
+	  }
+	}
+	function switchToEnglish() {
+	  const path = window.location.pathname;
+	  if (path.startsWith('/de')) {
+		window.location.href = path.replace("/de","");
+	  }
+	}
+</script>
+<div class="langBar">
+<a href="#" onclick="switchToGerman()">de</a> / <a href="#" onclick="switchToEnglish()">en</a>
+</div>
     <div id="description-section" class="section">
 	<h1>Contact Information and Terms of Use</h1>
 	</div>

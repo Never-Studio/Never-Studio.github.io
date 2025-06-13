@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="alternate" hreflang="en" href="https://neverstudio.de/wordle-project.html" />
+	<link rel="alternate" hreflang="de" href="https://neverstudio.de/de/wordle-project.html" />
+    <title>Neverword – ein Wordle-ähnliches Spiel</title>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "installUrl":"https://www.neverstudio.de/wordguesser.html",
+      "name": "neverword",
+      "browserRequirements":"JavaScript muss aktiviert sein. Lokaler Browser-Speicher wird benötigt, um Punkte und Wortlisten zwischen den Sitzungen zu speichern.",
+      "operatingSystem": "Alle",
+      "applicationCategory": "GameApplication",
+      "featureList":"Ein Wortratespiel. Ermöglicht das Erstellen eigener Spiele. Die Wortlänge kann angepasst werden.",
+      "offers": {
+        "@type": "Offer",
+        "price": 0,
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    <meta name='description' content='Neverword ist ein kostenloses Wortratespiel. Es ermöglicht die Nutzung eigener Wortlängen und das Teilen eigener Neverword-Spiele.'>
+    <meta name="description" content="Die Projektseite von Neverword: Neverword ist ein Wordle-ähnliches Spiel, das benutzerdefinierte Wortlängen und das Teilen eigener Neverwords mit eigenen Lösungen ermöglicht.">
+    <link rel="stylesheet" media="screen and (min-width: 700px)" href="https://neverstudio.de/styles.css">
+    <link rel="stylesheet" media="screen and (max-width: 700px)" href="https://neverstudio.de/styles-phone.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://neverstudio.de/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://neverstudio.de/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://neverstudio.de/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <style>
+    img {
+        border-radius: 7vw;
+    }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <script>
+		function switchToGerman() {
+		  const path = window.location.pathname;
+		  if (!path.startsWith('/de')) {
+			window.location.href = '/de' + path;
+		  }
+		}
+		function switchToEnglish() {
+		  const path = window.location.pathname;
+		  if (path.startsWith('/de')) {
+			window.location.href = path.replace("/de","");
+		  }
+		}
+	</script>
+	<div class="langBar">
+	<a href="#" onclick="switchToGerman()">de</a> / <a href="#" onclick="switchToEnglish()">en</a>
+	</div>
+    <div id="description-section" class="section" style="flex-direction: column;">
+        <h1><b>Neverword</b></h1>
+        <p>
+            Willkommen auf der Projektseite von Neverword.<br>
+            Neverword ist ein Wordle-ähnliches Wortratespiel.<br>
+        </p>
+    </div>
+    
+    
+    <div id="contact" class="section">
+        <img alt="Die Benutzeroberfläche von Neverword. Es zeigt die Wörter katze und neues." src="https://neverstudio.de/createnw.png" loading="lazy">
+        <p>Spiele Worträtsel. Sammle Punkte.</p>
+    </div>
+    <div id="contact" class="section">
+        <img alt="Die Einstellungen von Neverword. Zeigt das Feld zur Anpassung der Wortlänge." src="https://neverstudio.de/settingsnw.png" loading="lazy">
+        <p>Passe die Wortlänge an. Du kannst zum Beispiel auch 10-Buchstaben-Wörter raten.</p>
+    </div>
+    <div id="contact" class="section">
+        <img alt="Die Benutzeroberfläche von Neverword. Noch leer, zeigt die benutzerdefinierte Nachricht 'own'." src="https://neverstudio.de/ownnw.png" loading="lazy">
+        <p>Erstelle dein eigenes Neverword.<br><br> Mit eigener:<br>- Anfangsnachricht<br>- Wortlänge<br>- Anzahl an Versuchen</p>
+    </div>
+    <div id="contact" class="section">
+        <img alt="Ein Screenshot des Teilen-Menüs in Safari mit dem Icon von neverstudio.de" src="https://neverstudio.de/sharenw.png" loading="lazy">
+        <p>Teile personalisierte Neverword-Spiele mit Freunden.</p>
+    </div>
+    <div id="contact" class="section">
+        <a title="Neverword Wortratespiel" href="https://www.neverstudio.de/de/wordguesser.html">Jetzt ausprobieren: &rarr;</a>
+    </div>
+    <div class="section">
+        <a title="Neverstudio Startseite" href="index.html" id="mainmenu">Zurück zur Startseite &rarr;</a>
+    </div>
+    <div class="section">
+        <span>
+            <b>Kontakt und Nutzungsbedingungen</b><br>
+            Hier finden Sie unsere <a href="contact.html">Kontakt- und rechtlichen Informationen</a>.<br>
+            &copy; 2025 Michel und Nils Häußler.<br>Alle Rechte vorbehalten.
+        </span>
+    </div>
+    <script>
+    window.onload = () => {
+        let bcolors = ["#E34234", "#4d673a", "#5F92EC", "#ff8c00"];
+        document.body.style.backgroundColor = bcolors[Math.floor(Math.random() * bcolors.length)];
+    }
+    </script>
+</body>
+</html>
