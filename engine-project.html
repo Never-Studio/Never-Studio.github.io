@@ -17,7 +17,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
-	
+	<script>
+		function switchToGerman() {
+		  const path = window.location.pathname;
+		  if (!path.startsWith('/de')) {
+			window.location.href = '/de' + path;
+		  }
+		}
+		function switchToEnglish() {
+		  const path = window.location.pathname;
+		  if (path.startsWith('/de')) {
+			window.location.href = path.replace("/de","");
+		  }
+		}
+	</script>
+	<div class="langBar">
+	<a href="#" onclick="switchToGerman()">de</a> / <a href="#" onclick="switchToEnglish()">en</a>
+	</div>
     <div id="description-section" class="section" style="flex-direction: column;">
 	<h1><b>neverengine</b></h1>
         <p style="width: 80%; text-align: center;">
@@ -30,16 +46,16 @@
       <p>Create semi-3d objects with sprite sheets and bounding boxes.</p>
     </div>
 	<div id="contact" class="section">
-      <video title="Boxes with outlines in different colors collide and bounce back and forth." autoplay loop><source src="demo1_2.mp4" type="video/mp4">Your browser does not support the video tag.</video><p>Use the physics. Add custom collision actions.</p>
+      <img src="demo1_2.gif" alt="Kisten mit farbigen Umrandungen kollidieren und prallen hin und her." loading="lazy"><p>Use the physics. Add custom collision actions.</p>
     </div>
     <div id="contact" class="section">
-       <video title="A small grey box moves through an area full of other bigger boxes in multiple colors. It showcases that neverengine is able to accurately layer the objects." autoplay loop><source src="layering.mp4" type="video/mp4">Your browser does not support the video tag.</video><p>Layer objects with tile-free layering.</p>
+       <img alt="A small grey box moves through an area full of other bigger boxes in multiple colors. It showcases that neverengine is able to accurately layer the objects."  src="layering.gif" loading="lazy"><p>Layer objects with tile-free layering.</p>
     </div>
     <div id="contact" class="section">
        <p>Animate objects with the animate method.</p>
     </div>
     <div id="contact" class="section">
-      <video title="A small grey box moves sideways through a cluster of multiple bigger colorful boxes. The bigger boxes are also moving." autoplay loop><source src="demo3_2.mp4" type="video/mp4">Your browser does not support the video tag.</video><p>Create your own game.</p>
+      <img alt="A small grey box moves sideways through a cluster of multiple bigger colorful boxes. The bigger boxes are also moving." src="demo3_2.gif" loading="lazy"><p>Create your own game.</p>
     </div>
     <div id="contact" class="section">
       <a title="neverengine documentation"  href="https://www.neverstudio.de/neverisometric.html">Visit the documentation:  &rarr;</a>
