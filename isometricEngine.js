@@ -178,7 +178,7 @@ It can be used to visualize different ratio values.*/
 			}
 		}else{console.log("No turnMap")}
 		this.activeImage = this.turnMap[this.turnIndex]["imgs"][this.animationIndex]
-		if(this.world.images[this.activeImage]){
+		if(this.world.images && this.activeImage){
 			if(!this.dimDefined){
 				if(this.world != undefined){
 					this.width = this.world.images[this.activeImage].naturalWidth
