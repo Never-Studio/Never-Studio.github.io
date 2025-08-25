@@ -178,16 +178,18 @@ It can be used to visualize different ratio values.*/
 			}
 		}else{console.log("No turnMap")}
 		this.activeImage = this.turnMap[this.turnIndex]["imgs"][this.animationIndex]
-		if(!this.dimDefined){
-			if(this.world != undefined){
-				this.width = this.world.images[this.activeImage].naturalWidth
-				this.height = this.world.images[this.activeImage].naturalHeight
+		if(this.world.images[this.activeImage]){
+			if(!this.dimDefined){
+				if(this.world != undefined){
+					this.width = this.world.images[this.activeImage].naturalWidth
+					this.height = this.world.images[this.activeImage].naturalHeight
+				}
 			}
-		}
-		if(this.offsetMap.hasOwnProperty(this.activeImage)){
-			this.imgChange = this.offsetMap[this.activeImage]
-		}else{
-			this.imgChange = this.offsetMap["default"]
+			if(this.offsetMap.hasOwnProperty(this.activeImage)){
+				this.imgChange = this.offsetMap[this.activeImage]
+			}else{
+				this.imgChange = this.offsetMap["default"]
+			}
 		}
 	}
 	
