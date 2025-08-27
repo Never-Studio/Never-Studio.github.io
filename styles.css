@@ -2,7 +2,6 @@
   font-family: "Montserrat";
   font-optical-sizing: auto;
   font-style: normal;
-  font-weight: 400;
   color: #fff;
 }
 * {
@@ -33,50 +32,14 @@ b {
   font-weight: 700;
   font-size: inherit;
 }
-.section {
-  text-align: left;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  justify-content: center;
-  height: fit-content;
-  min-height: 100vh;
-  scroll-snap-align: start;
-}
-.section > :is(h1, h2, h3, h4, h5, h6) {
-  text-align: center;
-}
 h1 {
-  font-size: 100pt;
+  font-size: 10vw;
   overflow: scroll;
   font-weight: 700;
 }
 h2 {
-  font-size: 50pt;
+  font-size: 5vw;
   font-weight: 700;
-}
-.section > :not(:is(h1, h2, h3, h4, h5, h6)) {
-  font-size: 25pt;
-  margin: auto;
-  max-width: 40%;
-  width: fit-content;
-}
-
-.section > :only-child:not(:is(h1, h2, h3, h4, h5, h6)) {
-  position: absolute;
-  left: 10%;
-  font-size: 25pt;
-  margin: auto;
-  max-width: 80%;
-  width: fit-content;
-}
-img {
-  border-radius: 2vw;
-  margin: auto;
-}
-video {
-  border-radius: 2vw;
-  margin: auto;
 }
 button,
 a {
@@ -93,3 +56,53 @@ a:hover {
   text-decoration: none;
   max-width: 80%;
 }
+img {
+  border-radius: 2vw;
+  margin: auto;
+  max-height: 500px;
+}
+video {
+  border-radius: 2vw;
+  margin: auto;
+  max-height: 500px;
+}
+.section{
+  text-align: left;
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+  justify-content: center;
+  height: fit-content;
+  min-height: 100vh;
+  width: 100%;
+  scroll-snap-align: start;
+}
+.rowsection{
+  text-align: left;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  height: fit-content;
+  min-height: 100vh;
+  width: 100%;
+  scroll-snap-align: start;
+}
+
+
+.section > * {
+  position: relative;
+  left: 10%;
+  font-size: 25pt;
+  max-width: 80%;
+  width: fit-content;
+}
+
+.rowsection > * {
+  position: relative;
+  font-size: 25pt;
+  max-width: 40%;
+  width: fit-content;
+}
+
+

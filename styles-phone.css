@@ -48,7 +48,7 @@ b{
   scroll-snap-align: start;
 }
 
-.section > :is(h1,h2,h3,h4,h5,h6) {
+.section > :is(h1,h2) {
   text-align: center;
 }
 h1{
@@ -59,14 +59,14 @@ h2{
 	font-size: 30pt;
 }
 
-.section > :not(:is(h1,h2,h3,h4,h5,h6)) {
+.section > :not(:is(h1,h2)) {
   font-size: 20pt;
   margin: 10%;
   max-width: 80%;
   width: fit-content;
 }
 
-.section > :only-child:not(:is(h1,h2,h3,h4,h5,h6)) {
+.section > :only-child:not(:is(h1,h2)) {
   position: absolute;
   left: 10%;
   font-size: 20pt;

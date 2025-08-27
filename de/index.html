@@ -1,26 +1,25 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="utf-8" />
-<link href="https://neverstudio.de/de/index.html" rel="canonical"/>
-<link rel="alternate" hreflang="en" href="https://neverstudio.de/index.html" />
-<link rel="alternate" hreflang="de" href="https://neverstudio.de/de/index.html" />
-<title>Neverstudio - Programmierprojekte</title>
-<meta name="description" content="Du interessierst dich für KI oder Spieleentwicklung? Sieh dir unsere Projekte an, erfahre mehr über uns oder besuche unsere Social-Media-Seiten.">
-<link rel="apple-touch-icon" sizes="180x180" href="https://neverstudio.de/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://neverstudio.de/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="https://neverstudio.de/favicon-16x16.png">
-<link rel="manifest" href="https://neverstudio.de/site.webmanifest">
+<title>Neverstudio | KI Projekte, Spieleentwicklung & JavaScript Tools</title>
+<link href="https://www.neverstudio.de/de/index.html" rel="canonical"/>
+<link rel="alternate" hreflang="de" href="https://www.neverstudio.de/de/index.html" />
+<link rel="alternate" hreflang="en" href="https://www.neverstudio.de/" />
+<meta name="description" content="Neverstudio ist eine Webseite über KI- und Spieleentwicklungsprojekte. Entdecken Sie Spiele wie Neverword und JavaScript-Tools wie Neverengine.">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" media="screen and (min-width: 850px)"  href="https://neverstudio.de/styles.css">
-<link rel="stylesheet" media="screen and (max-width: 850px)"  href="https://neverstudio.de/styles-phone.css">
+<link rel="stylesheet"  href="../styles.css">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" defer>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "url": "https://neverstudio.de",
-  "logo": "https://neverstudio.de/logo.png",
+  "url": "https://www.neverstudio.de",
+  "logo": "https://www.neverstudio.de/logo.png",
   "name": "neverstudio",
   "description": "Neverstudio ist eine Website, die Programmierprojekte veröffentlicht. Projekte beinhalten das Wortratespiel Neverword und die isometrische JavaScript-Engine Neverengine.",
   "email": "info@neverstudio.de"
@@ -29,26 +28,28 @@
 </head>
 
 <body>
-	<script>
-		function switchToGerman() {
-		  const path = window.location.pathname;
-		  if (!path.startsWith('/de')) {
-			window.location.href = '/de' + path;
-		  }
-		}
-		function switchToEnglish() {
-		  const path = window.location.pathname;
-		  if (path.startsWith('/de')) {
-			window.location.href = path.replace("/de","");
-		  }
-		}
-	</script>
-	<div class="langBar">
-	<a href="#" onclick="switchToGerman()">de</a> / <a href="#" onclick="switchToEnglish()">en</a>
-	</div>
+
+<script>
+	function switchToGerman() {
+	  const path = window.location.pathname;
+	  if (!path.startsWith('/de')) {
+		window.location.href = '/de' + path;
+	  }
+	}
+	function switchToEnglish() {
+	  const path = window.location.pathname;
+	  if (path.startsWith('/de')) {
+		window.location.href = path.replace("/de","");
+	  }
+	}
+</script>
+<div class="langBar">
+<a href="#" onclick="switchToGerman()">de</a> / <a href="#" onclick="switchToEnglish()">en</a>
+</div>
+
 <div id="titleDiv" title="Neverstudio Titelanimation" style="width: 100vw; scroll-snap-align: start; height: 100vh; width: 100vw; padding: 0px; margin: 0px; left: 0px;display: flex; align-items: center;justify-content: center;">
-	<div id="removeText" style="text-align: center;" title="neverstudio">
-		<h1>neverstudio</h1>
+	<div id="removeText" style="text-align: center;" title= "neverstudio">
+		<h1>neverstudio coding</h1>
 		<p title="never just a studio">Klicke oder drücke eine Taste, um zu starten</p>
 	</div>
 </div>
@@ -58,86 +59,85 @@
 </div>
 
 <div id="description-section" class="section" >
-    <p>
-        <b>Wir sind Neverstudio!</b><br><br>
-        Neverstudio.de ist eine Website zur Veröffentlichung von Programmierprojekten.<br>
+        <p>
+			<b>Wir sind Neverstudio!</b><br><br>
+			Neverstudio.de ist eine Website zur Veröffentlichung von Programmierprojekten.<br>
         Wir interessieren uns für Spieleentwicklung, KI und andere technische Themen.<br>
         Schau dir gerne unsere <a href="https://github.com/Never-Studio" title="Neverstudio GitHub-Seite">GitHub-Seite</a> an oder probiere ein <a href="#projects" title="Projektliste">Projekt</a> aus.<br>
         Du kannst uns auf <a href="https://www.reddit.com/user/NeverStudio/" title="Neverstudio Reddit-Seite">Reddit</a> und <a href="https://www.instagram.com/neverstudio.de/" title="Neverstudio Instagram-Seite">Instagram</a> folgen.
-    </p>
+        </p>
 </div>
-
 <div class="section" id="projects">
 <h2>Projekte</h2>
 </div>
 
-
-<div class="section">
+<div class="rowsection">
 <img src="https://neverstudio.de/createnw.png" alt="Ein Wortratespiel ähnlich wie Wordle" title="Ein Wortratespiel ähnlich wie Wordle" loading="lazy">
-<p><b>neverword</b><br><br>
+<span>
+<h3>neverword</h3>
+<p>
 Ein Wortratespiel im Stil von Wordle mit frei wählbarer Wortlänge.<br>
-Du kannst auch eigene Spiele mit individuellen Lösungen erstellen und mit Freunden teilen.
-<br><br><a href="wordle-project.html" title="neverword">Projektseite</a>
-</p>
+Man kann auch eigene Spiele mit individuellen Lösungen erstellen und mit Freunden teilen.
+<br><br><a href="wordle-project.html" title="Neverword Spiel">Neverword Projektseite</a></p>
+</span>
 </div>
 
-
-
-<div class="section">
-<img src="https://neverstudio.de/neverRPG.png" alt="Eine Pixel-Art-Figur vor dem Text 'hello'" title="Eine Pixel-Art-Figur vor dem Text 'hello'" loading="lazy">
-<p><b>neverisometric</b><br><br>
+<div class="rowsection">
+<img src="https://www.neverstudio.de/neverRPG.png" alt="Eine stilisierte gepixelte Sanduhr (das alte Neverstudio Logo)" title="Eine stilisierte gepixelte Sanduhr (das alte Neverstudio Logo)" loading="lazy">
+<span>
+<h3>neverengine</h3>
+<p>
 Eine JavaScript-Engine für retro-inspirierte Pixelspiele.<br>
 Sie unterstützt benutzerdefinierte Achsenverhältnisse und Layering ohne tiles.
-<br><br><a href="engine-project.html" title="neverengine">Projektseite</a>
-</p>
+<br><br><a href="engine-project.html" title="Neverengine">Neverengine Projektseite</a></p>
+</span>
 </div>
-
+<div class="section">
 <div class="section">
 <h2>FAQ</h2>
 </div>
-
 <div class="section">
+<h3>Wozu dient diese Website?</h3>
 <p>
-<b>Wozu dient diese Website?</b><br>
-<a title="Neverstudio Startseite" href="index.html">Neverstudio.de</a> existiert, um Programmierprojekte und (Web-)Apps zu veröffentlichen.<br>
-Bisher haben wir nur ein Wortratespiel veröffentlicht, aber wir planen, unsere JavaScript Game Engine bald öffentlich zugänglich zu machen.<br>
-Außerdem wollen wir uns mit KI beschäftigen und vielleicht veröffentlichen wir eines Tages auch ein echtes Computerspiel.
+<a title="Neverstudio Hauptseite" href="https://www.neverstudio.de/">Neverstudio.de</a> ist eine Webseite zur Veröffentlichung von Programmierprojekten.<br>
+Bisher haben wir zwar erst Neverword (ein Wortratespiel wie Wordle) veröffentlicht, wir planen aber noch, unsere isometrische JavaScript Engine (Neverengine) zu veröffentlichen.<br>
+Außerdem wollen wir uns noch mit KI beschäftigen (evtl. werdebn wir bald einen auf GPT-OSS basierenden Agenten veröffentlichen).<br>
+Es kann sein, dass wir irgendwann auch ein echtes Spiel veröffentlichen.
 </p>
 </div>
-
 <div class="section">
+<h3>Wer hat diese Webseite erstellt?</h3>
 <p>
-<b>Wer hat diese Website erstellt?</b><br>
-Wir sind zwei Brüder aus Deutschland und interessieren uns für Programmierung.
-Die Webseite ist zwar ein Hobby-Projekt, wird aber trotzdem regelmäßig geupdated und gewartet.
+Diese Webseite wurde erstellt und wird gewartet von zwei Brüdern, die sich für Programmierung interessieren.<br>
 </p>
 </div>
-
 <div class="section">
+<h3>Wie kann man ein Projekt ausprobieren?</h3>
 <p>
-<b>Wie kann ich ein Projekt ausprobieren?</b><br>
-Besuche die jeweilige Unterseite, indem du auf den Link mit der Beschriftung "Projektseite" klickst.<br>
-Wenn es eine Demo gibt, findest du sie dort.
+Gehen sie zur <a href="#projects" title="Projektliste">Projektliste</a> und
+besuchen sie die entsprechende Unterseite, indem sie auf den Projektseiten-Link klicken.<br>
+Wenn es eine Demo gibt, ist sie höchstwahrscheinlich dort zu finden.
+Sie können auch <a href="https://github.com/orgs/Never-Studio/repositories" title="Neverstudio Github Repositories">die Repositories auf GitHub</a> ansehen.
 </p>
 </div>
-
 <div class="section">
+<h3>Auf welchen Social Media Webseiten ist Neverstudio.de vertreten?</h3>
 <p>
-<b>Auf welchen sozialen Medien ist Neverstudio vertreten?</b><br>
 Wir haben Accounts auf <a title="Der Neverstudio Instagram-Account" href="https://www.instagram.com/neverstudio.de/">Instagram</a>, <a title="Der Neverstudio Reddit-Account" href="https://www.reddit.com/user/NeverStudio/">Reddit</a>, <a title="Der Neverstudio Bluesky-Account" href="https://bsky.app/profile/neverstudio.bsky.social">Bluesky</a>,
 <a title="Unser GitHub-Account" href="https://github.com/Never-Studio">GitHub</a> und vielen weiteren Plattformen.<br>
 Nicht alle Accounts werden jedoch regelmäßig gepflegt.
 </p>
 </div>
 <div class="section">
+<h3>Wie kann ich Bugs melden oder Projektvorschläge machen?</h3>
 <p>
-<b>Wie kann ich Bugs melden oder Projektvorschläge machen?</b><br>
 Wenn du einen Bug oder Fehler in einem Projekt findest oder einen Vorschlag für ein neues Feature oder Projekt hast, kannst du uns gerne <a href="http://www.neverstudio.de/de/contact.html#contact">kontaktieren</a>.<br>
+Oder erstelle einfach eine Pull Request auf <a href="https://github.com/orgs/Never-Studio/repositories" title="neverstudio Github Repositories">GitHub</a>.
 </p>
 </div>
 <div class="section">
+<h2>Kontakt & Nutzungsbedingungen</h2>
 <p>
-<b>Kontakt & Nutzungsbedingungen</b><br>
 Hier findest du unsere <a href="contact.html" title="Kontakt- und rechtliche Informationen">Kontakt- und rechtlichen Informationen</a>.<br>
 &copy; 2025 Michel und Nils Häußler. Alle Rechte vorbehalten.
 </p>
