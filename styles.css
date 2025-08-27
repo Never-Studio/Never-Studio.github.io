@@ -33,7 +33,7 @@ canvas {
 h1 {
   font-size: max(5vw,25pt);
   font-weight: 700;
-  margin: 10%;
+  margin: auto;
 }
 
 b, h2 {
