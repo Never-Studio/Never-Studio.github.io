@@ -72,7 +72,6 @@ img, video {
   height: fit-content;
   min-height: 100vh;
   width: 100%;
-  scroll-snap-align: start;
 }
 
 .rowsection{
@@ -84,7 +83,6 @@ img, video {
   height: fit-content;
   min-height: 100vh;
   width: 100%;
-  scroll-snap-align: start;
 }
 
 .section > :not(h1) {
@@ -97,5 +95,19 @@ img, video {
   position: relative;
   margin: 10%;
 }
-
-
+@media (max-width: 800px) {
+  .rowsection {
+    text-align: left;
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    justify-content: center;
+    height: fit-content;
+    min-height: 100vh;
+    width: 100%;
+  }
+  .rowsection > :not(h1) {
+    position: relative;
+    max-width: 80%;
+  }
+}
