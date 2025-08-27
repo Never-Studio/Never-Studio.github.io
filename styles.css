@@ -3,6 +3,7 @@
   font-optical-sizing: auto;
   font-style: normal;
   color: #fff;
+  font-size: 17pt;
 }
 * {
   -ms-overflow-style: none;
@@ -28,43 +29,39 @@ canvas {
   left: 0;
   position: absolute;
 }
-b {
-  font-weight: 700;
-  font-size: inherit;
-}
+
 h1 {
-  font-size: 10vw;
-  overflow: scroll;
+  font-size: max(5vw,25pt);
+  font-weight: 700;
+  margin: 10%;
+}
+
+b, h2 {
+  font-size: max(4vw,20pt);
   font-weight: 700;
 }
-h2 {
-  font-size: 5vw;
+b, h3 {
+  font-size: max(3vw,17pt);
   font-weight: 700;
 }
-button,
-a {
+button, a {
   border: none;
   color: #fff;
   text-decoration: underline;
   text-decoration-thickness: 1px;
   max-width: 80%;
 }
-button,
-a:hover {
+button, a:hover {
   border: none;
   color: #fff;
   text-decoration: none;
   max-width: 80%;
 }
-img {
+img, video {
   border-radius: 2vw;
   margin: auto;
-  max-height: 500px;
-}
-video {
-  border-radius: 2vw;
-  margin: auto;
-  max-height: 500px;
+  max-height: 300px;
+  max-width: 30%;
 }
 .section{
   text-align: left;
@@ -89,20 +86,15 @@ video {
   scroll-snap-align: start;
 }
 
-
-.section > * {
+.section > :not(h1) {
   position: relative;
   left: 10%;
-  font-size: 25pt;
   max-width: 80%;
-  width: fit-content;
 }
 
-.rowsection > * {
+.rowsection > :not(h1) {
   position: relative;
-  font-size: 25pt;
-  max-width: 40%;
-  width: fit-content;
+  margin: 10%;
 }
 
 
