@@ -16,20 +16,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
 <body>
-<script>
-	function switchToGerman() {
-	  const path = window.location.pathname;
-	  if (!path.startsWith('/de')) {
-		window.location.href = '/de' + path;
-	  }
-	}
-	function switchToEnglish() {
-	  const path = window.location.pathname;
-	  if (path.startsWith('/de')) {
-		window.location.href = path.replace("/de","");
-	  }
-	}
-</script>
+<script src="../langswitch.js"></script>
 <div class="langBar">
 <a href="#" onclick="switchToGerman()">de</a> / <a href="#" onclick="switchToEnglish()">en</a>
 </div>
