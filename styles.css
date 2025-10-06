@@ -1,17 +1,30 @@
-* {
+body>*{
   font-family: "Montserrat";
   font-optical-sizing: auto;
   font-style: normal;
   color: #fff;
   font-size: 17pt;
 }
-* {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+
+body {
+  overflow: overlay;
 }
-*::-webkit-scrollbar {
-  display: none;
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
 }
+
+::-webkit-scrollbar-thumb {
+  background: rgb(120, 120, 120);
+  border-radius:1vw;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0);
+  
+}
+
 .langBar{
 	width: fit-content;
 	position: fixed;
@@ -124,4 +137,14 @@ img, video {
 }
 #homepageTitleDiv > div {
   text-align: center;
+}
+
+pre>code {
+	max-height: 70vh;
+	font-size: 10pt;
+	background-color: black;
+}
+
+pre{
+	border-radius: 1vw;
 }

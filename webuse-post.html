@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://www.neverstudio.de/webuse-post.html" rel="canonical">
+    <link rel="alternate" hreflang="en" href="https://www.neverstudio.de/webuse-post.html" >
+	<link rel="alternate" hreflang="de" href="https://www.neverstudio.de/de/webuse-post.html" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weba Agents with Playwright and JS - neverstudio</title>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "installUrl":"https://www.neverstudio.de/wordguesser.html",
+      "name": "neverword",
+      "browserRequirements":"Javascript has to be enabled. Local browser storage is needed for saving the points and the wordlist accross sessions.",
+      "operatingSystem": "All",
+      "applicationCategory": "GameApplication",
+      "featureList":"A word-guessing game. Enables creation of custom games. The wordlength can be changed.",
+      "offers": {
+        "@type": "Offer",
+        "price": 0,
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    <link rel="stylesheet" href="highlight/styles/atom-one-light.css">
+	<script src="highlight/highlight.min.js"></script>
+	<script src="hl2/highlightjs-copy.min.js"></script>
+	<link rel="stylesheet" href="hl2/highlightjs-copy.min.css">
+	<script>hljs.addPlugin(
+  new CopyButtonPlugin({
+    autohide: false, // Always show the copy button
+  })
+);hljs.highlightAll();</script>
+    <meta name="description" content="How to allow ai agents to interact with webpages without multimodality and specific training? - a blogpost">
+    <link rel="stylesheet"  href="styles.css">
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+	<script src="langswitch.js" defer></script>
+	<div class="langBar">
+	<a href="#" onclick="switchToGerman()">de</a> / <a href="#" onclick="switchToEnglish()">en</a>
+	</div>
+    <div id="description-section" class="section">
+		<h1>web agents</h1>
+        <p>
+			This is a post about using Playwright and Python for building a web usage framework.
+        </p>
+    </div>
+    <div class="section">
+    
+    </div>
+    <div class="section">
+        <h2>Requirements for a web agent tool</h2>
+        <p>
+        The goal for the tool is to be capable of both viewing a webpage and executing interactions such as clicking or typing.
+        When viewing a webpage only visible parts of the webpage should be displayed, and metadata about interactivity has to be added:<br>
+        In this case, tags that indicate whether an element can be clicked (&lt;clickable&gt;) or if it is a text input (&lt;typeable&gt;).<br>
+        Since these are the most common interactions, we expect them to enable the usage of many websites.
+        To enable these interactions, we have built two separate tools that locate elements based on the text they contain and execute clicking or typing interactions.
+        Note, however, that there are other <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input" title="Mozilla docs about different html input elements">types of input form interactions</a> that we do not cover here.
+        </p>
+        <h2>Parsing a webpage</h2>
+        <p>
+			We chose to parse the website with a custom JS script since it is more suitable than using Python's <a href="https://pypi.org/project/beautifulsoup4/" title="beautiful soup parser">Beautifulsoup</a> for multiple reasons:<br>
+			- JS is faster and can later be executed on the webpage itself using playwright.<br>
+			- We can access the position of objects, allowing for occlusion checks.<br>
+			- The DOM can already be traversed without separate parsing.<br>
+			The parser can also be found on <a href="https://github.com/Never-Studio/never-parser-HTML" title="Neverstudio webpage parser">GitHub</a>.<br>
+			</p><h3>Occlusion Checks</h3><p>
+			Let's start with the occlusion check: As there is no built-in JS function to check if an element is occluded, we'll implement a custom algorithm.<br>
+			To do that, we'll determine the center coordinate of the element we want to check and find the topmost element at that coordinate.<br>
+			To avoid that very small elements occlude much bigger ones, we calculate the area of intersection and only count an element as occluded when at least 50% of its area is occluded.</p>
+	<pre><code>
+/*
+* 
+* 
+* 
+* We calculate the edges of the box of intersection (so we can then calculate width and height and ultimately the area):
+* 
+*         |--width-|
+* 
+*   +--------------+
+*   |              |
+*   |     +--top---+--------+   –
+*   |     |########|        |   |
+*   |     |########|        |   |
+*   | left|########|right   |   | height
+*   |     |########|        |   |
+*   |     |########|        |   |
+*   +-----+-bottom-+        |   –
+*         |                 |
+*         +-----------------+
+* 
+* height = bottom - top
+* width = right-left
+* 
+*/
+function isOccluded(el) {
+	if(el.nodeType === Node.ELEMENT_NODE && el.ownerDocument === document){//Check if it's even an element node, since content inside nested documents has a different coordinate system they are ignored
+		const rect = el.getBoundingClientRect();//get the rectangle the node occupies
+		let elementArea = rect.width*rect.height//calculate its area...
+		const centerX = rect.left + rect.width / 2;//...and center coordinate
+		const centerY = rect.top + rect.height / 2;
+		const topElement = document.elementFromPoint(centerX, centerY);//get the top element at the center coordinate
+		if(topElement&& topElement.nodeName!="A"){//a tags (links) should not occlude other elements as they are sometimes overlayed to make elements clickable
+			if(!el.contains(topElement) && !topElement.contains(el)){//if they are not a child of each other...
+				//calculate intersection box:
+				let topRect = topElement.getBoundingClientRect();//get the rectangle the top element occupies
+				let left = Math.max(rect.left, topRect.left)
+				let right = Math.min(rect.right, topRect.right)
+				let top = Math.max(rect.top, topRect.top)
+				let bottom = Math.min(rect.bottom, topRect.bottom)
+				if(right&lt;left || bottom&lt;top) return false//check if the intersection box is invalid, return false if it is
+				let intersectArea = (right-left)*(bottom-top)//get the area of the intersection
+				return intersectArea/elementArea&gt;0.5//treat element as occluded when over 50% of its are is occluded
+			}
+		}
+		
+	}
+	return false;
+}
+</code></pre>
+<h3>Detect clickable and typeable elements</h3>
+<p>Let's move on to annotation of clickability and typeability. There is - again- no simple built-in tool for that.
+We choose to determine those attributes using CSS selectors since they're quite fast and easy to implement.<br>
+The queries likely won't cover all cases but at least a broad range, as they even check role attributes.<br>
+This two functions check whether a node is clickable or typeable:</p>
+<pre><code>
+function isClickable(node) {//use a css query to match common objects that can be clicked (there may be unchecked edge cases)
+	if(node.nodeType === Node.ELEMENT_NODE){
+		return node.matches('a, button, select, option, area, input[type="submit"], input[type="button"], input[type="reset"], input[type="radio"], input[type="checkbox"], [role="button"], [role="link"], [role="checkbox"], [role="menuitemcheckbox"] , [role="menuitemradio"], [role="option"], [role="radio"], [role="switch"], [role="tab"], [role="treeitem"], [onclick]')
+	}else{
+		return false
+	}
+}
+
+function isTypeable(node) {//use a css query to match common objects one can type in (there may be unchecked edge cases)
+	if(node.nodeType === Node.ELEMENT_NODE){
+		return node.matches('input[type="text"],input[type="password"],input[type="email"],input[type="search"],input[type="tel"],input[type="url"],input[type="number"],textarea,[role="textbox"], [role="search"], [role="searchbox"], [role="combobox"], [onkeydown],[onkeypress],[onkeyup]')
+	}else{
+		return false
+	}
+}
+</code></pre>
+<h3>Annotating the DOM tree</h3>
+<p>Now that we have implemented the most important checks, we can put all this together into one recursive parser.<br>
+The parser will start at the root node and recursively annotate and copy its children, their children, etc., until the whole DOM is traversed.<br>
+Here's what it should do (step-by-step):<br>
+1. Find out if the current element is invisible or undefined (if so, exit).<br>
+2. Determine if the element is clickable or typeable.<br>
+3. Create a new node that will be used to copy the original node. Its tag name will be clickable, typeable, or unwrap (it's hard to unwrap nodes directly, so we'll do that later with regex).<br>
+4. Add the children of the original element to the copy.<br>
+There are two edge cases that have to be handled in a special way here: Shadow DOM and iFrames.<br>
+5. If the element does not contain any text, we'll find a text based on attributes.<br>
+<br>
+Here's the code:<br>
+</p>
+<pre><code>
+function annotateNode(element) {//recursive main loop: Creates a copy of the DOM, incorporates shadow DOM, removes invisible/occluded elements, annotates usability of elements and replaces all other tags with 
+	//Step 1: Is the lement undefined, invisible otr a TextNode?
+	if(!element){//If something is None/undefined its replaced with an empty TextNode
+		return document.createTextNode("")
+	}else if(element.nodeType== Node.TEXT_NODE){//Text nodes are copied as is:
+			return document.createTextNode(element.textContent)
+	}else if(element.nodeType === Node.ELEMENT_NODE){//Remove elements that are invisible, occluded or simply invisible by default (e.g. scripts):
+		if(["SCRIPT", "STYLE","META","LINK","NOSCRIPT"].includes(element.nodeName) || isOccluded(element) || !element.checkVisibility({opacityProperty: true, visibilityProperty : true})) {
+			return document.createTextNode("")
+		}
+	}
+	
+	//Step 2+3: Determine the elements name and create the node for the copy
+	let name =  isClickable(element) ? "clickable": isTypeable(element) ? "typeable" : "unwrap"//decide whether the current node can be clicked, typed or if it should later be unwrapped (unwrap)
+	
+	let newNode = document.createElement(name);//create a node copy to add the content of the original to
+	
+	//Step 4: Add the children to the copy node
+	//Normal childNodes:
+	for (let node of element.childNodes) {//add all children of the original node but also annotate them
+		newNode.appendChild(annotateNode(node))
+	}
+	
+	//childNodes inside an iFrame:
+	if(element.nodeName=="IFRAME"){//if the original node is an iFrame add all its content too:
+			try{
+				let doc = element.contentDocument.body || element.contentWindow.document.body//find the iframes body as a root to start from
+				let nodes = doc.querySelectorAll(":scope > *")//select all direct children of the root element
+				for (let node of nodes){//annotate and add the nodes to the node copy
+					newNode.appendChild(annotateNode(node))
+				}
+			}catch(e){
+				console.log("Couldn't unwrap iFrame. Likely due to a cross-origin request issue: ",e)
+			}
+	}
+	
+	//childNodes inside shadowDOM:
+	if (element.shadowRoot) {//if the lement is a shadow dom element add its children too
+		for (let node of element.shadowRoot.childNodes) {//annotate and add children of shadow dom root
+			newNode.appendChild(annotateNode(node))
+		}
+	}
+	
+	//Step 5: add text to empty elements based on their attributes
+	if(newNode.innerText.trim().replaceAll(" ","") == ""){
+		newNode.innerText = "";
+		let replacer = element.title || element.ariaLabel || element.placeholder || element.alt;
+		if(replacer){
+			newNode.appendChild(document.createTextNode(replacer))
+		}
+	}
+	
+	return newNode
+}
+</code></pre>
+<h3>Cleaning the results and putting everything together</h3>
+<p>While we could - in theory - apply this function to the body of the document, the result will still be a mess.<br>
+The unwrap tags, for example, are still in there.<br>
+As we said earlier, we will remove them (and clean up the result in general) with regex.<br>
+Here's the code (with an additional <code>getAllHTML()</code> function for convenience):</p>
+<pre><code>function cleanUp(res){//clean up an annotated html
+  res = res.replaceAll("&lt;unwrap&gt;","&lt;br&gt;").replaceAll("&lt;/unwrap&gt;","&lt;br&gt;")//remove all unwrap tags (not their content)
+  res = res.replaceAll(/&lt;br&gt;/g, '\\n');//replace &lt;br&gt; tags with \\n
+  res = res.replaceAll('&amp;nbsp;', ' ');//replace &amp;nbsp; with blanks
+  res = res.replaceAll(/&lt;clickable&gt;\s*&lt;\/clickable&gt;/g, '');//remove empty clickable tags
+  res = res.replaceAll(/&lt;typeable&gt;\s*&lt;\/typeable&gt;/g, '');//remove empty typeable tags
+  res = res.replaceAll(/\\n\s+/g, '\\n');//replace multiple \\n with just one \\n
+  res = res.replaceAll(/ {2,}/g, ' ')//replace more than two blanks with just one blank
+  return res
+}
+function getAllHTML() {//function to retrieve the current page as annotated text
+  try{
+      return cleanUp(annotateNode(document.body).outerHTML)
+  }catch{
+     return cleanUp(annotateNode(document.body))
+  }
+}</code></pre>
+		<p>
+		You can now execute <code>getAllHTML</code> on any website to retrieve a parsed version.<br>
+		If you don't want the annotation tags, you can use <a href="https://github.com/Never-Studio/never-parser-HTML/blob/main/raw-text-parser.js" title="text-only js parser">the text-only version on GitHub.</a>
+        </p>
+        <h2>Examples for parsed pages</h2>
+        <p>Below is a parsed version of google.com:</p>
+        <pre><code>&lt;clickable&gt;About&lt;/clickable&gt;&lt;clickable&gt;Store&lt;/clickable&gt;
+&lt;clickable&gt;Gmail&lt;/clickable&gt;
+&lt;clickable&gt;Images&lt;/clickable&gt;
+&lt;clickable&gt;
+Sign in
+&lt;/clickable&gt;
+&lt;typeable&gt; 
+&lt;typeable&gt;Search&lt;/typeable&gt;
+&lt;clickable&gt;Google Search&lt;/clickable&gt; &lt;clickable&gt;I'm Feeling Lucky&lt;/clickable&gt;
+&lt;/typeable&gt;
+Google offered in: &lt;clickable&gt;Deutsch&lt;/clickable&gt; 
+Germany
+&lt;clickable&gt;Advertising&lt;/clickable&gt;&lt;clickable&gt;Business&lt;/clickable&gt;&lt;clickable&gt; How Search works &lt;/clickable&gt;
+&lt;clickable&gt;Privacy&lt;/clickable&gt;&lt;clickable&gt;Terms&lt;/clickable&gt;
+&lt;clickable&gt;
+Settings
+&lt;/clickable&gt;</code></pre>
+	<p>As one can see, the visible text is successfully extracted, and the interactive tags (e.g. the search field) are annotated. Invisible text like the list of services is not displayed.<br><br>
+	Heres the beginning of apple.com (as of 25 September 2025):</p>
+	<pre><code>&lt;clickable&gt;
+Apple
+&lt;/clickable&gt;
+&lt;clickable&gt;
+Search apple.com&lt;/clickable&gt;
+&lt;clickable&gt;
+Shopping Bag&lt;/clickable&gt;
+0
++
+Last chance to get AirPods or an eligible accessory of your choice when you buy Mac or iPad with education savings. Ends&nbsp;9.30.
+&lt;clickable&gt;1&lt;/clickable&gt;
+&lt;clickable&gt;Shop
+&lt;/clickable&gt;
+&lt;clickable&gt;&nbsp;&lt;/clickable&gt;
+iPhone 17 Pro in cosmic orange finish, Pro Fusion camera system, 3 lenses, microphone, flash
+&lt;clickable&gt;&nbsp;&lt;/clickable&gt;
+iPhone Air
+The thinnest iPhone ever. With the power of pro inside.
+&lt;clickable&gt;Learn more&lt;/clickable&gt;
+&lt;clickable&gt;Buy&lt;/clickable&gt;
+Side view of iPhone Air, showing very thin titanium side
+&lt;clickable&gt;&nbsp;&lt;/clickable&gt;
+iPhone 17
+Magichromatic.
+&lt;clickable&gt;Learn more&lt;/clickable&gt;
+&lt;clickable&gt;Buy&lt;/clickable&gt;</code></pre>
+	<p>While there are some issues (some of the menu items are not text but SVGs and do not have title tags or aria labels, which makes it impossible to retrieve a textual representation), this is somewhat correct.<br>
+	Now that we have a functional website viewer, we can move on to integrating this with Playwright and a Python backend.</p>
+	<h1>Using websites with Playwright</h1>
+	<p>The logical next step is making a tool to interact with websites that uses our parser.<br>
+	(Note: If you haven't installed Playwright and Firefox yet run<br>
+	<code>pip install pytest-playwright</code> and<br>
+	<code>playwright install firefox</code>.)<br><br></p>
+	<h3>Imports and variables</h3>
+	<p>
+	Let's start with importing Playwright and defining some variables that we'll need later:<br>
+	The JS parser (<code>parse_script</code>) and two simplified CSS queries (<code>is_clickable</code> and <code>is_typeable</code>).<br><br>
+	We obviously need the parser to execute it.<br>
+	The two CSS queries are for more accurate location of elements when executing clicking and typing actions.</p>
+	<pre><code>from playwright.sync_api import sync_playwright, expect# Import playwright. Note: You may have to install it first using "pip install pytest-playwright"
+
+#define JavaScript parser
+parse_script = """
+() => {
+function isOccluded(el) {
+	if(el.nodeType === Node.ELEMENT_NODE && el.ownerDocument === document){//Check if it's even an element node, since content inside nested documents has a different coordinate system they are ignored
+		const rect = el.getBoundingClientRect();//get the rectangle the node occupies
+		let elementArea = rect.width*rect.height//calculate its area...
+		const centerX = rect.left + rect.width / 2;//...and center coordinate
+		const centerY = rect.top + rect.height / 2;
+		const topElement = document.elementFromPoint(centerX, centerY);//get the top element at the center coordinate
+		if(topElement&& topElement.nodeName!="A"){//a tags (links) should not occlude other elements as they are sometimes overlayed to make elements clickable
+			if(!el.contains(topElement) && !topElement.contains(el)){//if they are not a child of each other...
+				//calculate intersection box:
+				let topRect = topElement.getBoundingClientRect();//get the rectangle the top element occupies
+				let left = Math.max(rect.left, topRect.left)
+				let right = Math.min(rect.right, topRect.right)
+				let top = Math.max(rect.top, topRect.top)
+				let bottom = Math.min(rect.bottom, topRect.bottom)
+				if(right&lt;left || bottom&lt;top) return false//check if the intersection box is invalid, return false if it is
+				let intersectArea = (right-left)*(bottom-top)//get the area of the intersection
+				return intersectArea/elementArea&gt;0.5//treat element as occluded when over 50% of its are is occluded
+			}
+		}
+		
+	}
+	return false;
+}
+
+function isClickable(node) {//use a css query to match common objects that can be clicked (there may be unchecked edge cases)
+	if(node.nodeType === Node.ELEMENT_NODE){
+		return node.matches('a, button, select, option, area, input[type="submit"], input[type="button"], input[type="reset"], input[type="radio"], input[type="checkbox"], [role="button"], [role="link"], [role="checkbox"], [role="menuitemcheckbox"] , [role="menuitemradio"], [role="option"], [role="radio"], [role="switch"], [role="tab"], [role="treeitem"], [onclick]')
+	}else{
+		return false
+	}
+}
+
+function isTypeable(node) {//use a css query to match common objects one can type in (there may be unchecked edge cases)
+	if(node.nodeType === Node.ELEMENT_NODE){
+		return node.matches('input[type="text"],input[type="password"],input[type="email"],input[type="search"],input[type="tel"],input[type="url"],input[type="number"],textarea,[role="textbox"], [role="search"], [role="searchbox"], [role="combobox"], [onkeydown],[onkeypress],[onkeyup]')
+	}else{
+		return false
+	}
+}
+
+
+function annotateNode(element) {//recursive main loop: Creates a copy of the DOM, incorporates shadow DOM, removes invisible/occluded elements, annotates usability of elements and replaces all other tags with 
+	if(!element){//If the lement is None/undefined it is replaced with an empty TextNode
+		return document.createTextNode("")
+	}else if(element.nodeType== Node.TEXT_NODE){//Text nodes are copied as is:
+			return document.createTextNode(element.textContent)
+	}else if(element.nodeType === Node.ELEMENT_NODE){//Remove elements that are invisible, occluded or simply invisible by default (e.g. scripts):
+		if(["SCRIPT", "STYLE","META","LINK","NOSCRIPT"].includes(element.nodeName) || isOccluded(element) || !element.checkVisibility({opacityProperty: true, visibilityProperty : true})) {
+			return document.createElement("br")
+		}
+	}
+	
+	let name =  isClickable(element) ? "clickable": isTypeable(element) ? "typeable" : "unwrap"//decide whether the current node can be clicked, typed or if it should later be unwrapped (unwrap)
+	
+	let newNode = document.createElement(name);//create a node copy to add the content of the original to
+	
+	//Normal childNodes:
+	for (let node of element.childNodes) {//add all children of the original node but also annotate them
+		newNode.appendChild(annotateNode(node))
+	}
+	
+	//childNodes inside an iFrame:
+	if(element.nodeName=="IFRAME"){//if the original node is an iFrame add all its content too:
+			try{
+				let doc = element.contentDocument.body || element.contentWindow.document.body//find the iframes body as a root to start from
+				let nodes = doc.querySelectorAll(":scope > *")//select all direct children of the root element
+				for (let node of nodes){//annotate and add the nodes to the node copy
+					newNode.appendChild(annotateNode(node))
+				}
+			}catch(e){
+				console.log("Couldn't unwrap iFrame. Likely due to a cross-origin request issue: ",e)
+			}
+	}
+	
+	//childNodes inside shadowDOM:
+	if (element.shadowRoot) {//if the lement is a shadow dom element add its children too
+		for (let node of element.shadowRoot.childNodes) {//annotate and add children of shadow dom root
+			newNode.appendChild(annotateNode(node))
+		}
+	}
+	
+	//add text to empty elements based on their attributes
+	if(newNode.innerText.trim().replaceAll(" ","") == ""){
+		newNode.innerText = "";
+		let replacer = element.title || element.ariaLabel || element.placeholder || element.alt;
+		if(replacer){
+			newNode.appendChild(document.createTextNode(replacer))
+		}
+	}
+	
+	return newNode
+}
+function cleanUp(res){//clean up an annotated html
+  res = res.replaceAll("&lt;unwrap&gt;","&lt;br&gt;").replaceAll("&lt;/unwrap&gt;","&lt;br&gt;")//remove all unwrap tags (not their content)
+  res = res.replaceAll(/&lt;br&gt;/g, '\\n');//replace &lt;br&gt; tags with \\n
+  res = res.replaceAll('&amp;nbsp;', ' ');//replace &amp;nbsp; with blanks
+  res = res.replaceAll(/&lt;clickable&gt;\s*&lt;\/clickable&gt;/g, '');//remove empty clickable tags
+  res = res.replaceAll(/&lt;typeable&gt;\s*&lt;\/typeable&gt;/g, '');//remove empty typeable tags
+  res = res.replaceAll(/\\n\s+/g, '\\n');//replace multiple \\n with just one \\n
+  res = res.replaceAll(/ {2,}/g, ' ')//replace more than two blanks with just one blank
+  return res
+}
+function getAllHTML() {//function to retrieve the current page as annotated text
+  try{
+      return cleanUp(annotateNode(document.body).outerHTML)
+  }catch{
+     return cleanUp(annotateNode(document.body))
+  }
+}
+return getAllHTML();
+}"""
+
+is_clickable = ':is(a, button, select, option, area, input, [role], [onclick])'#fast css query to find clickable elements
+is_typeable = ':is(input,textarea,[role], [onkeydown],[onkeypress],[onkeyup])'#fast css query to find elements one can type in
+</code></pre>
+<h3>Browser and Page</h3>
+<p>Now we still need a browser and page instance:</p>
+<pre><code>
+p = sync_playwright().start()
+firefox = p.firefox#get firefox instance. Note: You may have to install firefox with "playwright install firefox"
+browser = firefox.launch()#Open firefox. To view the browser window pass headless=False to the launch function
+page = browser.new_page()#Creates a new page instance
+</code></pre>
+<h3>CSS query generator for text search</h3>
+<p>And for locating elements whose text description is only contained inside attributes, we'll write a function to create custom CSS queries on the fly:</p>
+<pre><code>
+def text_selector(text):#Creates a css selector that searches for elements with the specified text contained in descriptive attributes
+    text = repr(text)
+    return ':is([aria-label = '+text+' i],[title = '+text+' i],[alt = '+text+' i], [placeholder = '+text+' i], [value = '+text+' i])'
+</code></pre>
+<h3>Visiting URLs</h3>
+<p>However we can't open pages yet, so let's write a function for that too:</p>
+<pre><code>
+def open_page(url):#Opens an url
+    page.goto(url=url)
+</code></pre>
+<h3>Executing the JS parser with Playwright</h3>
+<p>And we still have to write a function for executing the parser:</p>
+<pre><code>
+def get_info():#Executes the JavaScript website parser to get an annotated representation of the website
+    expect(page.locator("css=body")).to_be_visible()#Wait for body to be visible (=Wait for page to finish loading)
+    res = page.evaluate(parse_script)#Execute js parser
+    return res
+</code></pre>
+<h3>Executing clicking and typing actions</h3>
+<p>The most important part is actually interacting with the web page.<br>
+That part will be done by the two functions below (which use the CSS queries we defined at the beginning):</p>
+<pre><code>
+def click(text):
+	try:
+		elements = page.get_by_text(text).or_(page.locator("css={}".format(text_selector(text))))#Select all elements that contain the text
+		button = elements.and_(page.locator("css={}".format(is_clickable))).first#Of the elements that contain the text, select the first that is clickable
+		button.click(force=True)#Click the clickable element
+	except Exception as e:
+		print("Clicking '{}' failed!".format(text))
+		print(e)
+
+def type(text,to_type,press_enter=True):
+	try:
+		elements = page.get_by_text(text).or_(page.locator("css={}".format(text_selector(text))))#Find all elements that contain the text
+		field = elements.and_(page.locator("css={}".format(is_typeable))).first#Of the elements that contain the text select the first one that is an text input field
+		field.type(to_type)#Type into the text input field
+		if press_enter:#Press enter if necessary:
+			page.keyboard.press("Enter")
+	except Exception as e:
+		print("Typing into '{}' failed!".format(text))
+		print(e)
+</code></pre>
+<h3>A short demo</h3>
+<p>Let's test the code:</p>
+<pre><code>
+open_page("https://www.example.com")
+print(get_info())
+click("More information")
+print(get_info())
+</code></pre>
+<p>The output should look like this:</p>
+<pre><code>Example Domain
+This domain is for use in illustrative examples in documents. You may use this
+domain in literature without prior coordination or asking for permission.
+&lt;clickable&gt;More information...&lt;/clickable&gt;
+
+
+&lt;clickable&gt;
+Homepage
+&lt;/clickable&gt;
+&lt;clickable&gt;Domains&lt;/clickable&gt;
+&lt;clickable&gt;Protocols&lt;/clickable&gt;
+&lt;clickable&gt;Numbers&lt;/clickable&gt;
+&lt;clickable&gt;About&lt;/clickable&gt;
+Example Domains
+As described in &lt;clickable&gt;RFC 2606&lt;/clickable&gt; and &lt;clickable&gt;RFC 6761&lt;/clickable&gt;, a
+number of domains such as example.com and example.org are maintained
+for documentation purposes. These domains may be used as illustrative
+examples in documents without prior coordination with us. They are not
+available for registration or transfer.
+We provide a web service on the example domain hosts to provide basic
+information on the purpose of the domain. These web services are
+provided as best effort, but are not designed to support production
+applications. While incidental traffic for incorrectly configured
+applications is expected, please do not design applications that require
+the example domains to have operating HTTP service.
+Further Reading
+&lt;clickable&gt;IANA-managed Reserved Domains&lt;/clickable&gt;
+Last revised 2017-05-13.
+&lt;clickable&gt;Domain&nbsp;Names&lt;/clickable&gt;
+&lt;clickable&gt;Root Zone Registry&lt;/clickable&gt;
+&lt;clickable&gt;.INT Registry&lt;/clickable&gt;
+&lt;clickable&gt;.ARPA Registry&lt;/clickable&gt;
+&lt;clickable&gt;IDN Repository&lt;/clickable&gt;
+&lt;clickable&gt;Number&nbsp;Resources&lt;/clickable&gt;
+&lt;clickable&gt;Abuse Information&lt;/clickable&gt;
+&lt;clickable&gt;Protocols&lt;/clickable&gt;
+&lt;clickable&gt;Protocol Registries&lt;/clickable&gt;
+&lt;clickable&gt;Time Zone Database&lt;/clickable&gt;
+&lt;clickable&gt;About&nbsp;Us&lt;/clickable&gt;
+&lt;clickable&gt;News&lt;/clickable&gt;
+&lt;clickable&gt;Performance&lt;/clickable&gt;
+&lt;clickable&gt;Excellence&lt;/clickable&gt;
+&lt;clickable&gt;Archive&lt;/clickable&gt;
+&lt;clickable&gt;Contact Us&lt;/clickable&gt;
+The IANA functions coordinate the Internet’s globally unique identifiers, and
+are provided by &lt;clickable&gt;Public Technical Identifiers&lt;/clickable&gt;, an affiliate of
+&lt;clickable&gt;ICANN&lt;/clickable&gt;.
+&lt;clickable&gt;Privacy Policy&lt;/clickable&gt;
+&lt;clickable&gt;Terms of Service&lt;/clickable&gt;</code></pre>
+<p>
+	I hope you liked this tutorial! We plan to publish a second part that shows how to integrate this code base with the Ollama Python Api soon.<br>
+	Stay tuned and have fun!
+	
+	You can <a href="https://github.com/Never-Studio/web_usability_tutorial" title="Complete Code on GitHub">find the complete code on GitHub</a>.
+</p>
+
+    </div>
+	<div class="section">
+	<a title = "neverstudio main page" href="https://www.neverstudio.de" id="mainmenu" >Back to main page &rarr;</a>
+	</div>
+	<div class="section">
+	<div>
+	<h2>Contact and Terms of Services </h2>
+	Here is our <a href="contact.html">Contact and Legal information</a>.<br>
+	&copy; 2025 Michel and Nils H&auml;u&szlig;ler.<br>All rights reserved.
+	<meta name="author" content="Michel and Nils Häußler">
+	</div>
+	</div>
+	<script src="colorscript.js"></script>
+</body>
+</html>
