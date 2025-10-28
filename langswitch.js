@@ -10,3 +10,4 @@ function switchToEnglish() {
 	window.location.href = path.replace("/de","");
   }
 }
+
