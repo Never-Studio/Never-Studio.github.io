@@ -6,7 +6,7 @@
 <link rel="alternate" hreflang="en" href="https://www.neverstudio.de/404.html" >
 <link rel="alternate" hreflang="de" href="https://www.neverstudio.de/de/404.html" >
 <title>neverstudio - 404 error</title>
-<link rel="apple-touch-icon" sizes="180x180" href="/neverstudio.de/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
@@ -16,7 +16,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
 <body>
-<script src="../langswitch.js" defer></script>
+<script src="/langswitch.js" defer></script>
 <div class="langBar">
 <a href="#" onclick="switchToGerman()">de</a> / <a href="#" onclick="switchToEnglish()">en</a>
 </div>
@@ -25,18 +25,18 @@
 		<h1>404</h1>
 		<p id="help">Die Unterseite, auf die Sie zugreifen wollten, ist nicht verfügbar.
 		Sie können zurück zur <a title="neverstudio homepage" href="/de/index.html">Homepage</a> gehen.<br>
-		Oder Sie können ein <a title = "Neverword Wordguessing Spiel" href="/de/wordguesser.html">Neverword Spiel</a> spielen.</p>
+		Oder Sie können ein <a title = "Neverword Wordguessing Spiel" href="projects/neverword/wordguesser.html">Neverword Spiel</a> spielen.</p>
 	</div>
 </div>
 
 <div class="section">
 <h2>Kontakt und Nutzungsbedingungen</h2>
 <p>
-Hier sind unsere <a href="contact.html" title="Kontakt- und rechtliche Informationen">rechtlichen und Kontaktinformationen</a>.<br>
+Hier sind unsere <a href="contact/" title="Kontakt- und rechtliche Informationen">rechtlichen und Kontaktinformationen</a>.<br>
 &copy; 2025 Michel und Nils H&auml;u&szlig;ler.<br>Alle Rechte vorbehalten.
 </p>
 </div>
-<script src="../colorscript.js"></script>
+<script src="/colorscript.js"></script>
 <script>
 function dist(a, b) {
   const matrix = [];
@@ -58,13 +58,23 @@ function dist(a, b) {
   }
   return 1 - matrix[b.length][a.length]/ Math.max(a.length, a.length);
 }
-let urls = ["https://www.neverstudio.de/",
-"https://www.neverstudio.de/projects/neverisometric/neverisometric.html",
-"https://www.neverstudio.de/projects/neverisometric/engine-project.html",
-"https://www.neverstudio.de/contact/index.html",
-"https://www.neverstudio.de/de/wordguesser.html",
-"https://www.neverstudio.de/projects/neverword/wordle-project.html",
-"https://www.neverstudio.de/neverword.html"]
+let urls = [
+  "https://www.neverstudio.de/",
+  "https://www.neverstudio.de/404.html",
+  "https://www.neverstudio.de/contact/",
+  "https://www.neverstudio.de/projects/neverword/wordle-project.html",
+  "https://www.neverstudio.de/projects/neverengine/engine-project.html",
+  "https://www.neverstudio.de/projects/neverengine/neverisometric.html",
+  "https://www.neverstudio.de/tutorials/webagent/webuse-post.html",
+  "https://www.neverstudio.de/de/",
+  "https://www.neverstudio.de/de/404.html",
+  "https://www.neverstudio.de/de/contact/",
+  "https://www.neverstudio.de/de/projects/neverword/wordle-project.html",
+  "https://www.neverstudio.de/de/projects/neverword/wordguesser.html",
+  "https://www.neverstudio.de/de/projects/neverword/findhashurl.html",
+  "https://www.neverstudio.de/de/projects/neverengine/engine-project.html",
+]
+
 let substitutes = {"https://www.neverstudio.de/neverword.html":"https://www.neverstudio.de/de/wordguesser.html"}
 let currentUrl = document.URL;
 urls.sort(function(a, b){return dist(b,currentUrl)-dist(a,currentUrl);})
