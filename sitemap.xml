@@ -13,6 +13,11 @@
   <priority>1.00</priority>
 </url>
 <url>
+  <loc>https://www.neverstudio.de/tutorials/webagent/webuse-post.html</loc>
+  <lastmod>2025-10-30T18:51:30+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
   <loc>https://www.neverstudio.de/projects/neverword/wordle-project.html</loc>
   <lastmod>2025-10-30T18:51:30+00:00</lastmod>
   <priority>0.80</priority>
@@ -23,12 +28,22 @@
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://www.neverstudio.de/tutorials/webagent/webuse-post.html</loc>
+  <loc>https://www.neverstudio.de/contact/</loc>
   <lastmod>2025-10-30T18:51:30+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://www.neverstudio.de/contact/</loc>
+  <loc>https://www.neverstudio.de/projects/neverengine/neverisometric.html</loc>
+  <lastmod>2025-10-30T18:51:30+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.neverstudio.de/de/</loc>
+  <lastmod>2025-10-30T18:51:30+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://www.neverstudio.de/de/projects/neverword/wordle-project.html</loc>
   <lastmod>2025-10-30T18:51:30+00:00</lastmod>
   <priority>0.80</priority>
 </url>
@@ -38,10 +53,18 @@
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://www.neverstudio.de/projects/neverengine/neverisometric.html</loc>
+  <loc>https://www.neverstudio.de/de/projects/neverengine/engine-project.html</loc>
+  <lastmod>2025-10-30T18:51:30+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.neverstudio.de/de/contact/</loc>
+  <lastmod>2025-10-30T18:51:30+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.neverstudio.de/de/projects/neverword/findhashurl.html</loc>
   <lastmod>2025-10-30T18:51:30+00:00</lastmod>
   <priority>0.64</priority>
 </url>
-
-
 </urlset>
