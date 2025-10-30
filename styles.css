@@ -7,7 +7,7 @@ body>*{
 }
 
 body {
-  overflow: overlay;
+  overflow-x: hidden;
 }
 
 ::-webkit-scrollbar {
