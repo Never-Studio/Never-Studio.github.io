@@ -14,5 +14,5 @@ var backgroundC = bcolors[Math.floor(Math.random()*bcolors.length)];
 document.body.style.backgroundColor = backgroundC;
 
 
-//white #AC2216 #485F35 #1553BC #8A4500
-//black #EC6F65 #77A262 #6396EE #FF8C00
+//white "#AC2216", "#485F35", "#1553BC", "#8A4500"
+//black "#EC6F65", "#77A262", "#6396EE", "#FF8C00"
