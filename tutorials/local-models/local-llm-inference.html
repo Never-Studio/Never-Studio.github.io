@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://www.neverstudio.de/tutorials/local-models/local-llm-inference.html" rel="canonical">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inference of local LLMs and tool calling with ollama - neverstudio</title>
+    <link rel="stylesheet" href="/highlight/styles/atom-one-light.css">
+	<script src="/highlight/highlight.min.js"></script>
+	<script src="/hl2/highlightjs-copy.min.js"></script>
+	<link rel="stylesheet" href="/hl2/highlightjs-copy.min.css">
+	<script>hljs.addPlugin(
+			new CopyButtonPlugin({
+				autohide: false, // Always show the copy button
+			})
+			);hljs.highlightAll();
+	</script>
+    <meta name="description" content="How to create agentic ai with small local LLMs using ollama via custom python tools? - a blogpost">
+    <link rel="stylesheet"  href="/styles.min.css">
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+	<script src="/langswitch.js" defer></script>
+	<div class="langBar">
+	<a href="#" onclick="switchToGerman()">de</a> / <a href="#" onclick="switchToEnglish()">en</a>
+	</div>
+    <div id="description-section" class="section">
+		<h1>Inference of local LLMs and tool calling with Ollama</h1>
+        <p>
+			This is a post about using Ollama for inference of local ai agents using custom python tools.
+        </p>
+    </div>
+    <div class="section">
+    
+    </div>
+    <div class="section">
+		<h2>What is Tool-calling?</h2>
+		<p>
+		Tools, are python functions you can give to your llm, which it can then execute to gather additional information
+		or to perform tasks. You give your inference provider your tool and the llm calls the tool in its generation loop,
+		after the tool-call the generation stops, you provide the return values of the tools and the llm resumes generating.
+
+		In this tutorial we are goimg top use ollama for this because of its ease of use, but it is also possible with <a href="https://github.com/abetlen/llama-cpp-python?tab=readme-ov-file#function-calling" title="the llama cpp github page">llama-cpp</a>
+		Llama-cpp has the significant advantage of being independent of an app such as ollama.
+		</p>
+        <h2>Requirements for a web agent tool</h2>
+		<p>
+		Install/Update the necessary libraries first:
+		</p>
+        <pre class="sh"><code>
+pip install ollama -U
+		</code></pre>
+		<p>
+		or this requirements.txt
+		</p>
+		<pre class="plaintext"><code>
+ollama>0.3.0
+		</code></pre>
+		<p>
+		via this pip command:
+		</p>
+		<pre class="sh"><code>
+pip install -r requirements.txt
+		</code></pre>
+		<p>
+		Also make sure you have installed the <a href="https://ollama.com/" title="the ollama homepage">ollama app</a> and ensure its up and running.
+		</p>
+		<h2>A Simple Chat</h2>
+		<p>
+		To use a llm first pull the model, either from <a href="https://huggingface.co/models?pipeline_tag=text-generation&apps=ollama&sort=trending" title="the huggingface models list">Huggingface's Models list</a> or <a href="https://ollama.com/search?c=tools" title="the overview of ollama tools">from ollama itself</a>.
+
+		If its a model from huggingface follow the instructions under "use this model">"ollama". On ollama run
+		</p>
+		<pre class="sh"><code>
+ollama pull &lt;Model name&gt;
+		</code></pre>
+		<p>
+		With model name being 'gpt-oss:20b', or whatever model you want to use.
+
+		After successfully pulling the model, we can finally use it in our python code.
+		</p>
+		<pre class="python"><code>
+from ollama import chat
+
+response = chat(model='gpt-oss:20b', messages=[
+	{
+		'role': 'user',
+		'content': 'Explain how llms work.',
+	},
+])
+
+print(response['message']['thinking']) # thinking content
+print(response['message']['content']) # message content
+		</code></pre>
+		<p>
+		After importing it, we use the ollama chat API, to ask the model gpt-oss:20b, to explain how llms work.
+		After the synchronous function is executed, we can print the results.
+
+		The ollama chat API, returns a response object of the following structure:
+		</p>
+		<pre class="json"><code>
+{
+	"message":{
+		"role":"assistant", //or "tool", when specified by the user it can be "user" or "system" for the system message
+		"content":"...",//response text content, can be None with thinking models
+		"thinking":"...",//the models internal thoughts only specified with thinking models, can be None
+	},
+
+	"logprobs":[//if specified in the chat parameter with logprobs = True
+		Logprob(token='.', logprob=-0.005420973990112543, top_logprobs=None)//probability of each token
+		...
+	]
+}
+		</code></pre>
+		<p>
+		To create a simple chat to talk back and forth, we need to add a message history in form of a list.
+		Messages follow the same format as the response, with the mentioned exceptions.
+
+		We can also specify overall rules via the "system" role.
+		The system prompt is normally only used once and set at the beginning of the chat.
+
+		A python code with history would therefore look as following:
+		</p>
+		<pre class="python"><code>
+from ollama import chat
+
+history = []
+
+history.append({
+			'role': 'system',
+			'content': 'keep your messages short and concise'
+		})
+
+
+user_msg = input('Chat:')
+
+while user_msg != '':
+	history.append({
+			'role': 'user',
+			'content': user_msg
+		})
+	response = chat(model='gpt-oss:20b', messages=history)
+	
+	print(response['message']['thinking'])
+	print('-----------------------------')
+	print(response['message']['content'])
+	
+	history.append({
+			'role':response['message']['role'],
+			'content':response['message']['content']
+		})#do not add thinking to history
+	
+	user_msg = input('Chat:')
+		</code></pre>
+		<p>
+		We intialize the history, add a system prompt to keep all messages short and concise,
+		then we ask the user for an input and use that inout to generate an answer and print it,
+		till the user finally get's bored and exits, by leabing the inout empty.
+		</p>
+
+		<h2>Using tools</h2>
+		<p>
+		As mentioned the ai, can also utilize tools to enrich the conversation. To give the ai this ability we first have
+		to define the problem we want to solve and then create as few functions as possible, with the highest possible simplicitly to achieve that goal.
+
+		Let's say we want our ai to take Notes.
+		In order for the ai to be able to do this we will create a function with a descriptive name such as "take_note".
+		We then think of a short description and add that in docstring, together with specifying the input.
+		Even though python isn't typesafe it's still good to specify the types, to give the llm hints on what types to use.
+		</p>
+		<pre class="python"><code>
+def take_note(title:str, content:str) -> str:
+	"""
+	take notes, to remember importnt things.
+	
+	title:str
+	the title of your message
+
+	content:str
+	the content of your message
+
+	"""
+	notes.append(f"# {title}\n{content}")
+	
+	history.append({
+			'role': 'system',
+			'content': 'keep your messages short and concise\n\nYou took the following notes:\n'+'\n- '.join(notes)
+		})
+	
+	return "note taken successfully!"
+		</code></pre>
+		<p>
+		Similarly we create the function multiply, because llms are inherently bad at calculating.
+		</p><code>
+def multiply(a:float, b:float) -> float:
+	"""
+	multiply to floats a and get the result
+	
+	a:float
+	the first float
+
+	b:float
+	the second float
+
+	"""
+	
+	return a*b
+		</code></pre>
+		<p>
+		We then specify the tools we have in the "tools" argument of the chat API.
+		</p>
+		<pre class="python"><code>
+response = chat(model='gpt-oss:20b', messages=history, tools=tools)
+		</code></pre>
+		<p>
+		For simplicity reasons and to increase the ease of making changes later we will store all tools in a dictionary called tools:
+		</p>
+		<pre class="python"><code>
+tools = {
+	"take_note":take_note,
+	"multiply":multiply
+}
+		</code></pre>
+		<p>
+		But that's not all. As I said in the beginning the ai can now specify tools, but Ollama doesn't call those for us.
+		We need to call the function ourselves, and give the result as a message with the role "tool". We then proceed geneerating till the ai doesn't call any tools anymore.
+		</p>
+		<pre class="python"><code>
+if response.message.tool_calls:# check if the ai called a tool
+	for call in response.message.tool_calls:
+		result = 'Unknown tool'# fallback value if the tool does not exist
+		
+		for tool in tools.keys():
+			if call.function.name == tool:
+				result = tools[tool](**call.function.arguments)#call the tool with the specified arguments
+		
+		history.append({# add the result to the history
+			'role': 'tool',
+			'tool_name': call.function.name,
+			'content': str(result)
+		})
+		</code></pre>
+		<p>
+		We out the above in a loop. The moment, the ai doesn't call any tools 
+		So the full function calling code looks like this:
+		</p>
+		<pre class="python"><code>
+from ollama import chat
+from ollama import ChatResponse
+
+
+
+history = []
+notes = []
+
+def take_note(title:str, content:str) -> str:
+	"""
+	take notes, to remember importnt things.
+	
+	title:str
+	the title of your message
+
+	content:str
+	the content of your message
+
+	"""
+	notes.append(f"# {title}\n{content}")
+	
+	history.append({
+			'role': 'system',
+			'content': 'keep your messages short and concise\n\nYou took the following notes:\n'+'\n- '.join(notes)
+		})
+	
+	return "note taken successfully!"
+
+def multiply(a:float, b:float) -> float:
+	"""
+	multiply to floats a and get the result
+	
+	a:float
+	the first float
+
+	b:float
+	the second float
+
+	"""
+	
+	return a*b
+	
+history.append({
+			'role': 'system',
+			'content': 'keep your messages short and concise. Use tools whenever necessary.'
+		})
+
+
+user_msg = input('Chat:')
+
+tools = {
+	"take_note":take_note,
+	"multiply":multiply
+}
+
+while user_msg != '':
+	history.append({
+			'role': 'user',
+			'content': user_msg
+		})
+	
+	while True:#while the ai calls tools
+		response = chat(model='gpt-oss:20b', messages=history, tools=tools.values())
+		
+		history.append({
+				'role':response['message']['role'],
+				'content':response['message']['content']
+			})#do not add thinking to history
+		
+		if response.message.tool_calls:# if the ai called a tool
+			
+			for call in response.message.tool_calls:
+				result = 'Unknown tool'# fallback value if the tool does not exist
+				
+				for tool in tools.keys():
+					
+					if call.function.name == tool:
+						print("used tool",tool)
+						result = tools[tool](**call.function.arguments)#call the tool with the specified arguments
+				
+				history.append({# add the result to the history
+					'role': 'tool',
+					'tool_name': call.function.name,
+					'content': str(result)
+				})
+		else:#if the ai finished without a tool call end the generation loop
+			break
+	
+	print(response['message']['thinking'])
+	print('-----------------------------')
+	print(response['message']['content'])
+	
+	user_msg = input('Chat:')
+		</code></pre>
+		<p>
+		As you can see, we also changed the system prompt to make the ai use the provided tools.
+		</p>
+		<h2>Summary</h2>
+		<p>
+		So now, you can use ollama, to create your own local, agentic ai models.
+		If you liked this tutorial, feel free to check by from time to time to check out our other tutorials.
+		</p>
+    </div>
+	<div class="section">
+	<a title = "neverstudio main page" href="/" id="mainmenu" >Back to main page &rarr;</a>
+	</div>
+	<div class="section">
+	<div>
+	<h2>Contact and Terms of Services </h2>
+	Here is our <a href="/contact/">Contact and Legal information</a>.<br>
+	&copy; 2025 Michel and Nils H&auml;u&szlig;ler.<br>All rights reserved.
+	<meta name="author" content="Michel and Nils Häußler">
+	</div>
+	</div>
+	<script src="/colorscript.js"></script>
+</body>
+</html>

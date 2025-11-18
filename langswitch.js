@@ -17,7 +17,7 @@ function showMessage(text, delay = 2000) {
   setTimeout(() => toast.remove(), delay);
 }
 
-var non_existent_de = ["tutorials/webagent/webuse-post.html"]
+var non_existent_de = ["tutorials/webagent/webuse-post.html","tutorials/local-models/local-llm-inference.html"]
 var non_existent_en = []
 
 function canSwitchDe(path){
