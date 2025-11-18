@@ -319,7 +319,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	
 	function showMessage(text, delay = 2000) {
 		let toast = document.createElement("div");
-		toast.textContent = text;
+		toast.innerHTML = text;
 		toast.style = `
 			position: fixed;
 			bottom: 20px;
