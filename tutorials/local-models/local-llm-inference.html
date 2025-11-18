@@ -15,7 +15,7 @@
 			})
 			);hljs.highlightAll();
 	</script>
-    <meta name="description" content="How to create agentic ai with small local LLMs using ollama via custom python tools? - a blogpost">
+    <meta name="description" content="How to create agentic AI with small local LLMs using ollama via custom python tools? - a blogpost">
     <link rel="stylesheet"  href="/styles.min.css">
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -31,7 +31,7 @@
     <div id="description-section" class="section">
 		<h1>Inference of local LLMs and tool calling with Ollama</h1>
         <p>
-			This is a post about using Ollama for inference of local ai agents using custom python tools.
+			This is a post about using Ollama for inference of local AI agents using custom python tools.
         </p>
     </div>
     <div class="section">
@@ -158,17 +158,17 @@ while user_msg != '':
 		</code></pre>
 		<p>
 		We intialize the history, add a system prompt to keep all messages short and concise,
-		then we ask the user for an input and use that inout to generate an answer and print it,
-		till the user finally get's bored and exits, by leabing the inout empty.
+		then we ask the user for an input and use that input to generate an answer and print it,
+		till the user finally get's bored and exits, by leaving the input empty.
 		</p>
 
 		<h2>Using tools</h2>
 		<p>
-		As mentioned the ai, can also utilize tools to enrich the conversation. To give the ai this ability we first have
-		to define the problem we want to solve and then create as few functions as possible, with the highest possible simplicitly to achieve that goal.
+		As mentioned the ai, can also utilize tools to enrich the conversation. To give it this ability we first have
+		to define the problem we want to solve and then create as few functions as possible, with the highest possible simplicitly to achieve our goal.
 
-		Let's say we want our ai to take Notes.
-		In order for the ai to be able to do this we will create a function with a descriptive name such as "take_note".
+		Let's say we want our AI to take Notes.
+		In order for the AI to be able to do this we will create a function with a descriptive name such as "take_note".
 		We then think of a short description and add that in docstring, together with specifying the input.
 		Even though python isn't typesafe it's still good to specify the types, to give the llm hints on what types to use.
 		</p>
@@ -194,8 +194,8 @@ def take_note(title:str, content:str) -> str:
 	return "note taken successfully!"
 		</code></pre>
 		<p>
-		Similarly we create the function multiply, because llms are inherently bad at calculating.
-		</p><code>
+		Similarly we create the function "multiply", because llms are inherently bad at calculating.
+		</p><pre class="python"><code>
 def multiply(a:float, b:float) -> float:
 	"""
 	multiply to floats a and get the result
@@ -211,13 +211,13 @@ def multiply(a:float, b:float) -> float:
 	return a*b
 		</code></pre>
 		<p>
-		We then specify the tools we have in the "tools" argument of the chat API.
+		We then specify the tools we have with the "tools" argument of the chat API.
 		</p>
 		<pre class="python"><code>
 response = chat(model='gpt-oss:20b', messages=history, tools=tools)
 		</code></pre>
 		<p>
-		For simplicity reasons and to increase the ease of making changes later we will store all tools in a dictionary called tools:
+		For simplicity and for increasing the ease of making changes later on, we will store all tools in a dictionary called tools:
 		</p>
 		<pre class="python"><code>
 tools = {
@@ -226,11 +226,11 @@ tools = {
 }
 		</code></pre>
 		<p>
-		But that's not all. As I said in the beginning the ai can now specify tools, but Ollama doesn't call those for us.
-		We need to call the function ourselves, and give the result as a message with the role "tool". We then proceed geneerating till the ai doesn't call any tools anymore.
+		But that's not all. As I said in the beginning, the AI can now specify tools, but Ollama doesn't call them for us.
+		We need to call the function ourselves, and give the result as a message with the role "tool". We then proceed generating till the AI doesn't call any tools anymore.
 		</p>
 		<pre class="python"><code>
-if response.message.tool_calls:# check if the ai called a tool
+if response.message.tool_calls:# check if the AI called a tool
 	for call in response.message.tool_calls:
 		result = 'Unknown tool'# fallback value if the tool does not exist
 		
@@ -245,8 +245,8 @@ if response.message.tool_calls:# check if the ai called a tool
 		})
 		</code></pre>
 		<p>
-		We out the above in a loop. The moment, the ai doesn't call any tools 
-		So the full function calling code looks like this:
+		We put the above in a loop. The moment, the AI doesn't call any tools, we exit.
+		Therefore, the full function calling code looks like this:
 		</p>
 		<pre class="python"><code>
 from ollama import chat
@@ -310,7 +310,7 @@ while user_msg != '':
 			'content': user_msg
 		})
 	
-	while True:#while the ai calls tools
+	while True:#while the AI calls tools
 		response = chat(model='gpt-oss:20b', messages=history, tools=tools.values())
 		
 		history.append({
@@ -318,7 +318,7 @@ while user_msg != '':
 				'content':response['message']['content']
 			})#do not add thinking to history
 		
-		if response.message.tool_calls:# if the ai called a tool
+		if response.message.tool_calls:# if the AI called a tool
 			
 			for call in response.message.tool_calls:
 				result = 'Unknown tool'# fallback value if the tool does not exist
@@ -334,7 +334,7 @@ while user_msg != '':
 					'tool_name': call.function.name,
 					'content': str(result)
 				})
-		else:#if the ai finished without a tool call end the generation loop
+		else:#if the AI finished without a tool call end the generation loop
 			break
 	
 	print(response['message']['thinking'])
@@ -344,11 +344,11 @@ while user_msg != '':
 	user_msg = input('Chat:')
 		</code></pre>
 		<p>
-		As you can see, we also changed the system prompt to make the ai use the provided tools.
+		We also changed the system prompt to make the AI use the provided tools.
 		</p>
 		<h2>Summary</h2>
 		<p>
-		So now, you can use ollama, to create your own local, agentic ai models.
+		So now, you can use ollama, to create your own local, agentic AI models.
 		If you liked this tutorial, feel free to check by from time to time to check out our other tutorials.
 		</p>
     </div>
