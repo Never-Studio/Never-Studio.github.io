@@ -48,12 +48,8 @@ User-agent: webzio-extended
 User-agent: YandexAdditional
 User-agent: YandexAdditionalBot
 Disallow: /
-DisallowAITraining: /
-Content-Usage: train-ai=n
 
 User-agent: *
 Allow: /
-Content-Usage: train-ai=n
-
 
 Sitemap: https://www.neverstudio.de/sitemap.xml
