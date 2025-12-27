@@ -226,7 +226,7 @@ function getAllHTML() {//function to retrieve the current page as annotated text
         </p>
         <h2>Examples for parsed pages</h2>
         <p>Below is a parsed version of google.com:</p>
-        <pre><code>&lt;clickable&gt;About&lt;/clickable&gt;&lt;clickable&gt;Store&lt;/clickable&gt;
+        <pre><code class="language-html">&lt;clickable&gt;About&lt;/clickable&gt;&lt;clickable&gt;Store&lt;/clickable&gt;
 &lt;clickable&gt;Gmail&lt;/clickable&gt;
 &lt;clickable&gt;Images&lt;/clickable&gt;
 &lt;clickable&gt;
@@ -245,7 +245,7 @@ Settings
 &lt;/clickable&gt;</code></pre>
 	<p>As one can see, the visible text is successfully extracted, and the interactive tags (e.g. the search field) are annotated. Invisible text like the list of services is not displayed.<br><br>
 	Heres the beginning of apple.com (as of 25 September 2025):</p>
-	<pre><code>&lt;clickable&gt;
+	<pre><code class="language-html">&lt;clickable&gt;
 Apple
 &lt;/clickable&gt;
 &lt;clickable&gt;
@@ -465,7 +465,7 @@ open_page("https://www.example.com")
 print(get_info())
 click("More information")
 print(get_info())
-</code></pre>
+</code class="language-html"></pre>
 <p>The output should look like this:</p>
 <pre><code>Example Domain
 This domain is for use in illustrative examples in documents. You may use this
