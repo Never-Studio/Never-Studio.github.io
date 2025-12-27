@@ -97,9 +97,26 @@ class Perceptron{
 }
 
 
-function round(num, digit){
-    let f = Math.pow(10,digit);
-    return Math.round(num * f)/f
+function round(num, digit, pad = true){
+    let f;
+    
+    if(num < 0){
+        f = Math.pow(10,digit-1);
+    }else{
+        f = Math.pow(10,digit);
+    }
+
+    let str = String(Math.round(num * f)/f)
+
+    if(pad){
+        if(str.includes(".")){
+            return str.padEnd(digit+2,'0')
+        }else{
+            return str.padStart(digit+2,'0'); //' ').replaceAll(' ','&nbsp;') to pad with spaces in monospace font
+        }
+    }else{
+        return str;
+    }
 }
 
 function fillTable(p){
@@ -308,7 +325,6 @@ function fillGraph(c, m, upside){
 }
 
 function fillExplanation(p){
-
     if(onCanvas){
         let x = canvasPos[0];
         let y = canvasPos[1];
@@ -327,7 +343,7 @@ function fillExplanation(p){
 
         explainElement1.innerHTML = round(p.sum(inputs),3);
 
-        explainElement2.innerHTML = "&nbsp;=&nbsp;"+round(p.feedForward(inputs),3);
+        explainElement2.innerHTML = "&nbsp;=&nbsp;"+round(p.feedForward(inputs),4,false);
 
 
     }else{
