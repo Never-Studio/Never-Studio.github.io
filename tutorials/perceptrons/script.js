@@ -224,6 +224,7 @@ function listenForInputs(p){
 
     weightRandomButton.addEventListener("click", (event) => {
         p.randomize();
+        fillInputs(p);
     });
 }
 
