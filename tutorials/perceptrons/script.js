@@ -131,10 +131,19 @@ function fillTable(p){
     }
 }
 
-function fillInputs(p){
+function fillInputs(p, which = "all"){
     for(let i=0; i < 3; i++){
-        document.getElementById("input_w_"+i).value = p.weights[i]
-        document.getElementById("slider_w_"+i).value = p.weights[i]
+        if(which == "all"){
+            document.getElementById("input_w_"+i).value = p.weights[i]
+            document.getElementById("slider_w_"+i).value = p.weights[i]
+        }else{
+            if(which == "sliders"){
+                document.getElementById("slider_w_"+i).value = p.weights[i]
+            }else if(which == "inputs"){
+                document.getElementById("input_w_"+i).value = p.weights[i]
+            }
+        }
+        
     }
 }
 
@@ -154,7 +163,8 @@ function listenForInputs(p){
     })
 
     for(let i=0; i < 3; i++){
-        onvalue = (event)=>{
+
+        document.getElementById("input_w_"+i).addEventListener('input', (event)=>{
             if(Number.isNaN(parseFloat(event.target.value))) return;
             p.weights[i] = parseFloat(event.target.value);
 
@@ -164,12 +174,21 @@ function listenForInputs(p){
                 alert("stopped training")
             }
 
-            fillInputs(p);
-        }
+            fillInputs(p, "sliders");
+        });
 
-        document.getElementById("input_w_"+i).addEventListener('input', onvalue);
+        document.getElementById("slider_w_"+i).addEventListener('input', (event)=>{
+            if(Number.isNaN(parseFloat(event.target.value))) return;
+            p.weights[i] = parseFloat(event.target.value);
 
-        document.getElementById("slider_w_"+i).addEventListener('input', onvalue);
+            if(mode == "train"){
+                trainToggle.innerHTML = "train"
+                mode = "manual";
+                alert("stopped training")
+            }
+
+            fillInputs(p, "inputs");
+        });
     }
 
     trainToggle.addEventListener("click", (event) => {
