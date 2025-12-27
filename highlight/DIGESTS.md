@@ -19,6 +19,8 @@ The full list of digests for every file can be found below.
 ### Digests
 
 ```
+sha384-HSr+TD3IkBbR0oASHT5rysX8q2MUc+g5O7+hCWJn5YqXZo0FxtlZ8tVzS10o5zjW /es/languages/glsl.js
+sha384-BAQNawDeoCUPCZWWabbjBwXCREsauI9uBgfmsygn0IxSgWsk3mnYN0rssUPupU4s /es/languages/glsl.min.js
 sha384-g7t9fKR5Tvod4iWv7BQXN+/JMn5GT9sD6FG3h7Fgl+KCv5k4NnnCzEqUe7BMJ9Mv /es/languages/javascript.js
 sha384-f7huPivS1dV2T5V+g0aJpgsY7WBHWCsioIq30tpNoXGizD65fWJYGuXXVPNI52VB /es/languages/javascript.min.js
 sha384-8CRS96Xb/ZkZlQU+5ffA03XTN6/xY40QAnsXKB0Y+ow1vza1LAkRNPSrZqGSNo53 /es/languages/json.js
@@ -27,6 +29,10 @@ sha384-Cmq5lORXzyHraasLNqmfchH07JRXyEmjDF+j6tSggoXjYHwtgX/ySW6kkRytM5uu /es/lang
 sha384-ZV5sgX70bBgLkDR5Mtox5UsbJedBc39hRKPdvTw6miK4lSkE/wv94cLY2iyZb/sB /es/languages/python.min.js
 sha384-9jy7CI5TLYs91VYlZ4S0czQFpDsMzc9jakiJ5RqCFZugGpdPglP94JPAyEhMBwJp /es/languages/python-repl.js
 sha384-CO+NiDedness48VlHW0FCIw9rQt8szFZ0IOXYiQo3LEAHLytXxM5NlKnmNYBUACQ /es/languages/python-repl.min.js
+sha384-9ECFzM+oWDye4s/MFx3QUXGo4mW43+SyLpWUDeQtWup6GZJ+KHFxVS89PmZt/fzl /es/languages/xml.js
+sha384-PQrsaWeWrBiE1CFRw8K335CaJuQRTjDGm73vn8bXvlwaw6RyqWObdvMTBS8B75NN /es/languages/xml.min.js
+sha384-LGEW2yNxgENy35/TFa2DmM11QU/stRuw69epbr0GP5zvUbi7ddUFMeW6UB45yF0P /languages/glsl.js
+sha384-55RCrjtjoduGgxOrAm5xxwlpSaef1T4sAUbyj0QiAl246lH+ZlanDaelryeGI/yO /languages/glsl.min.js
 sha384-yxv7Fv9ToggiLsR67t98hV5ZRup6XX6xL1Rkbi/cGV5J8y7fosCi9POqlBkiBWFg /languages/javascript.js
 sha384-tPOrIubtDHoQU7Rqw0o88ilthGO0/4xEZGB47XrQKWhrc1/SchwsDx+AP74u4nk0 /languages/javascript.min.js
 sha384-pUlqdjoNePvHvdi7GVKJJnh/P2T3EvXXodl5j0JtTkbNC4DRH7gwGbcHFa84bFOP /languages/json.js
@@ -35,7 +41,9 @@ sha384-ueSSFZFqg7cVD0dpEqIk9EefJiJUYan0PH6I8u/p+bNLLx7dMs4J2keMaFXqCN8P /languag
 sha384-eXRt+aAa2ig1yFVDQCLis8k9s/1dikTcigj+/R07yNdIxc8BAG/b1uHDyEW3of17 /languages/python.min.js
 sha384-Zr5t2YaLU0giGFY/MuBA8UrK47JGpd9DuryiosYFRSQ6EJfTIF9mt8IJp/4/hpOU /languages/python-repl.js
 sha384-n3iFvvEGhuJlnYpLj6JaCg7WiOhd8kQfKTZBDnpJwFZ0puRMhoq9JWtKDRw5Snyq /languages/python-repl.min.js
-sha384-wF/OuKfKJrWbbBRx+tNeOrM2HTwv898zQo+jnVq+lHEY5otl1D1pMuTDd4hy6rPe /highlight.js
-sha384-amXi58jjPvR1UbTNO6TzTzpDifUdChpq0NEBQZpaN7haBUYTtf3n5gpHfk1osoHv /highlight.min.js
+sha384-Pgzg6a405W6U1xFjjSs5i8d7V81Tmt/TYn8HFOa+u1psDc8cbs8nC7BuyNXbWWRK /languages/xml.js
+sha384-FQjSArDMJE4WMAJGcCNAV+IXIOljcIxM3UFAD2vxjedWmBnnDaAyqRG7AQHf/uM/ /languages/xml.min.js
+sha384-VPMA7nK5NznQ+EkxKNrI+rZZ6F4jU7GsNKNGEV8zG2cB0OFemIpjgr+JCyxjoGp5 /highlight.js
+sha384-VK0KxXeaPeKpUbDLj+4p7SLmv5hYOx9Rw+QoGVr0q7k1xtPHNcpuDR1DwE9/ADOc /highlight.min.js
 ```
 
