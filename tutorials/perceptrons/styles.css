@@ -1,0 +1,74 @@
+table {
+    table-layout: fixed;
+    border-color: black;
+    border-width: 1px;
+    border-style: solid;
+    border-collapse: collapse;
+}
+
+select {
+    border: 1px solid white;
+    background-color: transparent;
+    border-radius: 2vw;
+    color: white;
+}
+
+th,
+td {
+    border: 1px solid;
+    padding: 0.6em;
+}
+
+th, .formula {
+    font-style: italic;
+    font-weight:bold;
+    font-family: "Times New Roman", Times, serif;
+}
+
+td:nth-last-child(-n + 1), th:nth-last-child(-n + 1){
+    border-width: 1px 1px 1px 3px;
+} 
+
+#settings {
+    float: right;
+    position: relative;
+}
+
+#content-wrapper{
+    grid-template-columns: auto auto auto;
+    position: relative;
+    display: grid;
+    padding: 10px;
+}
+
+#content-wrapper > * {
+    margin: 10px;
+    width:max-content;
+    height: max-content;
+}
+
+#datasets-select {
+    width: fit-content;
+}
+
+#interpretability {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    row-gap: 20px;
+    width: max-content;
+
+}
+
+#f-akt-img {
+    display: none;
+    width: 200px;
+    height: 200px;
+}
+
+#f-akt-img:hover {
+    display: block;
+}
+
+#f-akt:hover + #f-akt-img {
+    display: block;
+}

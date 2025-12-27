@@ -14,6 +14,7 @@ let camera = new e.PerspectiveCamera(50, container.offsetWidth / container.offse
     renderer = new e.WebGLRenderer({
         antialias: !0
     });
+renderer.domElement.id = "animationCanvas"
 renderer.setSize(container.offsetWidth, container.offsetHeight), renderer.setClearColor(backgroundC, 1), renderer.setPixelRatio(window.devicePixelRatio), window.scrollTo(0, 0);
 let loader = new n;
 loader.load("https://esm.sh/@compai/font-montserrat/data/typefaces/normal-700.json", function(n) {

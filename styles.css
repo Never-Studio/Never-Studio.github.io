@@ -36,7 +36,7 @@ body {
 	background-color: inherit;
 }
 
-canvas {
+#animationCanvas {
   margin: 0;
   padding: 0;
   left: 0;
@@ -74,7 +74,7 @@ button, a:hover {
 img, video {
   border-radius: 2vw;
   max-height: 300px;
-  max-width: 30%;
+  max-width: 40vw;
 }
 .section{
   text-align: left;
@@ -106,7 +106,7 @@ img, video {
 
 .rowsection > :not(h1) {
   position: relative;
-  margin: 10%;
+  margin: 4%;
 }
 @media (max-width: 800px) {
   .rowsection {
@@ -147,4 +147,11 @@ pre>code {
 
 pre{
 	border-radius: 1vw;
+}
+
+button, select {
+    border: 1px solid white;
+    background-color: transparent;
+    border-radius: 2vw;
+    color: white;
 }

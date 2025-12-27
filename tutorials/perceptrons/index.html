@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://www.neverstudio.de/tutorials/perceptrons/index.html" rel="canonical">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo of the inner workings of an Perceptron - neverstudio</title>
+    <meta name="description" content="How do Perceptrons work and how are they trained? - a demonstration">
+    <link rel="stylesheet"  href="/styles.min.css">
+    <link rel="stylesheet" href="styles.css">
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libertinus+Math&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>Perceptron Demo</h1>
+    <div id="content-wrapper">
+        <canvas id="canvas"> </canvas>
+        <div id="settings">
+            <label for="input_w_0" class="formula">w<sub>0 (bias)</sub></label><br>
+            <input id="slider_w_0" type="range" min="-1" max="1" step="any"><br>
+            <input id="input_w_0"><br><br>
+
+            <label for="input_w_1" class="formula">w<sub>1</sub></label><br>
+            <input id="slider_w_1" type="range" min="-1" max="1" step="any"><br>
+            <input id="input_w_1"><br><br>
+
+            <label for="input_w_2" class="formula">w<sub>2</sub></label><br>
+            <input id="slider_w_2" type="range" min="-1" max="1" step="any"><br>
+            <input id="input_w_2"><br><br>
+
+            <button id="train-toggle">train</button><br>
+            <button id="randomize">randomize all weights</button><br>
+        </div>
+        <span>
+            <table id="results">
+                <tr>
+                    <th>x<sub>0</sub></th>
+                    <th>x<sub>1</sub></th>
+                    <th>x<sub>2</sub></th>
+                    <th>y&#770;</th>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">1</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">1</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">1</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold">1</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+            </table>
+
+            <select id="datasets-select">
+                <option value="and">AND</option>
+                <option value="or">OR</option>
+                <option value="xor">XOR</option>
+                <option value="random">random</option>
+            </select>
+        </span>
+
+        <div id="interpretability">
+            <span class="formula"><br><br>net &nbsp;=&nbsp;<br><br></span>
+            <span class="formula" id="explain"></span>
+            <span class="formula"><br><br>; &nbsp; y&#770; &nbsp;=&nbsp;
+                <span id="f-akt">
+                    f<sub>akt</sub>&nbsp;(&nbsp;<span id="explain1">net</span>&nbsp;)<span id="explain2"></span>
+                </span>
+                <img id="f-akt-img" src="heaviside.png">
+                <br><br>
+            </span>
+            
+        </div>
+       
+    </div>
+    
+    <script src="script.js"></script>
+
+    <div class="section">
+	<a title = "neverstudio main page" href="/" id="mainmenu" >Back to main page &rarr;</a>
+	</div>
+	<div class="section">
+	<div>
+	<h2>Contact and Terms of Services </h2>
+	Here is our <a href="/contact/">Contact and Legal information</a>.<br>
+	&copy; 2025 Michel and Nils H&auml;u&szlig;ler.<br>All rights reserved.
+	<meta name="author" content="Michel and Nils Häußler">
+	</div>
+	</div>
+	<script src="/colorscript.js"></script>
+</body>
+</html>
