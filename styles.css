@@ -98,6 +98,10 @@ img, video {
   width: 100%;
 }
 
+.rowsection > p {
+  width: 50%;
+}
+
 .section > :not(h1) {
   position: relative;
   left: 10%;
