@@ -54,4 +54,8 @@ Disallow: /
 User-agent: *
 Allow: /
 
+User-Agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=no
+Allow: /
+
 Sitemap: https://www.neverstudio.de/sitemap.xml
