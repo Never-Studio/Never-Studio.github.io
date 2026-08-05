@@ -47,6 +47,8 @@ User-agent: Webzio-Extended
 User-agent: webzio-extended
 User-agent: YandexAdditional
 User-agent: YandexAdditionalBot
+User-agent: cohere-ai
+User-agent: cohere-training-data-crawler
 Disallow: /
 
 User-agent: *
