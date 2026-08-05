@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://www.neverstudio.de/projects/nevender/index.html" rel="canonical">
+
+    
+	
+	<meta name='description' content='A simple demo of Virtual Geomtry, based on Unreal Engines Nanite, for THREE.js. It features the DAG creation, traversal and cut.'>
+
+    <title>A simple demo of Virtual Geometry in THREE.js - neverstudio</title>
+    
+    <link rel="stylesheet"  href="/styles.min.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+	<script src="/langswitch.js" defer></script>
+	<div class="langBar">
+	    <a href="#" onclick="switchToGerman()">de</a> / <a href="#" onclick="switchToEnglish()">en</a>
+	</div>
+    <div id="description-section" class="section" style="flex-direction: column;">
+        <h1>A simple demo of Virtual Geometry in THREE.js</h1>
+        <p style="width: 80%; text-align: center;"> Prove of concept of virtual geometry for non-WebGPU Browsers </p>
+    </div>
+    
+    <div class="section">
+        <h2>What does the Demo Feature?</h2>
+        <p>
+            The demo features custom simplification, meshletization, DAG-building, grouping and merging of meshlets, as well as travresal of the resulting DAG and building of a geometry based on the cut.
+            It also supports custom attributes and textures.<br>
+    
+            Currently building the DAG takes quite a while, because the meshletizer is utilizing BFS, as do the grouping algorithms.
+            Because I wasn't able to create a traversal algorithm in WebGL this remains a prove of concept that has no performance increase for real THREE.js scenes.<br><br>
+        </p>
+        <h2>What does the Demo NOT Feature?</h2>
+        <p>
+            In order to be practical for efficient use in THREE.js one main component needs to be optimized: The DAG traversal.<br>
+            All other computations can be done offline and loaded at runtime, such as the building of the DAG.<br><br>
+            Optimizing the DAG traversal is very challenging as it means hundreds of computations in parallel for large meshes. With JavaScript this is only manageable to a certain degree.<br>
+            A real solution would therefore need to utilize the GPU, to be specific WebGL or WebGPU.<br>
+            As Virtual Geometry was already implemented for WebGPU (albeit at the time standalone not for THREE.js) I tried implementing Virtual Geometry in WebGL, but soon gave up, because the constraints of WebGL where too restrictive.
+            An implementation in WebGL, would mean a significant jump in the number of Devices, supporting Virtual Geometry in the Browser.
+
+            This is why this Demo does not feature a WebGL-powered traversal.
+        </p>
+        <h2>Where can I try it out?</h2>
+        <p>
+            You can see the demo <a href="demo">here</a>.<br>
+        </p>
+        <h2>How do I use the Demo?</h2>
+        <p>
+            First you need to wait for a while till the DAG traversal has finsihed and the geometry becomes visible on the screen.
+            By moving the upper slider you can change the distance to the geometry and see the resulting changes in quality on the left side,
+            as well as the changes in Triangle count on the right side in the window dubbed "TRIS". The lower slider changes the threshold of how high the qualit should minimally be.
+        </p>
+        
+    </div>
+    <div class="section">
+        <a href="/" title="neverstudio main page" id="mainmenu" >Back to main page &rarr;</a>
+    </div>
+    
+    <div class="section">
+        <div>
+            <h2>Contact and Terms of Services </h2>
+            Here is our <a href="/contact">Contact and Legal information</a>.<br>
+            &copy; 2025 Michel and Nils H&auml;u&szlig;ler.<br>All rights reserved.
+        </div>
+    </div>
+    <script src="/colorscript.js"></script>
+    </body>
+</html>

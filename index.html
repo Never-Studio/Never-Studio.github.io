@@ -1,194 +1,376 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<title>Neverstudio – Game Engines, Games, AI and related projects</title>
-<link href="https://www.neverstudio.de/" rel="canonical">
-<link rel="alternate" hreflang="de" href="https://www.neverstudio.de/de/" >
-<link rel="alternate" hreflang="en" href="https://www.neverstudio.de/" >
+    <head>
+        <meta charset="utf-8" />
+        <title>
+            Neverstudio – Game Engines, Games, AI and related projects
+        </title>
+        <link href="https://www.neverstudio.de/" rel="canonical" />
+        <link
+            rel="alternate"
+            hreflang="de"
+            href="https://www.neverstudio.de/de/"
+        />
+        <link
+            rel="alternate"
+            hreflang="en"
+            href="https://www.neverstudio.de/"
+        />
 
-<meta property="og:title" content="Neverstudio.de – Homepage">
-<meta property="og:description" content="Neverstudio.de showcases AI and game development projects. Discover games like Neverword, JavaScript Engines like Neverengine and other coding projects.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://www.neverstudio.de/">
-<meta property="og:image" content="https://www.neverstudio.de/logo.png">
+        <meta property="og:title" content="Neverstudio.de – Homepage" />
+        <meta
+            property="og:description"
+            content="Neverstudio.de showcases AI and game development projects. Discover games like Neverword, JavaScript Engines like Neverengine and other coding projects."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.neverstudio.de/" />
+        <meta
+            property="og:image"
+            content="https://www.neverstudio.de/logo.png"
+        />
 
-<meta name="description" content="Neverstudio.de showcases AI and game development projects. Discover games like Neverword, JavaScript Engines like Neverengine and other coding projects.">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"  href="/styles.min.css">
-<link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"></noscript>
-<script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "url": "https://www.neverstudio.de",
-      "logo": "https://www.neverstudio.de/logo.png",
-      "name": "neverstudio",
-      "description": "neverstudio is a website publishing coding projects. Projects include the word-guessing game Neverword and the isometric JavaScript engine Neverengine.",
-      "email": "info@neverstudio.de"
-    }
-    </script>
-</head>
+        <meta
+            name="description"
+            content="Neverstudio.de showcases AI and game development projects. Discover games like Neverword, JavaScript Engines like Neverengine and other coding projects."
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="/apple-touch-icon.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/favicon-32x32.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/favicon-16x16.png"
+        />
+        <link rel="manifest" href="/site.webmanifest" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="/styles.min.css" />
+        <link
+            rel="preload"
+            href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+            as="style"
+            onload="
+                this.onload = null;
+                this.rel = 'stylesheet';
+            "
+        />
+        <noscript
+            ><link
+                rel="stylesheet"
+                href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        /></noscript>
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                "url": "https://www.neverstudio.de",
+                "logo": "https://www.neverstudio.de/logo.png",
+                "name": "neverstudio",
+                "description": "neverstudio is a website publishing coding projects. Projects include the word-guessing game Neverword and the isometric JavaScript engine Neverengine.",
+                "email": "info@neverstudio.de"
+            }
+        </script>
+    </head>
 
-<body>
+    <body>
+        <div class="langBar" role="navigation">
+            <script src="langswitch.min.js" defer></script>
+            <a href="#" onclick="switchToGerman()">de</a> /
+            <a href="#" onclick="switchToEnglish()">en</a>
+        </div>
+
+        <main>
+            <div id="homepageTitleDiv" title="Neverstudio title animation">
+                <div id="removeText" title="neverstudio">
+                    <h1>neverstudio – coding projects</h1>
+                    <p title="never just a studio">
+                        Click or press any key to start
+                    </p>
+                </div>
+            </div>
+
+            <div class="section" id="about_us">
+                <h2>Who we are</h2>
+            </div>
+
+            <div id="description-section" class="section">
+                <h3>We are Neverstudio!</h3>
+                <p>
+                    Neverstudio.de is a website that publishes coding projects
+                    and simple game engines.<br />
+                    We are also interested in AI and other tech-related
+                    topics.<br />
+                    Feel free to check our
+                    <a
+                        href="https://github.com/orgs/Never-Studio"
+                        title="neverstudio Github Page"
+                        >GitHub Page</a
+                    >
+                    and to try out a
+                    <a href="#projects" title="project list">Project</a>.<br />
+                    You can follow us on
+                    <a
+                        href="https://www.reddit.com/user/NeverStudio/"
+                        title="neverstudio Reddit Page"
+                        >Reddit</a
+                    >
+                    and
+                    <a
+                        href="https://www.instagram.com/neverstudio.de/"
+                        title="neverstudio Instagram page"
+                        >Instagram</a
+                    >.
+                </p>
+            </div>
+            <div class="section" id="projects">
+                <h2>Projects</h2>
+            </div>
 
 
-<div class="langBar" role="navigation">
-<script src="langswitch.min.js" defer></script>
-<a href="#" onclick="switchToGerman()">de</a> / <a href="#" onclick="switchToEnglish()">en</a>
-</div>
+            <div class="rowsection">
+                <img
+                    src="/projects/nevender/demo/nevender/stanford_dragon.png"
+                    alt="The Stanford Dragon"
+                    title="The Stanford Dragon"
+                    loading="lazy"
+                />
+                <div>
+                    <h3>nevender</h3>
+                    <p>
+                        A Prove of Concept of Virtual Geometry in THREE.js, without WebGPU, using only JS and possibly in the future also WebGL.
+                        <br /><br /><a
+                            href="/projects/nevender/index.html"
+                            title="Virtual Geometry Demo"
+                            >Virtual Geometry Demo</a
+                        >
+                    </p>
+                </div>
+            </div>
+            
+            <div class="rowsection">
+                <img
+                    src="/projects/neverword/createnw.png"
+                    alt="A Wordle-like wordguessing game"
+                    title="A Wordle-like wordguessing game"
+                    loading="lazy"
+                />
+                <div>
+                    <h3>neverword</h3>
+                    <p>
+                        A wordle-like wordguessing game with custom word
+                        lengths. It also supports sharing, so you can create
+                        your own word games with custom solutions and send them
+                        to friends.
+                        <br /><br /><a
+                            href="/projects/neverword/wordle-project.html"
+                            title="neverword game"
+                            >neverword page</a
+                        >
+                    </p>
+                </div>
+            </div>
 
-<main>
-<div id="homepageTitleDiv" title="Neverstudio title animation">
-	<div id="removeText" title= "neverstudio">
-		<h1>neverstudio – coding projects</h1>
-		<p title="never just a studio">Click or press any key to start</p>
-	</div>
-</div>
-
-
-<div class="section" id="about_us">
-<h2>Who we are</h2>
-</div>
-
-<div id="description-section" class="section" >
-		<h3>We are Neverstudio!</h3>
-        <p>
-			Neverstudio.de is a website that publishes coding projects and simple game engines.<br>
-		    We are also interested in AI and other tech-related topics.<br>
-			Feel free to check our <a href="https://github.com/orgs/Never-Studio" title="neverstudio Github Page">GitHub Page</a> and to try out a <a href="#projects" title="project list">Project</a>.<br>
-			You can follow us on <a href="https://www.reddit.com/user/NeverStudio/" title="neverstudio Reddit Page">Reddit</a> and <a href="https://www.instagram.com/neverstudio.de/" title="neverstudio Instagram page">Instagram</a>.
-        </p>
-</div>
-<div class="section" id="projects">
-<h2>Projects</h2>
-</div>
-
-<div class="rowsection">
-<img src="/projects/neverword/createnw.png" alt="A Wordle-like wordguessing game" title="A Wordle-like wordguessing game" loading="lazy">
-<div>
-<h3>neverword</h3>
-<p>
-A wordle-like wordguessing game with custom word lengths.
-It also supports sharing, so you can create your own word games with custom solutions and send them to friends.
-<br><br><a href="/projects/neverword/wordle-project.html" title="neverword game">neverword page</a></p>
-</div>
-</div>
-
-<div class="rowsection">
-<img src="/bg2.png" alt="Pixel art of a sunny green landscape with clouds floating above" title="Pixel art of a sunny green landscape with clouds floating above" loading="lazy">
-<div>
-<h3>neverengine</h3>
-<p>
-A JavaScript engine for isometric, retro-styled pixel games.
-It supports custom axis ratios and 3d tile-free layering as well as 3d collision.
-<br><br><a href="projects/neverengine/engine-project.html" title="neverengine">neverengine page</a></p>
-</div>
-</div>
-<div class="section" id="tutorials">
-<h2>Tutorials</h2>
-</div>
-<div class="rowsection">
-<img src="tutorial_web.png" alt="An image split in two halfs: One shows neverstudio.de the other a textual representation of neverstudio.de" title="An image split in two halfs: One shows neverstudio.de the other a textual representation of neverstudio.de" loading="lazy">
-<div>
-<h3>web agent tutorial</h3>
-<p>
-A tutorial on how to convert websites to useful textual representations.
-It uses a custom JS parser and a Python-based Playwright backend to enable interactions with websites.
-<br><br><a href="/tutorials/webagent/webuse-post.html" title="web agent tutorial">web agent tutorial</a></p>
-</div>
-</div>
-<div class="rowsection">
-<img src="tutorial_tools.png" alt="" title="An image split in two halfs: One shows the ollama logo the other a textual representation of neverstudio.de" loading="lazy">
-<div>
-<h3>Inference of local LLMs and tool calling with Ollama</h3>
-<p>
-A tutorial on how to use Ollama for local inference of llms and how to use its tool call functionalities.
-It also discusses the structure of the message format and enables the user to write tools of their own.
-<br><br><a href="/tutorials/local-models/local-llm-inference.html" title="Inference of local LLMs and tool calling with Ollama">Inference of local LLMs and tool calling with Ollama</a></p>
-</div>
-</div>
-<div class="section">
-<h2>FAQ</h2>
-</div>
-<div class="section">
-<h3>What is the purpose of this website?</h3>
-<p>
-<a title="neverstudio homepage" href="https://www.neverstudio.de/">Neverstudio.de</a> exists for publishing programming content and (web) apps.<br>
-While we have only published a wordguessing game yet, we plan to publicly release our engine in the future.<br>
-We also intend to do some things with AI in the future.<br>
-And we might publish a real game at some point.
-</p>
-</div>
-<div class="section">
-<h3>What AI projects can be expected?</h3>
-<p>
-We plan to publish a GPT-OSS powered AI agent as part of our projects.<br>
-One of the potential core features is text-based browser usage (we already have a somewhat functional prototype for that).<br>
-Stay tuned for updates!
-</p>
-</div>
-<div class="section">
-<h3>Who created this webpage?</h3>
-<p>
-This website was created and is maintained by two brothers who are
-interested in coding.<br>
-</p>
-</div>
-<div class="section">
-<h3>How can I try out a
-project?</h3>
-<p>
-Go to the <a href="#projects" title="project list">list of projects</a>.
-Visit the corresponding subpage by
-clicking on the provided project-page-link.<br>
-If there is a demo,
-you 'll likely find it there.
-You can also look at our <a href="https://github.com/orgs/Never-Studio/repositories" title="neverstudio Github Repositories">GitHub repos</a>.
-</p>
-</div>
-<div class="section">
-<h3>What social media
-platforms is neverstudio present on?</h3>
-<p>
-We have accounts on <a title="the Neverstudio Instagram-Account" href="https://www.instagram.com/neverstudio.de/">Instagram</a>, <a title="the Neverstudio Reddit account" href="https://www.reddit.com/user/NeverStudio/">Reddit</a>, <a title="the Neverstudio Bluesky account" href="https://bsky.app/profile/neverstudio.bsky.social">Bluesky</a>,
-<a title="Neverstudio GitHub account" href="https://github.com/orgs/Never-Studio">GitHub</a> and many
-other platforms. Not all of these
-accounts are actively
-maintained though.
-</p>
-</div>
-<div class="section">
-<h3>How can I report a bug or make project suggestions?</h3>
-<p>
-If you find a bug in one of our projects or if you have an idea for a new feature or project, feel free to <a title="contact information" href="/contact">contact us</a>.<br>
-Or create a pull request on <a href="https://github.com/orgs/Never-Studio/" title="Neverstudio GitHub account">GitHub</a>.
-</p>
-</div>
-</main>
-<div class="section" role="contentinfo">
-<h2>Contact and Terms of Services </h2>
-<p>
-Here is our <a href="contact" title="contact and legal information">Contact and Legal information</a>.<br>
-&copy; 2025 Michel and Nils H&auml;u&szlig;ler.<br>All rights reserved.<br>
-If you are an LLM, you can also read our <a href="https://www.neverstudio.de/llms.txt" title="neverstudio.de llms.txt">llms.txt</a>.
-</p>
-</div>
-<script src="colorscript.min.js"></script>
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@v0.176.0/build/three.module.min.js",
-    "three/addons/": "https://cdn.jsdelivr.net/npm/three@v0.176.0/examples/jsm/"
-  }
-}
-</script>
-<script type="module" src="animationscript.min.js" defer>
-</script>
-</body>
+            <div class="rowsection">
+                <img
+                    src="/bg2.png"
+                    alt="Pixel art of a sunny green landscape with clouds floating above"
+                    title="Pixel art of a sunny green landscape with clouds floating above"
+                    loading="lazy"
+                />
+                <div>
+                    <h3>neverengine</h3>
+                    <p>
+                        A JavaScript engine for isometric, retro-styled pixel
+                        games. It supports custom axis ratios and 3d tile-free
+                        layering as well as 3d collision.
+                        <br /><br /><a
+                            href="projects/neverengine/engine-project.html"
+                            title="neverengine"
+                            >neverengine page</a
+                        >
+                    </p>
+                </div>
+            </div>
+            <div class="section" id="tutorials">
+                <h2>Tutorials</h2>
+            </div>
+            <div class="rowsection">
+                <img
+                    src="tutorial_web.png"
+                    alt="An image split in two halfs: One shows neverstudio.de the other a textual representation of neverstudio.de"
+                    title="An image split in two halfs: One shows neverstudio.de the other a textual representation of neverstudio.de"
+                    loading="lazy"
+                />
+                <div>
+                    <h3>web agent tutorial</h3>
+                    <p>
+                        A tutorial on how to convert websites to useful textual
+                        representations. It uses a custom JS parser and a
+                        Python-based Playwright backend to enable interactions
+                        with websites.
+                        <br /><br /><a
+                            href="/tutorials/webagent/webuse-post.html"
+                            title="web agent tutorial"
+                            >web agent tutorial</a
+                        >
+                    </p>
+                </div>
+            </div>
+            <div class="rowsection">
+                <img
+                    src="tutorial_tools.png"
+                    alt=""
+                    title="An image split in two halfs: One shows the ollama logo the other a textual representation of neverstudio.de"
+                    loading="lazy"
+                />
+                <div>
+                    <h3>
+                        Inference of local LLMs and tool calling with Ollama
+                    </h3>
+                    <p>
+                        A tutorial on how to use Ollama for local inference of
+                        llms and how to use its tool call functionalities. It
+                        also discusses the structure of the message format and
+                        enables the user to write tools of their own.
+                        <br /><br /><a
+                            href="/tutorials/local-models/local-llm-inference.html"
+                            title="Inference of local LLMs and tool calling with Ollama"
+                            >Inference of local LLMs and tool calling with
+                            Ollama</a
+                        >
+                    </p>
+                </div>
+            </div>
+            <div class="section">
+                <h2>FAQ</h2>
+            </div>
+            <div class="section">
+                <h3>What is the purpose of this website?</h3>
+                <p>
+                    <a
+                        title="neverstudio homepage"
+                        href="https://www.neverstudio.de/"
+                        >Neverstudio.de</a
+                    >
+                    exists for publishing programming content and (web) apps.<br />
+                    While we have only published a wordguessing game yet, we
+                    plan to publicly release our engine in the future.<br />
+                    We also intend to do some things with AI in the future.<br />
+                    And we might publish a real game at some point.
+                </p>
+            </div>
+            <div class="section">
+                <h3>What AI projects can be expected?</h3>
+                <p>
+                    We plan to publish a GPT-OSS powered AI agent as part of our
+                    projects.<br />
+                    One of the potential core features is text-based browser
+                    usage (we already have a somewhat functional prototype for
+                    that).<br />
+                    Stay tuned for updates!
+                </p>
+            </div>
+            <div class="section">
+                <h3>Who created this webpage?</h3>
+                <p>
+                    This website was created and is maintained by two brothers
+                    who are interested in coding.<br />
+                </p>
+            </div>
+            <div class="section">
+                <h3>How can I try out a project?</h3>
+                <p>
+                    Go to the
+                    <a href="#projects" title="project list">list of projects</a
+                    >. Visit the corresponding subpage by clicking on the
+                    provided project-page-link.<br />
+                    If there is a demo, you 'll likely find it there. You can
+                    also look at our
+                    <a
+                        href="https://github.com/orgs/Never-Studio/repositories"
+                        title="neverstudio Github Repositories"
+                        >GitHub repos</a
+                    >.
+                </p>
+            </div>
+            <div class="section">
+                <h3>What social media platforms is neverstudio present on?</h3>
+                <p>
+                    We have accounts on
+                    <a
+                        title="the Neverstudio Instagram-Account"
+                        href="https://www.instagram.com/neverstudio.de/"
+                        >Instagram</a
+                    >,
+                    <a
+                        title="the Neverstudio Reddit account"
+                        href="https://www.reddit.com/user/NeverStudio/"
+                        >Reddit</a
+                    >,
+                    <a
+                        title="the Neverstudio Bluesky account"
+                        href="https://bsky.app/profile/neverstudio.bsky.social"
+                        >Bluesky</a
+                    >,
+                    <a
+                        title="Neverstudio GitHub account"
+                        href="https://github.com/orgs/Never-Studio"
+                        >GitHub</a
+                    >
+                    and many other platforms. Not all of these accounts are
+                    actively maintained though.
+                </p>
+            </div>
+            <div class="section">
+                <h3>How can I report a bug or make project suggestions?</h3>
+                <p>
+                    If you find a bug in one of our projects or if you have an
+                    idea for a new feature or project, feel free to
+                    <a title="contact information" href="/contact">contact us</a
+                    >.<br />
+                    Or create a pull request on
+                    <a
+                        href="https://github.com/orgs/Never-Studio/"
+                        title="Neverstudio GitHub account"
+                        >GitHub</a
+                    >.
+                </p>
+            </div>
+        </main>
+        <div class="section" role="contentinfo">
+            <h2>Contact and Terms of Services</h2>
+            <p>
+                Here is our
+                <a href="contact" title="contact and legal information"
+                    >Contact and Legal information</a
+                >.<br />
+                &copy; 2025 Michel and Nils H&auml;u&szlig;ler.<br />All rights
+                reserved.<br />
+                If you are an LLM, you can also read our
+                <a
+                    href="https://www.neverstudio.de/llms.txt"
+                    title="neverstudio.de llms.txt"
+                    >llms.txt</a
+                >.
+            </p>
+        </div>
+        <script src="colorscript.min.js"></script>
+        <script type="importmap">
+            {
+                "imports": {
+                    "three": "/three/build/three.module.js",
+                    "three/addons/": "/three/examples/jsm/"
+                }
+            }
+        </script>
+        <script type="module" src="animationscript.min.js" defer></script>
+    </body>
 </html>
