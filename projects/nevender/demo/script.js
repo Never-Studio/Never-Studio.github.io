@@ -4,7 +4,7 @@ import { fillScene, animateScene } from "./tests/sceneLoader.js";
 
 import { preproccess } from "./nevender/index.js";
 
-import Stats from "./stats.js/src/stats.js";
+import Stats from "./stats.js/src/Stats.js";
 
 const SCENE = 4;
 
